@@ -469,20 +469,26 @@
       document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Отправка в ваш Telegram
+    // Отправка в ваш Telegram @Zdes_reshau_ya
     function sendOrder(e) {
       e.preventDefault();
-      const tg = document.getElementById('tgUser').value;
+      
       const tariff = document.getElementById('tariffSelect').value;
       const story = document.getElementById('storyText').value;
 
-      // Укажите ваш юзернейм в Telegram без знака @
-      const myTelegramUsername = "YOUR_TELEGRAM_USERNAME";
+      // Ваш юзернейм
+      const myTelegramUsername = "Zdes_reshau_ya";
 
+      // Формируем красивое сообщение с просьбой скинуть фото и обещанием 24 часов
       const message = encodeURIComponent(
-        `Здравствуйте! Хочу заказать манхву.\nТариф: ${tariff}\nМой контакт: ${tg}\nИстория: ${story}`
+        `Здравствуйте! Хочу заказать манхву.\n\n` +
+        `📦 Тариф: ${tariff}\n\n` +
+        `📖 Моя история:\n${story}\n\n` +
+        `--- \n` +
+        `Готов(а) скинуть фотки для начала работы! Жду ответ. (Сделаем за 24 часа)`
       );
 
+      // Открываем диалог в Telegram с предзаполненным текстом
       window.open(`https://t.me/${myTelegramUsername}?text=${message}`, '_blank');
     }
   </script>
