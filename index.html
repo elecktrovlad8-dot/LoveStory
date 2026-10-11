@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NeuroManga — Твоя история любви в стиле манхвы</title>
+  <title>Ourtune — Твоя история любви в стиле манхвы</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
@@ -64,6 +64,7 @@
       background: var(--gold-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
     }
     .nav-btn {
       background: rgba(255, 255, 255, 0.06);
@@ -136,7 +137,6 @@
 
     /* --- ЛИПКИЙ СКРОЛЛ РИДЕРА --- */
     .showcase-wrapper {
-      /* Высота в 3.5 экрана. Чем больше, тем дольше придется скроллить, чтобы пролистать комикс */
       height: 350vh; 
       position: relative;
     }
@@ -170,14 +170,13 @@
       justify-content: center;
       position: relative;
       width: 100%;
-      /* Увеличена высота телефона, чтобы он не выглядел сжатым */
       height: 75vh; 
       min-height: 500px;
       max-height: 850px;
     }
     .phone-mockup {
       width: 100%;
-      max-width: 380px; /* Оптимальная ширина для современных смартфонов (как iPhone 13/14) */
+      max-width: 380px; 
       height: 100%;
       background: #000;
       border: 8px solid #1f242d;
@@ -202,14 +201,14 @@
     .webtoon-scroll {
       height: 100%;
       width: 100%;
-      overflow: hidden; /* Скрываем стандартный скролл. Двигать будет скрипт */
+      overflow: hidden; 
       position: relative;
     }
     .webtoon-tape {
       display: flex;
       flex-direction: column;
       width: 100%;
-      will-change: transform; /* Оптимизация анимации для видеокарт */
+      will-change: transform;
     }
     .webtoon-tape img {
       width: 100%;
@@ -357,7 +356,7 @@
 
   <header>
     <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
-      <div class="logo">NEUROMANGA</div>
+      <div class="logo">OURTUNE</div>
       <a href="#order" class="nav-btn">Заказать</a>
     </div>
   </header>
@@ -365,8 +364,8 @@
   <section class="hero">
     <div class="container">
       <div class="badge">✨ Превращаем реальные фото в романтическую манхву</div>
-      <!-- Обновленный заголовок -->
-      <h1>В одном непрерывном вебтуне вас ждёт <span>ваша история любви</span></h1>
+      <!-- Обновленный заголовок: выделение перенесено -->
+      <h1><span>В одном непрерывном вебтуне вас ждёт</span> ваша история любви</h1>
       <p>Оригинальный подарок с сохранением узнаваемости лиц.</p>
       <a href="#order" class="btn-main">Создать комикс для пары</a>
     </div>
@@ -500,23 +499,18 @@
       const tape = document.getElementById('scrollTape');
       const scrollArea = document.getElementById('scrollArea');
 
-      // Позиция секции на странице
       const wrapperTop = wrapper.offsetTop;
       const wrapperScrollableHeight = wrapper.offsetHeight - window.innerHeight;
 
-      // Вычисляем прогресс прокрутки внутри этой секции (от 0 до 1)
       let progress = (window.scrollY - wrapperTop) / wrapperScrollableHeight;
-      progress = Math.max(0, Math.min(1, progress)); // Ограничиваем рамками 0 - 1
+      progress = Math.max(0, Math.min(1, progress)); 
 
-      // Вычисляем, насколько нужно сдвинуть картинку внутри телефона
       const maxScroll = tape.offsetHeight - scrollArea.offsetHeight;
 
-      // Применяем сдвиг, только если картинка загрузилась и она больше экрана телефона
       if (maxScroll > 0) {
         tape.style.transform = `translateY(-${progress * maxScroll}px)`;
       }
     });
-
 
     // --- Логика формы и тарифов ---
     function selectPlan(planName) {
