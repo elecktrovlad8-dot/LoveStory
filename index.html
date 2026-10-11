@@ -126,6 +126,7 @@
       text-decoration: none;
       box-shadow: 0 10px 30px var(--accent-glow);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
     }
     .btn-main:hover {
       transform: translateY(-2px);
@@ -307,10 +308,10 @@
     }
     .form-group label {
       display: block;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 600;
       margin-bottom: 8px;
-      color: var(--text-muted);
+      color: #e5e7eb;
     }
     .form-group input, .form-group select, .form-group textarea {
       width: 100%;
@@ -321,9 +322,20 @@
       color: #fff;
       outline: none;
       font-size: 1rem;
+      transition: border-color 0.2s;
     }
-    .form-group input:focus, .form-group textarea:focus {
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
       border-color: var(--accent);
+    }
+    .photo-notice {
+      background: rgba(245, 158, 11, 0.08);
+      border-left: 4px solid var(--accent);
+      padding: 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.5;
     }
   </style>
 </head>
@@ -340,7 +352,7 @@
     <div class="container">
       <div class="badge">✨ Превращаем реальные фото в романтическую манхву</div>
       <h1>Ваша история любви в одном <span>непрерывном вебтуне</span></h1>
-      <p>Оригинальный подарок с сохранением узнаваемости лиц. Готовность за 24 часа без длительного ожидания художников.</p>
+      <p>Оригинальный подарок с сохранением узнаваемости лиц.</p>
       <a href="#order" class="btn-main">Создать комикс для пары</a>
     </div>
   </section>
@@ -358,11 +370,11 @@
           <div class="phone-notch"></div>
           <div class="webtoon-scroll" id="scrollReader">
             <div class="webtoon-tape">
-              <img src="frame1.jpg" alt="Часть 1: Ночь перед отъездом">
-              <img src="frame2.jpg" alt="Часть 2: Вокзал и переписка в поезде">
-              <img src="frame3.jpg" alt="Часть 3: Разлука и теплые сообщения">
-              <img src="frame4.jpg" alt="Часть 4: Возвращение и встреча на перроне">
-              <img src="frame5.jpg" alt="Часть 5: Счастливый финал в парке">
+              <img src="frame1.jpg" alt="Часть 1">
+              <img src="frame2.jpg" alt="Часть 2">
+              <img src="frame3.jpg" alt="Часть 3">
+              <img src="frame4.jpg" alt="Часть 4">
+              <img src="frame5.jpg" alt="Часть 5">
             </div>
           </div>
         </div>
@@ -384,8 +396,8 @@
             <div class="price-name">Мини-история</div>
             <div class="price-cost">1 990 ₽</div>
             <ul class="price-features">
-              <li>4–5 ключевых кадров</li>
-              <li>Стиль: Романтичный вебтун</li>
+              <li>15 ключевых кадров (фоток)</li>
+              <li>Небольшая история</li>
               <li>Формат: Цифровой файл (скролл)</li>
               <li>Срок изготовления: 24 часа</li>
             </ul>
@@ -399,10 +411,10 @@
             <div class="price-name">Полный метр</div>
             <div class="price-cost">3 490 ₽</div>
             <ul class="price-features">
-              <li>10–15 детальных кадров истории</li>
-              <li>Диалоги и романтические связки</li>
-              <li>Файл высокой четкости + PDF для печати</li>
-              <li>Приоритетная генерация</li>
+              <li>45 детальных кадров</li>
+              <li>Большая развернутая история</li>
+              <li>Диалоги и связки сюжета</li>
+              <li>Срок изготовления: 24 часа</li>
             </ul>
           </div>
           <button class="btn-select" onclick="selectPlan('Полный метр (3 490 ₽)')">Выбрать тариф</button>
@@ -413,10 +425,10 @@
             <div class="price-name">Печатный глянец</div>
             <div class="price-cost">5 990 ₽</div>
             <ul class="price-features">
-              <li>Сценарий «Полный метр» (15 кадров)</li>
-              <li>Физический комикс в твердой обложке</li>
-              <li>Премиальная глянцевая бумага</li>
-              <li>Доставка СДЭК до двери включена</li>
+              <li>45 кадров (Полный метр)</li>
+              <li>Физический комикс в обложке</li>
+              <li>Срок выполнения: 1 неделя</li>
+              <li>Доставка до двери включена</li>
             </ul>
           </div>
           <button class="btn-select" onclick="selectPlan('Печатный глянец (5 990 ₽)')">Выбрать тариф</button>
@@ -429,33 +441,35 @@
   <section class="order-section" id="order">
     <div class="container">
       <div class="order-box">
-        <h2 style="font-size: 1.8rem; margin-bottom: 8px; text-align: center;">Оформление заказа</h2>
-        <p style="color: var(--text-muted); font-size: 0.95rem; text-align: center; margin-bottom: 28px;">
-          Заполните данные, и мы свяжемся с вами в Telegram для получения фотографий
-        </p>
+        <h2 style="font-size: 1.8rem; margin-bottom: 28px; text-align: center;">Оформление заказа</h2>
 
         <form id="orderForm" onsubmit="sendOrder(event)">
+          
           <div class="form-group">
-            <label>Ваш Telegram (@username)</label>
-            <input type="text" id="tgUser" placeholder="@nickname" required>
+            <label>Как к вам обращаться?</label>
+            <input type="text" id="clientName" placeholder="Ваше имя" required>
           </div>
 
           <div class="form-group">
-            <label>Выбранный тариф</label>
-            <select id="tariffSelect">
-              <option value="Мини-история (1 990 ₽)">Мини-история — 1 990 ₽</option>
-              <option value="Полный метр (3 490 ₽)" selected>Полный метр — 3 490 ₽</option>
-              <option value="Печатный глянец (5 990 ₽)">Печатный глянец — 5 990 ₽</option>
+            <label>Какой тариф и сколько кадров?</label>
+            <select id="tariffSelect" onchange="updateFormHint()">
+              <option value="Мини-история (15 кадров)">Мини-история (15 кадров) — 1 990 ₽</option>
+              <option value="Полный метр (45 кадров)" selected>Полный метр (45 кадров) — 3 490 ₽</option>
+              <option value="Печатный глянец (45 кадров + печать)">Печатный глянец (45 кадров + печать) — 5 990 ₽</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label>Кратко: о чем ваша история?</label>
-            <textarea id="storyText" rows="3" placeholder="Как познакомились, памятные моменты или фразы..." required></textarea>
+            <label id="storyLabel">Ваша история</label>
+            <textarea id="storyText" rows="5" required></textarea>
+          </div>
+
+          <div class="photo-notice">
+            📸 <strong>Важно:</strong> Прямо сейчас фото прикреплять не нужно. После нажатия кнопки вы перейдете в наш Telegram, где нужно будет просто отправить созданную заявку и прикрепить небольшое количество фотографий лиц для начала нашей работы!
           </div>
 
           <button type="submit" class="btn-main" style="width: 100%; border: none; cursor: pointer;">
-            Отправить заявку
+            Отправить заявку в Telegram
           </button>
         </form>
       </div>
@@ -463,34 +477,60 @@
   </section>
 
   <script>
-    // Подстановка тарифа при клике
+    // Подстановка тарифа при клике по кнопкам в карточках
     function selectPlan(planName) {
-      document.getElementById('tariffSelect').value = planName;
+      // Ищем опцию, которая содержит название плана
+      const select = document.getElementById('tariffSelect');
+      for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].text.includes(planName.split(' ')[0])) {
+          select.selectedIndex = i;
+          break;
+        }
+      }
+      updateFormHint();
       document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
     }
+
+    // Динамическая смена подсказки для истории в зависимости от тарифа
+    function updateFormHint() {
+      const tariff = document.getElementById('tariffSelect').value;
+      const label = document.getElementById('storyLabel');
+      const textarea = document.getElementById('storyText');
+
+      if (tariff.includes('Мини')) {
+        label.innerText = 'Небольшая история (для 15 кадров)';
+        textarea.placeholder = 'Напишите небольшую историю (как познакомились, или опишите один смешной/романтичный момент). Для 15 кадров этого объема будет вполне достаточно...';
+      } else {
+        label.innerText = 'Подробная история (для 45 кадров)';
+        textarea.placeholder = 'Расскажите вашу историю максимально подробно! Чем больше деталей, фраз, шуток и ситуаций вы напишете, тем насыщеннее и интереснее получится комикс на 45 кадров...';
+      }
+    }
+
+    // Вызываем функцию один раз при загрузке страницы, чтобы задать изначальный текст
+    window.onload = updateFormHint;
 
     // Отправка в ваш Telegram @Zdes_reshau_ya
     function sendOrder(e) {
       e.preventDefault();
       
+      const name = document.getElementById('clientName').value;
       const tariff = document.getElementById('tariffSelect').value;
       const story = document.getElementById('storyText').value;
 
       // Ваш юзернейм
       const myTelegramUsername = "Zdes_reshau_ya";
 
-      // Формируем красивое сообщение с просьбой скинуть фото и обещанием 24 часов
+      // Формируем чистое и красивое сообщение, только то, что ввел человек
       const message = encodeURIComponent(
-        `Здравствуйте! Хочу заказать манхву.\n\n` +
-        `📦 Тариф: ${tariff}\n\n` +
-        `📖 Моя история:\n${story}\n\n` +
-        `--- \n` +
-        `Готов(а) скинуть фотки для начала работы! Жду ответ. (Сделаем за 24 часа)`
+        `Здравствуйте!\n\n` +
+        `Имя: ${name}\n` +
+        `Тариф: ${tariff}\n\n` +
+        `Текст истории:\n${story}`
       );
 
-      // Открываем диалог в Telegram с предзаполненным текстом
+      // Открываем диалог в Telegram
       window.open(`https://t.me/${myTelegramUsername}?text=${message}`, '_blank');
     }
   </script>
 </body>
-  </html>
+</html>
