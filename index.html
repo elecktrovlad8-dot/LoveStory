@@ -41,6 +41,7 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 24px;
+      width: 100%;
     }
 
     /* Навигация */
@@ -133,18 +134,32 @@
       box-shadow: 0 15px 40px rgba(245, 158, 11, 0.5);
     }
 
-    /* Интерактивный Webtoon Reader */
-    .showcase {
-      padding: 80px 0;
+    /* --- ЛИПКИЙ СКРОЛЛ РИДЕРА --- */
+    .showcase-wrapper {
+      /* Высота в 3.5 экрана. Чем больше, тем дольше придется скроллить, чтобы пролистать комикс */
+      height: 350vh; 
+      position: relative;
     }
+    .showcase-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 20px 0;
+    }
+    
     .section-title {
       text-align: center;
-      margin-bottom: 48px;
+      margin-bottom: 24px;
     }
     .section-title h2 {
       font-size: 2.2rem;
       font-weight: 800;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
     .section-title p {
       color: var(--text-muted);
@@ -154,14 +169,18 @@
       display: flex;
       justify-content: center;
       position: relative;
+      width: 100%;
+      height: 65vh; /* Ограничиваем высоту телефона, чтобы влезал заголовок */
+      min-height: 400px;
+      max-height: 720px;
     }
     .phone-mockup {
       width: 100%;
-      max-width: 440px;
-      height: 720px;
+      max-width: 380px;
+      height: 100%;
       background: #000;
-      border: 10px solid #1f242d;
-      border-radius: 46px;
+      border: 8px solid #1f242d;
+      border-radius: 40px;
       box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 50px rgba(245, 158, 11, 0.15);
       position: relative;
       overflow: hidden;
@@ -171,31 +190,25 @@
       top: 0;
       left: 50%;
       transform: translateX(-50%);
-      height: 22px;
-      width: 130px;
+      height: 20px;
+      width: 120px;
       background: #1f242d;
-      border-bottom-left-radius: 16px;
-      border-bottom-right-radius: 16px;
+      border-bottom-left-radius: 14px;
+      border-bottom-right-radius: 14px;
       z-index: 10;
     }
+    
     .webtoon-scroll {
       height: 100%;
-      overflow-y: scroll;
-      scrollbar-width: thin;
-      scrollbar-color: var(--accent) transparent;
-      scroll-behavior: smooth;
-    }
-    .webtoon-scroll::-webkit-scrollbar {
-      width: 4px;
-    }
-    .webtoon-scroll::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 4px;
+      width: 100%;
+      overflow: hidden; /* Скрываем стандартный скролл. Двигать будет скрипт */
+      position: relative;
     }
     .webtoon-tape {
       display: flex;
       flex-direction: column;
       width: 100%;
+      will-change: transform; /* Оптимизация анимации для видеокарт */
     }
     .webtoon-tape img {
       width: 100%;
@@ -342,7 +355,7 @@
 <body>
 
   <header>
-    <div class="container" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
       <div class="logo">NEUROMANGA</div>
       <a href="#order" class="nav-btn">Заказать</a>
     </div>
@@ -357,24 +370,26 @@
     </div>
   </section>
 
-  <!-- Интерактивный скролл-ридер с вашими кадрами -->
-  <section class="showcase">
-    <div class="container">
-      <div class="section-title">
-        <h2>Попробуйте интерактивный скролл</h2>
-        <p>Прокручивайте экран внутри смартфона, чтобы оценить бесшовность переходов</p>
-      </div>
+  <!-- Интерактивный липкий скролл-ридер с вашими кадрами -->
+  <section class="showcase-wrapper" id="showcase-wrapper">
+    <div class="showcase-sticky">
+      <div class="container">
+        <div class="section-title">
+          <h2>Оцените бесшовность</h2>
+          <p>Продолжайте скрутить страницу вниз, чтобы пролистать историю</p>
+        </div>
 
-      <div class="phone-container">
-        <div class="phone-mockup">
-          <div class="phone-notch"></div>
-          <div class="webtoon-scroll" id="scrollReader">
-            <div class="webtoon-tape">
-              <img src="frame1.jpg" alt="Часть 1">
-              <img src="frame2.jpg" alt="Часть 2">
-              <img src="frame3.jpg" alt="Часть 3">
-              <img src="frame4.jpg" alt="Часть 4">
-              <img src="frame5.jpg" alt="Часть 5">
+        <div class="phone-container">
+          <div class="phone-mockup">
+            <div class="phone-notch"></div>
+            <div class="webtoon-scroll" id="scrollArea">
+              <div class="webtoon-tape" id="scrollTape">
+                <img src="frame1.jpg" alt="Часть 1">
+                <img src="frame2.jpg" alt="Часть 2">
+                <img src="frame3.jpg" alt="Часть 3">
+                <img src="frame4.jpg" alt="Часть 4">
+                <img src="frame5.jpg" alt="Часть 5">
+              </div>
             </div>
           </div>
         </div>
@@ -402,7 +417,7 @@
               <li>Срок изготовления: 24 часа</li>
             </ul>
           </div>
-          <button class="btn-select" onclick="selectPlan('Мини-история (1 990 ₽)')">Выбрать тариф</button>
+          <button class="btn-select" onclick="selectPlan('Мини-история (15 кадров)')">Выбрать тариф</button>
         </div>
 
         <div class="price-card popular">
@@ -414,10 +429,10 @@
               <li>45 детальных кадров</li>
               <li>Большая развернутая история</li>
               <li>Диалоги и связки сюжета</li>
-              <li>Срок изготовления: 24 часа</li>
+              <li>Срок изготовления: 2 дня</li>
             </ul>
           </div>
-          <button class="btn-select" onclick="selectPlan('Полный метр (3 490 ₽)')">Выбрать тариф</button>
+          <button class="btn-select" onclick="selectPlan('Полный метр (45 кадров)')">Выбрать тариф</button>
         </div>
 
         <div class="price-card">
@@ -428,10 +443,10 @@
               <li>45 кадров (Полный метр)</li>
               <li>Физический комикс в обложке</li>
               <li>Срок выполнения: 1 неделя</li>
-              <li>Доставка до двери включена</li>
+              <li>Доставка до ближайшего СДЭК</li>
             </ul>
           </div>
-          <button class="btn-select" onclick="selectPlan('Печатный глянец (5 990 ₽)')">Выбрать тариф</button>
+          <button class="btn-select" onclick="selectPlan('Печатный глянец (45 кадров + печать)')">Выбрать тариф</button>
         </div>
       </div>
     </div>
@@ -477,9 +492,32 @@
   </section>
 
   <script>
-    // Подстановка тарифа при клике по кнопкам в карточках
+    // --- Логика липкого скролла для телефона ---
+    window.addEventListener('scroll', () => {
+      const wrapper = document.getElementById('showcase-wrapper');
+      const tape = document.getElementById('scrollTape');
+      const scrollArea = document.getElementById('scrollArea');
+
+      // Позиция секции на странице
+      const wrapperTop = wrapper.offsetTop;
+      const wrapperScrollableHeight = wrapper.offsetHeight - window.innerHeight;
+
+      // Вычисляем прогресс прокрутки внутри этой секции (от 0 до 1)
+      let progress = (window.scrollY - wrapperTop) / wrapperScrollableHeight;
+      progress = Math.max(0, Math.min(1, progress)); // Ограничиваем рамками 0 - 1
+
+      // Вычисляем, насколько нужно сдвинуть картинку внутри телефона
+      const maxScroll = tape.offsetHeight - scrollArea.offsetHeight;
+
+      // Применяем сдвиг, только если картинка загрузилась и она больше экрана телефона
+      if (maxScroll > 0) {
+        tape.style.transform = `translateY(-${progress * maxScroll}px)`;
+      }
+    });
+
+
+    // --- Логика формы и тарифов ---
     function selectPlan(planName) {
-      // Ищем опцию, которая содержит название плана
       const select = document.getElementById('tariffSelect');
       for (let i = 0; i < select.options.length; i++) {
         if (select.options[i].text.includes(planName.split(' ')[0])) {
@@ -491,7 +529,6 @@
       document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Динамическая смена подсказки для истории в зависимости от тарифа
     function updateFormHint() {
       const tariff = document.getElementById('tariffSelect').value;
       const label = document.getElementById('storyLabel');
@@ -506,10 +543,8 @@
       }
     }
 
-    // Вызываем функцию один раз при загрузке страницы, чтобы задать изначальный текст
     window.onload = updateFormHint;
 
-    // Отправка в ваш Telegram @Zdes_reshau_ya
     function sendOrder(e) {
       e.preventDefault();
       
@@ -517,10 +552,8 @@
       const tariff = document.getElementById('tariffSelect').value;
       const story = document.getElementById('storyText').value;
 
-      // Ваш юзернейм
       const myTelegramUsername = "Zdes_reshau_ya";
 
-      // Формируем чистое и красивое сообщение, только то, что ввел человек
       const message = encodeURIComponent(
         `Здравствуйте!\n\n` +
         `Имя: ${name}\n` +
@@ -528,7 +561,6 @@
         `Текст истории:\n${story}`
       );
 
-      // Открываем диалог в Telegram
       window.open(`https://t.me/${myTelegramUsername}?text=${message}`, '_blank');
     }
   </script>
