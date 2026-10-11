@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroManga — Твоя история любви в стиле манхвы</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --card-bg: rgba(23, 25, 35, 0.7);
+      --border: rgba(255, 255, 255, 0.08);
+      --accent: #f59e0b;
+      --accent-glow: rgba(245, 158, 11, 0.35);
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --gold-gradient: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 60%, rgba(217, 119, 6, 0.06) 0%, transparent 40%);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Навигация */
+    header {
+      padding: 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 12, 16, 0.8);
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .nav-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 20px;
+      border-radius: 99px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .nav-btn:hover {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    /* Первый экран */
+    .hero {
+      padding: 90px 0 60px;
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 99px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #fbbf24;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 24px;
+      letter-spacing: -1.5px;
+    }
+    h1 span {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto 36px;
+    }
+    .btn-main {
+      display: inline-block;
+      background: var(--gold-gradient);
+      color: #111;
+      font-weight: 700;
+      font-size: 1.05rem;
+      padding: 16px 36px;
+      border-radius: 99px;
+      text-decoration: none;
+      box-shadow: 0 10px 30px var(--accent-glow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(245, 158, 11, 0.5);
+    }
+
+    /* Интерактивный Webtoon Reader */
+    .showcase {
+      padding: 80px 0;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .section-title h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .section-title p {
+      color: var(--text-muted);
+    }
+
+    .phone-container {
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+    .phone-mockup {
+      width: 100%;
+      max-width: 440px;
+      height: 720px;
+      background: #000;
+      border: 10px solid #1f242d;
+      border-radius: 46px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 50px rgba(245, 158, 11, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    .phone-notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 22px;
+      width: 130px;
+      background: #1f242d;
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+      z-index: 10;
+    }
+    .webtoon-scroll {
+      height: 100%;
+      overflow-y: scroll;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent) transparent;
+      scroll-behavior: smooth;
+    }
+    .webtoon-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .webtoon-scroll::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 4px;
+    }
+    .webtoon-tape {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+    .webtoon-tape img {
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Тарифы */
+    .pricing {
+      padding: 80px 0;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+    }
+    .price-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 36px 28px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .price-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(245, 158, 11, 0.4);
+    }
+    .price-card.popular {
+      border: 2px solid var(--accent);
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.08) 0%, rgba(23, 25, 35, 0.8) 100%);
+    }
+    .popular-tag {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold-gradient);
+      color: #111;
+      padding: 4px 14px;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .price-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .price-cost {
+      font-size: 2.4rem;
+      font-weight: 800;
+      margin-bottom: 24px;
+      color: #fff;
+    }
+    .price-features {
+      list-style: none;
+      margin-bottom: 32px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+    .price-features li {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .price-features li::before {
+      content: "✓";
+      color: var(--accent);
+      font-weight: bold;
+    }
+    .btn-select {
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-select:hover, .price-card.popular .btn-select {
+      background: var(--gold-gradient);
+      color: #111;
+      border: none;
+    }
+
+    /* Форма заказа */
+    .order-section {
+      padding: 80px 0 120px;
+    }
+    .order-box {
+      max-width: 620px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      padding: 40px 32px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      background: rgba(11, 12, 16, 0.7);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      color: #fff;
+      outline: none;
+      font-size: 1rem;
+    }
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+      <div class="logo">NEUROMANGA</div>
+      <a href="#order" class="nav-btn">Заказать</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="badge">✨ Превращаем реальные фото в романтическую манхву</div>
+      <h1>Ваша история любви в одном <span>непрерывном вебтуне</span></h1>
+      <p>Оригинальный подарок с сохранением узнаваемости лиц. Готовность за 24 часа без длительного ожидания художников.</p>
+      <a href="#order" class="btn-main">Создать комикс для пары</a>
+    </div>
+  </section>
+
+  <!-- Интерактивный скролл-ридер с вашими кадрами -->
+  <section class="showcase">
+    <div class="container">
+      <div class="section-title">
+        <h2>Попробуйте интерактивный скролл</h2>
+        <p>Прокручивайте экран внутри смартфона, чтобы оценить бесшовность переходов</p>
+      </div>
+
+      <div class="phone-container">
+        <div class="phone-mockup">
+          <div class="phone-notch"></div>
+          <div class="webtoon-scroll" id="scrollReader">
+            <div class="webtoon-tape">
+              <img src="frame1.jpg" alt="Часть 1: Ночь перед отъездом">
+              <img src="frame2.jpg" alt="Часть 2: Вокзал и переписка в поезде">
+              <img src="frame3.jpg" alt="Часть 3: Разлука и теплые сообщения">
+              <img src="frame4.jpg" alt="Часть 4: Возвращение и встреча на перроне">
+              <img src="frame5.jpg" alt="Часть 5: Счастливый финал в парке">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Тарифы -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="section-title">
+        <h2>Тарифные планы</h2>
+        <p>Выберите объем истории, подходящий к вашему событию</p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div>
+            <div class="price-name">Мини-история</div>
+            <div class="price-cost">1 990 ₽</div>
+            <ul class="price-features">
+              <li>4–5 ключевых кадров</li>
+              <li>Стиль: Романтичный вебтун</li>
+              <li>Формат: Цифровой файл (скролл)</li>
+              <li>Срок изготовления: 24 часа</li>
+            </ul>
+          </div>
+          <button class="btn-select" onclick="selectPlan('Мини-история (1 990 ₽)')">Выбрать тариф</button>
+        </div>
+
+        <div class="price-card popular">
+          <div class="popular-tag">Хит продаж</div>
+          <div>
+            <div class="price-name">Полный метр</div>
+            <div class="price-cost">3 490 ₽</div>
+            <ul class="price-features">
+              <li>10–15 детальных кадров истории</li>
+              <li>Диалоги и романтические связки</li>
+              <li>Файл высокой четкости + PDF для печати</li>
+              <li>Приоритетная генерация</li>
+            </ul>
+          </div>
+          <button class="btn-select" onclick="selectPlan('Полный метр (3 490 ₽)')">Выбрать тариф</button>
+        </div>
+
+        <div class="price-card">
+          <div>
+            <div class="price-name">Печатный глянец</div>
+            <div class="price-cost">5 990 ₽</div>
+            <ul class="price-features">
+              <li>Сценарий «Полный метр» (15 кадров)</li>
+              <li>Физический комикс в твердой обложке</li>
+              <li>Премиальная глянцевая бумага</li>
+              <li>Доставка СДЭК до двери включена</li>
+            </ul>
+          </div>
+          <button class="btn-select" onclick="selectPlan('Печатный глянец (5 990 ₽)')">Выбрать тариф</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Форма заказа -->
+  <section class="order-section" id="order">
+    <div class="container">
+      <div class="order-box">
+        <h2 style="font-size: 1.8rem; margin-bottom: 8px; text-align: center;">Оформление заказа</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem; text-align: center; margin-bottom: 28px;">
+          Заполните данные, и мы свяжемся с вами в Telegram для получения фотографий
+        </p>
+
+        <form id="orderForm" onsubmit="sendOrder(event)">
+          <div class="form-group">
+            <label>Ваш Telegram (@username)</label>
+            <input type="text" id="tgUser" placeholder="@nickname" required>
+          </div>
+
+          <div class="form-group">
+            <label>Выбранный тариф</label>
+            <select id="tariffSelect">
+              <option value="Мини-история (1 990 ₽)">Мини-история — 1 990 ₽</option>
+              <option value="Полный метр (3 490 ₽)" selected>Полный метр — 3 490 ₽</option>
+              <option value="Печатный глянец (5 990 ₽)">Печатный глянец — 5 990 ₽</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Кратко: о чем ваша история?</label>
+            <textarea id="storyText" rows="3" placeholder="Как познакомились, памятные моменты или фразы..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn-main" style="width: 100%; border: none; cursor: pointer;">
+            Отправить заявку
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Подстановка тарифа при клике
+    function selectPlan(planName) {
+      document.getElementById('tariffSelect').value = planName;
+      document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Отправка в ваш Telegram
+    function sendOrder(e) {
+      e.preventDefault();
+      const tg = document.getElementById('tgUser').value;
+      const tariff = document.getElementById('tariffSelect').value;
+      const story = document.getElementById('storyText').value;
+
+      // Укажите ваш юзернейм в Telegram без знака @
+      const myTelegramUsername = "YOUR_TELEGRAM_USERNAME";
+
+      const message = encodeURIComponent(
+        `Здравствуйте! Хочу заказать манхву.\nТариф: ${tariff}\nМой контакт: ${tg}\nИстория: ${story}`
+      );
+
+      window.open(`https://t.me/${myTelegramUsername}?text=${message}`, '_blank');
+    }
+  </script>
+</body>
+  </html>
