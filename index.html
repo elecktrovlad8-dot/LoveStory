@@ -149,17 +149,17 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      padding: 20px 0;
+      padding: 10px 0;
     }
     
     .section-title {
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
     .section-title h2 {
       font-size: 2.2rem;
       font-weight: 800;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
     .section-title p {
       color: var(--text-muted);
@@ -170,13 +170,14 @@
       justify-content: center;
       position: relative;
       width: 100%;
-      height: 65vh; /* Ограничиваем высоту телефона, чтобы влезал заголовок */
-      min-height: 400px;
-      max-height: 720px;
+      /* Увеличена высота телефона, чтобы он не выглядел сжатым */
+      height: 75vh; 
+      min-height: 500px;
+      max-height: 850px;
     }
     .phone-mockup {
       width: 100%;
-      max-width: 380px;
+      max-width: 380px; /* Оптимальная ширина для современных смартфонов (как iPhone 13/14) */
       height: 100%;
       background: #000;
       border: 8px solid #1f242d;
@@ -364,7 +365,8 @@
   <section class="hero">
     <div class="container">
       <div class="badge">✨ Превращаем реальные фото в романтическую манхву</div>
-      <h1><span>Ваша история любви</span> в одном непрерывном вебтуне</h1>
+      <!-- Обновленный заголовок -->
+      <h1>В одном непрерывном вебтуне вас ждёт <span>ваша история любви</span></h1>
       <p>Оригинальный подарок с сохранением узнаваемости лиц.</p>
       <a href="#order" class="btn-main">Создать комикс для пары</a>
     </div>
