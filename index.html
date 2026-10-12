@@ -135,7 +135,7 @@
       box-shadow: 0 15px 40px rgba(245, 158, 11, 0.5);
     }
 
-    /* --- ЛИПКИЙ СКРОЛЛ РИДЕРА --- */
+    /* ЛИПКИЙ СКРОЛЛ РИДЕРА */
     .showcase-wrapper {
       height: 350vh; 
       position: relative;
@@ -287,8 +287,17 @@
       color: var(--accent);
       font-weight: bold;
     }
+
+    /* Блок с кнопкой и анимацией */
+    .action-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    
     .btn-select {
-      width: 100%;
+      flex: 1; /* Кнопка занимает всё свободное место */
       padding: 14px;
       border-radius: 14px;
       border: 1px solid var(--border);
@@ -302,6 +311,101 @@
       background: var(--gold-gradient);
       color: #111;
       border: none;
+    }
+
+    /* Контейнер для иконок анимации */
+    .anim-box {
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .price-card.popular .anim-box {
+      border-color: rgba(245, 158, 11, 0.3);
+      background: rgba(245, 158, 11, 0.05);
+    }
+
+    /* Анимация: Телефон (медленный и быстрый скролл) */
+    .anim-phone {
+      width: 18px;
+      height: 32px;
+      border: 2px solid var(--text-muted);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+    .price-card.popular .anim-phone {
+      border-color: var(--accent);
+    }
+    .anim-phone::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 400%;
+      background: repeating-linear-gradient(to bottom, 
+        rgba(255,255,255,0.2) 0, rgba(255,255,255,0.2) 6px, 
+        transparent 6px, transparent 12px);
+      animation: scrollPhone linear infinite;
+    }
+    .price-card.popular .anim-phone::after {
+      background: repeating-linear-gradient(to bottom, 
+        var(--accent) 0, var(--accent) 6px, 
+        transparent 6px, transparent 12px);
+    }
+    
+    .anim-phone.slow::after { animation-duration: 4s; }
+    .anim-phone.fast::after { animation-duration: 1s; }
+
+    @keyframes scrollPhone {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+
+    /* Анимация: Книга (перелистывание страниц) */
+    .anim-book {
+      width: 28px;
+      height: 20px;
+      border: 2px solid var(--text-muted);
+      border-radius: 2px;
+      position: relative;
+      perspective: 100px;
+    }
+    .price-card:hover .anim-book {
+      border-color: var(--accent);
+    }
+    .anim-book::before {
+      content: '';
+      position: absolute;
+      left: 50%; top: -2px; bottom: -2px; width: 2px;
+      background: var(--text-muted);
+      transform: translateX(-50%);
+      transition: background 0.3s;
+    }
+    .price-card:hover .anim-book::before {
+      background: var(--accent);
+    }
+    .anim-book::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 0;
+      width: 50%; height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      border-left: 1px solid var(--text-muted);
+      transform-origin: left center;
+      animation: flipPage 1.8s ease-in-out infinite;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .price-card:hover .anim-book::after {
+      background: rgba(245, 158, 11, 0.4);
+      border-color: var(--accent);
+    }
+
+    @keyframes flipPage {
+      0%, 15% { transform: rotateY(0deg); }
+      85%, 100% { transform: rotateY(-180deg); }
     }
 
     /* Форма заказа */
@@ -364,20 +468,19 @@
   <section class="hero">
     <div class="container">
       <div class="badge">✨ Превращаем реальные фото в романтическую манхву</div>
-      <!-- Обновленный заголовок: выделение перенесено -->
       <h1><span>В одном непрерывном вебтуне вас ждёт</span> ваша история любви</h1>
       <p>Оригинальный подарок с сохранением узнаваемости лиц.</p>
       <a href="#order" class="btn-main">Создать комикс для пары</a>
     </div>
   </section>
 
-  <!-- Интерактивный липкий скролл-ридер с вашими кадрами -->
+  <!-- Интерактивный липкий скролл-ридер -->
   <section class="showcase-wrapper" id="showcase-wrapper">
     <div class="showcase-sticky">
       <div class="container">
         <div class="section-title">
           <h2>Оцените бесшовность</h2>
-          <p>Продолжайте скрутить страницу вниз, чтобы пролистать историю</p>
+          <p>Продолжайте скроллить страницу вниз, чтобы пролистать историю</p>
         </div>
 
         <div class="phone-container">
@@ -418,7 +521,12 @@
               <li>Срок изготовления: 24 часа</li>
             </ul>
           </div>
-          <button class="btn-select" onclick="selectPlan('Мини-история (15 кадров)')">Выбрать тариф</button>
+          <div class="action-row">
+            <button class="btn-select" onclick="selectPlan('Мини-история (15 кадров)')">Выбрать тариф</button>
+            <div class="anim-box" title="Медленный скролл">
+              <div class="anim-phone slow"></div>
+            </div>
+          </div>
         </div>
 
         <div class="price-card popular">
@@ -433,21 +541,31 @@
               <li>Срок изготовления: 2 дня</li>
             </ul>
           </div>
-          <button class="btn-select" onclick="selectPlan('Полный метр (45 кадров)')">Выбрать тариф</button>
+          <div class="action-row">
+            <button class="btn-select" onclick="selectPlan('Полный метр (45 кадров)')">Выбрать тариф</button>
+            <div class="anim-box" title="Быстрый скролл">
+              <div class="anim-phone fast"></div>
+            </div>
+          </div>
         </div>
 
         <div class="price-card">
           <div>
             <div class="price-name">Печатный глянец</div>
-            <div class="price-cost">5 990 ₽</div>
+            <div class="price-cost">17 990 ₽</div>
             <ul class="price-features">
               <li>45 кадров (Полный метр)</li>
-              <li>Физический комикс в обложке</li>
+              <li>VIP физический комикс в обложке</li>
               <li>Срок выполнения: 1 неделя</li>
               <li>Доставка до ближайшего СДЭК</li>
             </ul>
           </div>
-          <button class="btn-select" onclick="selectPlan('Печатный глянец (45 кадров + печать)')">Выбрать тариф</button>
+          <div class="action-row">
+            <button class="btn-select" onclick="selectPlan('Печатный глянец (45 кадров + печать)')">Выбрать тариф</button>
+            <div class="anim-box" title="Печатный формат">
+              <div class="anim-book"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -471,7 +589,7 @@
             <select id="tariffSelect" onchange="updateFormHint()">
               <option value="Мини-история (15 кадров)">Мини-история (15 кадров) — 1 990 ₽</option>
               <option value="Полный метр (45 кадров)" selected>Полный метр (45 кадров) — 3 490 ₽</option>
-              <option value="Печатный глянец (45 кадров + печать)">Печатный глянец (45 кадров + печать) — 5 990 ₽</option>
+              <option value="Печатный глянец (45 кадров + печать)">Печатный глянец (45 кадров + печать) — 17 990 ₽</option>
             </select>
           </div>
 
