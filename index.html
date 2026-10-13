@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ourtune — Твоя история любви в стиле манхвы</title>
+  <title>OURTUNE — Ваша история любви в стиле манхвы</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0c10;
-      --card-bg: rgba(23, 25, 35, 0.7);
+      --bg: #07080c;
+      --bg-secondary: #0d0f17;
+      --card-bg: rgba(20, 23, 34, 0.65);
       --border: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(245, 158, 11, 0.35);
       --accent: #f59e0b;
+      --accent-light: #fbbf24;
       --accent-glow: rgba(245, 158, 11, 0.35);
-      --text: #f3f4f6;
+      --text: #f9fafb;
       --text-muted: #9ca3af;
-      --gold-gradient: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+      --gold-gradient: linear-gradient(135deg, #fde68a 0%, #f59e0b 50%, #d97706 100%);
     }
 
     * {
@@ -27,179 +30,332 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.6;
       overflow-x: hidden;
-      background-image: 
-        radial-gradient(circle at 15% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 85% 60%, rgba(217, 119, 6, 0.06) 0%, transparent 40%);
+      position: relative;
+    }
+
+    /* Фоновый Canvas с золотыми частицами */
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.65;
+    }
+
+    /* Фоновые атмосферные свечения */
+    .ambient-glow {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(130px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .glow-1 {
+      width: 550px;
+      height: 550px;
+      background: rgba(245, 158, 11, 0.09);
+      top: -150px;
+      left: -150px;
+    }
+    .glow-2 {
+      width: 600px;
+      height: 600px;
+      background: rgba(139, 92, 246, 0.06);
+      bottom: 10%;
+      right: -200px;
     }
 
     .container {
-      max-width: 1200px;
+      max-width: 1220px;
       margin: 0 auto;
       padding: 0 24px;
       width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Анимация появления блоков при скролле */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* Навигация */
     header {
-      padding: 24px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      padding: 18px 0;
       border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(11, 12, 16, 0.8);
+      background: rgba(7, 8, 12, 0.78);
     }
-    .logo {
-      font-size: 1.5rem;
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .brand-logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid var(--accent-light);
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+    .brand-fallback-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fbbf24, #92400e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: 0 0 15px var(--accent-glow);
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    .logo-text {
+      font-size: 1.45rem;
       font-weight: 800;
-      letter-spacing: -0.5px;
+      letter-spacing: 0.5px;
       background: var(--gold-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-transform: uppercase;
     }
-    .nav-btn {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 10px 20px;
-      border-radius: 99px;
-      font-weight: 600;
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+    .nav-links a.link {
+      color: var(--text-muted);
       text-decoration: none;
-      transition: all 0.2s ease;
+      font-size: 0.92rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a.link:hover {
+      color: #fff;
+    }
+    .nav-btn {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid var(--border-gold);
+      color: var(--accent-light);
+      padding: 10px 22px;
+      border-radius: 99px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.25s ease;
     }
     .nav-btn:hover {
-      background: var(--text);
-      color: var(--bg);
+      background: var(--gold-gradient);
+      color: #111;
+      box-shadow: 0 0 25px var(--accent-glow);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links a.link { display: none; }
+    }
+
+    /* Первый экран (Hero) */
+    .hero {
+      padding: 85px 0 60px;
+      text-align: center;
+      position: relative;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 99px;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid var(--border-gold);
+      color: var(--accent-light);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 28px;
+      box-shadow: 0 0 30px rgba(245, 158, 11, 0.15);
+    }
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      background: #fbbf24;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #fbbf24;
+      animation: pulseDot 2s infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.6; }
+    }
+
+    h1 {
+      font-size: clamp(2.3rem, 5.2vw, 4.4rem);
+      font-weight: 800;
+      line-height: 1.12;
+      margin-bottom: 24px;
+      letter-spacing: -1.5px;
+      max-width: 980px;
+      margin-left: auto;
+      margin-right: auto;
+      color: #ffffff;
+    }
+    h1 span {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 600;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline;
+    }
+    .hero-sub {
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 38px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 52px;
+    }
+    .btn-main {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--gold-gradient);
+      color: #0b0c10;
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 17px 38px;
+      border-radius: 99px;
+      text-decoration: none;
+      box-shadow: 0 12px 35px var(--accent-glow);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-main:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 45px rgba(245, 158, 11, 0.55);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 1.02rem;
+      padding: 17px 32px;
+      border-radius: 99px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Триггеры доверия под кнопкой */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      max-width: 820px;
+      margin: 0 auto;
+      gap: 16px;
+      padding: 22px 28px;
+      background: rgba(20, 23, 34, 0.5);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      backdrop-filter: blur(12px);
+    }
+    .stat-item {
+      text-align: center;
+    }
+    .stat-val {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--accent-light);
+      line-height: 1.2;
+    }
+    .stat-lbl {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 4px;
     }
 
     /* Общие стили секций */
     section {
-      padding: 100px 0;
+      padding: 95px 0;
+      position: relative;
+      z-index: 2;
     }
     .section-title {
       text-align: center;
       margin-bottom: 56px;
     }
+    .section-tag {
+      color: var(--accent-light);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 10px;
+      display: block;
+    }
     .section-title h2 {
-      font-size: 2.2rem;
+      font-size: clamp(1.85rem, 3.5vw, 2.6rem);
       font-weight: 800;
       margin-bottom: 12px;
+      letter-spacing: -0.5px;
     }
     .section-title p {
       color: var(--text-muted);
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       max-width: 600px;
       margin: 0 auto;
     }
 
-    /* Первый экран */
-    .hero {
-      padding: 90px 0 60px;
-      text-align: center;
-    }
-    .badge {
-      display: inline-block;
-      padding: 6px 16px;
-      border-radius: 99px;
-      background: rgba(245, 158, 11, 0.12);
-      border: 1px solid rgba(245, 158, 11, 0.3);
-      color: #fbbf24;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 24px;
-    }
-    h1 {
-      font-size: clamp(2.5rem, 5vw, 4.2rem);
-      font-weight: 800;
-      line-height: 1.15;
-      margin-bottom: 24px;
-      letter-spacing: -1.5px;
-    }
-    h1 span {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      background: var(--gold-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .hero p {
-      font-size: 1.2rem;
-      color: var(--text-muted);
-      max-width: 640px;
-      margin: 0 auto 36px;
-    }
-    .btn-main {
-      display: inline-block;
-      background: var(--gold-gradient);
-      color: #111;
-      font-weight: 700;
-      font-size: 1.05rem;
-      padding: 16px 36px;
-      border-radius: 99px;
-      text-decoration: none;
-      box-shadow: 0 10px 30px var(--accent-glow);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      cursor: pointer;
-    }
-    .btn-main:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 40px rgba(245, 158, 11, 0.5);
-    }
-
-    /* Как это работает (Новый блок) */
-    .steps-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 32px;
-    }
-    .step-card {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 40px 32px;
-      text-align: left;
-      position: relative;
-      transition: transform 0.3s, background 0.3s;
-    }
-    .step-card:hover {
-      transform: translateY(-5px);
-      background: rgba(255, 255, 255, 0.04);
-    }
-    .step-number {
-      font-family: 'Playfair Display', serif;
-      font-size: 4rem;
-      font-style: italic;
-      font-weight: 800;
-      color: rgba(245, 158, 11, 0.2);
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      line-height: 1;
-    }
-    .step-title {
-      font-size: 1.3rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-      color: #fff;
-    }
-    .step-text {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    /* ЛИПКИЙ СКРОЛЛ РИДЕРА */
+    /* --- ЛИПКИЙ СКРОЛЛ РИДЕРА --- */
     .showcase-wrapper {
-      height: 350vh; 
+      height: 380vh;
       position: relative;
+      padding: 0;
     }
     .showcase-sticky {
       position: sticky;
@@ -210,44 +366,147 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      padding: 10px 0;
+      padding: 16px 0;
     }
+    .showcase-layout {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      width: 100%;
+      height: 76vh;
+      min-height: 520px;
+      max-height: 850px;
+    }
+
+    /* Всплывающие карточки сбоку от телефона во время скролла */
+    .showcase-side {
+      width: 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    @media (max-width: 992px) {
+      .showcase-side { display: none; }
+    }
+    .scene-pill {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px 18px;
+      transition: all 0.35s ease;
+      opacity: 0.4;
+      transform: scale(0.96);
+    }
+    .scene-pill.active {
+      opacity: 1;
+      transform: scale(1.03);
+      border-color: var(--border-gold);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(245, 158, 11, 0.15);
+    }
+    .scene-pill-head {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent-light);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .scene-pill-text {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    /* Смартфон */
     .phone-container {
       display: flex;
       justify-content: center;
       position: relative;
+      height: 100%;
       width: 100%;
-      height: 75vh; 
-      min-height: 500px;
-      max-height: 850px;
+      max-width: 380px;
     }
     .phone-mockup {
       width: 100%;
-      max-width: 380px; 
       height: 100%;
-      background: #000;
-      border: 8px solid #1f242d;
-      border-radius: 40px;
-      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9), 0 0 50px rgba(245, 158, 11, 0.15);
+      background: #050507;
+      border: 9px solid #222631;
+      border-radius: 46px;
+      box-shadow: 
+        0 30px 70px -15px rgba(0, 0, 0, 0.95),
+        0 0 60px rgba(245, 158, 11, 0.18),
+        inset 0 0 0 2px rgba(255,255,255,0.08);
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Статус-бар и Dynamic Island */
+    .phone-statusbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 36px;
+      padding: 0 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #fff;
+      z-index: 15;
+      background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, transparent 100%);
+      pointer-events: none;
     }
     .phone-notch {
       position: absolute;
-      top: 0;
+      top: 7px;
       left: 50%;
       transform: translateX(-50%);
       height: 20px;
-      width: 120px;
-      background: #1f242d;
-      border-bottom-left-radius: 14px;
-      border-bottom-right-radius: 14px;
-      z-index: 10;
+      width: 96px;
+      background: #000;
+      border-radius: 20px;
+      z-index: 16;
+      border: 1px solid rgba(255,255,255,0.08);
     }
+    /* Прогресс чтения внутри телефона */
+    .reader-progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 38px;
+      background: rgba(11, 12, 16, 0.88);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      z-index: 15;
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      gap: 10px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .reader-track {
+      flex: 1;
+      height: 4px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .reader-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--gold-gradient);
+      transition: width 0.1s linear;
+    }
+
     .webtoon-scroll {
       height: 100%;
       width: 100%;
-      overflow: hidden; 
+      overflow: hidden;
       position: relative;
     }
     .webtoon-tape {
@@ -262,72 +521,220 @@
       display: block;
       margin: 0;
       padding: 0;
+      user-select: none;
     }
 
-    /* Отзывы (Новый блок) */
-    .reviews-grid {
+    /* Bento Grid: Почему OURTUNE попадает в сердце */
+    .bento-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(12, 1fr);
       gap: 24px;
     }
-    .review-card {
+    .bento-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 32px;
+      border-radius: 28px;
+      padding: 36px 32px;
       position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, border-color 0.3s ease;
     }
-    .stars {
-      color: var(--accent);
-      font-size: 1.2rem;
-      margin-bottom: 16px;
+    .bento-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-gold);
     }
-    .review-text {
-      font-size: 1rem;
-      font-style: italic;
-      color: #fff;
+    .bento-col-7 { grid-column: span 7; }
+    .bento-col-5 { grid-column: span 5; }
+    .bento-col-6 { grid-column: span 6; }
+    @media (max-width: 900px) {
+      .bento-col-7, .bento-col-5, .bento-col-6 { grid-column: span 12; }
+    }
+    .bento-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid var(--border-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
       margin-bottom: 20px;
-      line-height: 1.7;
     }
-    .review-author {
-      font-weight: 600;
+    .bento-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    .bento-desc {
       color: var(--text-muted);
+      font-size: 0.96rem;
+      line-height: 1.65;
+    }
+
+    /* Блок «Реакция в 01:24 ночи» + Сравнение */
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: stretch;
+    }
+    @media (max-width: 900px) {
+      .comparison-grid { grid-template-columns: 1fr; }
+    }
+    .chat-mockup {
+      background: linear-gradient(160deg, #131622 0%, #0b0d14 100%);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .chat-header {
       display: flex;
       align-items: center;
       gap: 12px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
     }
-    .review-author::before {
-      content: '';
-      display: block;
-      width: 32px;
-      height: 2px;
-      background: var(--accent);
+    .chat-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--gold-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #111;
+    }
+    .chat-bubble {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px 18px 18px 4px;
+      padding: 16px 20px;
+      max-width: 88%;
+      margin-bottom: 14px;
+      font-size: 0.96rem;
+      position: relative;
+    }
+    .chat-bubble.gold {
+      background: rgba(245, 158, 11, 0.14);
+      border-color: var(--border-gold);
+      border-radius: 18px 18px 4px 18px;
+      align-self: flex-end;
+      color: #fff;
+    }
+    .chat-time {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-align: right;
+      margin-top: 6px;
+    }
+
+    .vs-box {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      justify-content: center;
+    }
+    .vs-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+    }
+    .vs-card.bad {
+      opacity: 0.75;
+    }
+    .vs-card.good {
+      border: 1.5px solid var(--accent);
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(20, 23, 34, 0.85) 100%);
+      box-shadow: 0 15px 40px rgba(245, 158, 11, 0.12);
+    }
+    .vs-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+    .vs-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    /* Как это работает (3 шага) */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+    }
+    .step-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      padding: 38px 30px;
+      position: relative;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .step-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--border-gold);
+    }
+    .step-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.8rem;
+      font-style: italic;
+      font-weight: 700;
+      color: rgba(245, 158, 11, 0.18);
+      position: absolute;
+      top: 18px;
+      right: 28px;
+      line-height: 1;
+    }
+    .step-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .step-text {
+      color: var(--text-muted);
+      font-size: 0.95rem;
     }
 
     /* Тарифы */
     .pricing-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
       gap: 28px;
+      align-items: stretch;
     }
     .price-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 28px;
-      padding: 36px 28px;
+      padding: 38px 30px;
       position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.2s, border-color 0.2s;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
     }
     .price-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(245, 158, 11, 0.4);
+      transform: translateY(-6px);
+      border-color: var(--border-gold);
     }
     .price-card.popular {
       border: 2px solid var(--accent);
-      background: linear-gradient(180deg, rgba(245, 158, 11, 0.08) 0%, rgba(23, 25, 35, 0.8) 100%);
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.11) 0%, rgba(20, 23, 34, 0.9) 100%);
+      box-shadow: 0 20px 50px rgba(245, 158, 11, 0.14);
     }
     .popular-tag {
       position: absolute;
@@ -336,19 +743,25 @@
       transform: translateX(-50%);
       background: var(--gold-gradient);
       color: #111;
-      padding: 4px 14px;
+      padding: 5px 16px;
       border-radius: 99px;
       font-size: 0.75rem;
       font-weight: 800;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
     .price-name {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 8px;
+      font-size: 1.45rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .price-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
     }
     .price-cost {
-      font-size: 2.4rem;
+      font-size: 2.5rem;
       font-weight: 800;
       margin-bottom: 24px;
       color: #fff;
@@ -360,90 +773,196 @@
       font-size: 0.95rem;
     }
     .price-features li {
-      margin-bottom: 12px;
+      margin-bottom: 13px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
     .price-features li::before {
-      content: "✓";
-      color: var(--accent);
+      content: "✦";
+      color: var(--accent-light);
       font-weight: bold;
     }
 
-    /* Анимации кнопок тарифов */
-    .action-row { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
+    /* Блок с кнопкой и анимацией сбоку */
+    .action-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+    }
     .btn-select {
-      flex: 1; padding: 14px; border-radius: 14px; border: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.05); color: #fff; font-weight: 600; cursor: pointer; transition: all 0.2s;
+      flex: 1;
+      padding: 15px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
     }
-    .btn-select:hover, .price-card.popular .btn-select { background: var(--gold-gradient); color: #111; border: none; }
+    .btn-select:hover, .price-card.popular .btn-select {
+      background: var(--gold-gradient);
+      color: #111;
+      border-color: transparent;
+      box-shadow: 0 8px 25px var(--accent-glow);
+    }
+
+    /* Контейнер для иконок анимации */
     .anim-box {
-      width: 48px; height: 48px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border);
-      border-radius: 14px; display: flex; align-items: center; justify-content: center;
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
-    .price-card.popular .anim-box { border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.05); }
-    .anim-phone { width: 18px; height: 32px; border: 2px solid var(--text-muted); border-radius: 4px; position: relative; overflow: hidden; }
-    .price-card.popular .anim-phone { border-color: var(--accent); }
+    .price-card.popular .anim-box {
+      border-color: var(--border-gold);
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    /* Анимация: Телефон (медленный и быстрый скролл) */
+    .anim-phone {
+      width: 18px;
+      height: 32px;
+      border: 2px solid var(--text-muted);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+    .price-card.popular .anim-phone {
+      border-color: var(--accent-light);
+    }
     .anim-phone::after {
-      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 400%;
-      background: repeating-linear-gradient(to bottom, rgba(255,255,255,0.2) 0, rgba(255,255,255,0.2) 6px, transparent 6px, transparent 12px);
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 400%;
+      background: repeating-linear-gradient(to bottom, 
+        rgba(255,255,255,0.3) 0, rgba(255,255,255,0.3) 6px, 
+        transparent 6px, transparent 12px);
       animation: scrollPhone linear infinite;
     }
     .price-card.popular .anim-phone::after {
-      background: repeating-linear-gradient(to bottom, var(--accent) 0, var(--accent) 6px, transparent 6px, transparent 12px);
+      background: repeating-linear-gradient(to bottom, 
+        var(--accent-light) 0, var(--accent-light) 6px, 
+        transparent 6px, transparent 12px);
     }
     .anim-phone.slow::after { animation-duration: 4s; }
-    .anim-phone.fast::after { animation-duration: 1s; }
-    @keyframes scrollPhone { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
-    .anim-book { width: 28px; height: 20px; border: 2px solid var(--text-muted); border-radius: 2px; position: relative; perspective: 100px; }
-    .price-card:hover .anim-book { border-color: var(--accent); }
-    .anim-book::before {
-      content: ''; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 2px;
-      background: var(--text-muted); transform: translateX(-50%); transition: background 0.3s;
-    }
-    .price-card:hover .anim-book::before { background: var(--accent); }
-    .anim-book::after {
-      content: ''; position: absolute; right: 0; top: 0; width: 50%; height: 100%;
-      background: rgba(255, 255, 255, 0.1); border-left: 1px solid var(--text-muted);
-      transform-origin: left center; animation: flipPage 1.8s ease-in-out infinite; transition: background 0.3s, border-color 0.3s;
-    }
-    .price-card:hover .anim-book::after { background: rgba(245, 158, 11, 0.4); border-color: var(--accent); }
-    @keyframes flipPage { 0%, 15% { transform: rotateY(0deg); } 85%, 100% { transform: rotateY(-180deg); } }
+    .anim-phone.fast::after { animation-duration: 0.9s; }
 
-    /* FAQ (Новый блок) */
+    @keyframes scrollPhone {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+
+    /* Анимация: Книга (перелистывание печатной манхвы) */
+    .anim-book {
+      width: 28px;
+      height: 22px;
+      border: 2px solid var(--accent-light);
+      border-radius: 3px;
+      position: relative;
+      perspective: 120px;
+    }
+    .anim-book::before {
+      content: '';
+      position: absolute;
+      left: 50%; top: -2px; bottom: -2px; width: 2px;
+      background: var(--accent-light);
+      transform: translateX(-50%);
+    }
+    .anim-book::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 0;
+      width: 50%; height: 100%;
+      background: rgba(245, 158, 11, 0.35);
+      border-left: 1px solid var(--accent-light);
+      transform-origin: left center;
+      animation: flipPage 1.6s ease-in-out infinite;
+    }
+    @keyframes flipPage {
+      0%, 15% { transform: rotateY(0deg); }
+      85%, 100% { transform: rotateY(-180deg); }
+    }
+
+    /* Отзывы */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 24px;
+    }
+    .review-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .stars {
+      color: var(--accent-light);
+      font-size: 1.1rem;
+      margin-bottom: 14px;
+      letter-spacing: 2px;
+    }
+    .review-text {
+      font-size: 0.98rem;
+      color: #f3f4f6;
+      margin-bottom: 22px;
+      line-height: 1.65;
+    }
+    .review-author {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--accent-light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .review-author span {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* FAQ */
     .faq-container {
-      max-width: 800px;
+      max-width: 820px;
       margin: 0 auto;
     }
     details {
-      background: rgba(255, 255, 255, 0.02);
+      background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      margin-bottom: 16px;
+      border-radius: 18px;
+      margin-bottom: 14px;
       overflow: hidden;
-      transition: background 0.2s;
+      transition: border-color 0.2s;
     }
-    details:hover {
-      background: rgba(255, 255, 255, 0.04);
+    details[open] {
+      border-color: var(--border-gold);
     }
     summary {
-      padding: 24px;
-      font-size: 1.1rem;
-      font-weight: 600;
+      padding: 22px 26px;
+      font-size: 1.05rem;
+      font-weight: 700;
       cursor: pointer;
-      list-style: none; /* Убирает стандартный треугольник */
+      list-style: none;
       display: flex;
       justify-content: space-between;
       align-items: center;
       color: #fff;
     }
-    summary::-webkit-details-marker {
-      display: none;
-    }
+    summary::-webkit-details-marker { display: none; }
     summary::after {
       content: '+';
-      color: var(--accent);
+      color: var(--accent-light);
       font-size: 1.5rem;
       font-weight: 400;
       transition: transform 0.3s;
@@ -452,141 +971,222 @@
       transform: rotate(45deg);
     }
     .faq-content {
-      padding: 0 24px 24px;
+      padding: 0 26px 22px;
       color: var(--text-muted);
-      line-height: 1.6;
+      font-size: 0.95rem;
+      line-height: 1.65;
     }
 
     /* Форма заказа */
     .order-box {
-      max-width: 620px;
+      max-width: 660px;
       margin: 0 auto;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(26, 29, 42, 0.85) 0%, rgba(14, 16, 24, 0.95) 100%);
+      border: 1px solid var(--border-gold);
       border-radius: 32px;
-      padding: 40px 32px;
+      padding: 44px 36px;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.6), 0 0 40px rgba(245, 158, 11, 0.1);
+    }
+    @media (max-width: 600px) {
+      .order-box { padding: 30px 20px; }
     }
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
     .form-group label {
       display: block;
       font-size: 0.95rem;
-      font-weight: 600;
+      font-weight: 700;
       margin-bottom: 8px;
-      color: #e5e7eb;
+      color: #f3f4f6;
     }
     .form-group input, .form-group select, .form-group textarea {
       width: 100%;
-      background: rgba(11, 12, 16, 0.7);
+      background: rgba(7, 8, 12, 0.8);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px;
+      border-radius: 14px;
+      padding: 15px 16px;
       color: #fff;
       outline: none;
       font-size: 1rem;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
     .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-      border-color: var(--accent);
-    }
-    .photo-notice {
-      background: rgba(245, 158, 11, 0.08);
-      border-left: 4px solid var(--accent);
-      padding: 16px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 24px;
-      line-height: 1.5;
+      border-color: var(--accent-light);
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
     }
 
-    /* Футер (Новый блок) */
+    /* Быстрые подсказки-теги для написания истории */
+    .story-prompts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .prompt-chip {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 99px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .prompt-chip:hover {
+      border-color: var(--border-gold);
+      color: var(--accent-light);
+      background: rgba(245, 158, 11, 0.1);
+    }
+
+    .photo-notice {
+      background: rgba(245, 158, 11, 0.08);
+      border-left: 4px solid var(--accent-light);
+      padding: 16px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      color: #d1d5db;
+      margin-bottom: 24px;
+      line-height: 1.55;
+    }
+
+    /* Футер */
     footer {
       border-top: 1px solid var(--border);
-      padding: 40px 0;
+      padding: 48px 0;
       text-align: center;
       color: var(--text-muted);
       font-size: 0.9rem;
-    }
-    .footer-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-    }
-    .footer-logo {
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: 1px;
+      position: relative;
+      z-index: 2;
     }
   </style>
 </head>
 <body>
 
+  <!-- Золотые частицы на фоне -->
+  <canvas id="particles-canvas"></canvas>
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- Навигация -->
   <header>
-    <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
-      <div class="logo">OURTUNE</div>
-      <a href="#order" class="nav-btn">Заказать</a>
+    <div class="container nav-inner">
+      <a href="#" class="brand">
+        <img src="logo.jpg" alt="OURTUNE" class="brand-logo-img" onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='flex';">
+        <div id="fallbackLogo" class="brand-fallback-icon" style="display:none;">✦</div>
+        <span class="logo-text">OURTUNE</span>
+      </a>
+      <div class="nav-links">
+        <a href="#showcase-wrapper" class="link">Пример работы</a>
+        <a href="#why" class="link">Преимущества</a>
+        <a href="#pricing" class="link">Тарифы</a>
+        <a href="#order" class="nav-btn">Заказать манхву</a>
+      </div>
     </div>
   </header>
 
+  <!-- Первый экран -->
   <section class="hero">
     <div class="container">
-      <div class="badge">✨ Превращаем реальные фото в романтическую манхву</div>
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Превращаем ваши фото и воспоминания в романтический вебтун
+      </div>
       <h1><span>В одном непрерывном вебтуне вас ждёт</span> ваша история любви</h1>
-      <p>Оригинальный подарок с сохранением узнаваемости лиц. То, что у художников занимает недели, мы делаем быстро и безупречно.</p>
-      <a href="#order" class="btn-main">Создать комикс для пары</a>
-    </div>
-  </section>
-
-  <!-- Как это работает -->
-  <section style="padding-top: 0;">
-    <div class="container">
-      <div class="section-title">
-        <h2>Магия в 3 шага</h2>
-        <p>Никаких долгих созвонов и сложных брифов. Всё происходит легко и быстро.</p>
+      <p class="hero-sub">Подарок, который попадает прямо в сердце. 100% узнаваемость ваших лиц, любимые локации, переписки и шутки на уровне топовой корейской студии за 24 часа.</p>
+      
+      <div class="hero-actions">
+        <a href="#order" class="btn-main">Создать комикс для пары ✦</a>
+        <a href="#showcase-wrapper" class="btn-secondary">Смотреть живой пример ↓</a>
       </div>
-      <div class="steps-grid">
-        <div class="step-card">
-          <div class="step-number">1</div>
-          <div class="step-title">Ваша история и фото</div>
-          <div class="step-text">Вы выбираете тариф, рассказываете нам милую или смешную историю ваших отношений и присылаете пару обычных селфи.</div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-val">100% сходство</div>
+          <div class="stat-lbl">Переносим ваши черты лица и стиль по 2–3 фото</div>
         </div>
-        <div class="step-card">
-          <div class="step-number">2</div>
-          <div class="step-title">Генерация и Сценарий</div>
-          <div class="step-text">Мы пишем профессиональный сценарий и переносим ваши лица в стилистику шедевральной аниме-манхвы с идеальным сходством.</div>
+        <div class="stat-item">
+          <div class="stat-val">от 24 часов</div>
+          <div class="stat-lbl">Готовность цифрового скролл-вебтуна</div>
         </div>
-        <div class="step-card">
-          <div class="step-number">3</div>
-          <div class="step-title">Эмоции в подарок</div>
-          <div class="step-text">Вы получаете длинный бесшовный цифровой комикс на телефон или эксклюзивную печатную VIP-книгу прямо к вашей дате.</div>
+        <div class="stat-item">
+          <div class="stat-val">Бесшовный 9:16</div>
+          <div class="stat-lbl">Идеально для чтения с экрана смартфона</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Интерактивный липкий скролл-ридер -->
+  <!-- Интерактивный липкий скролл-ридер с вашими 5 кадрами -->
   <section class="showcase-wrapper" id="showcase-wrapper">
     <div class="showcase-sticky">
       <div class="container">
-        <div class="section-title">
+        <div class="section-title" style="margin-bottom: 18px;">
+          <span class="section-tag">Реальный кейс OURTUNE</span>
           <h2>Как это выглядит вживую</h2>
-          <p>Продолжайте скроллить страницу вниз, чтобы пролистать пример истории</p>
+          <p>Просто крутите страницу вниз — история внутри телефона начнет листаться сама</p>
         </div>
 
-        <div class="phone-container">
-          <div class="phone-mockup">
-            <div class="phone-notch"></div>
-            <div class="webtoon-scroll" id="scrollArea">
-              <div class="webtoon-tape" id="scrollTape">
-                <img src="frame1.jpg" alt="Часть 1">
-                <img src="frame2.jpg" alt="Часть 2">
-                <img src="frame3.jpg" alt="Часть 3">
-                <img src="frame4.jpg" alt="Часть 4">
-                <img src="frame5.jpg" alt="Часть 5">
+        <div class="showcase-layout">
+          <!-- Левая колонка подсказок (меняется при прокрутке) -->
+          <div class="showcase-side">
+            <div class="scene-pill active" id="pill-0">
+              <div class="scene-pill-head">Эпизод 1 · Уютные детали</div>
+              <div class="scene-pill-text">Ночь перед отъездом, домашняя атмосфера и даже ваш любимый питомец в кадре.</div>
+            </div>
+            <div class="scene-pill" id="pill-1">
+              <div class="scene-pill-head">Эпизод 2 · Магия переходов</div>
+              <div class="scene-pill-text">Светящаяся нить с осенними листьями плавно связывает вокзал и поезд без единого шва.</div>
+            </div>
+            <div class="scene-pill" id="pill-2">
+              <div class="scene-pill-head">Эпизод 3 · Ваши переписки</div>
+              <div class="scene-pill-text">Кружочки в Telegram, фотографии из поездки и ночные сообщения любимому человеку.</div>
+            </div>
+          </div>
+
+          <!-- Смартфон -->
+          <div class="phone-container">
+            <div class="phone-mockup">
+              <div class="phone-statusbar">
+                <span>01:24</span>
+                <span>5G 100%</span>
               </div>
+              <div class="phone-notch"></div>
+              
+              <div class="webtoon-scroll" id="scrollArea">
+                <div class="webtoon-tape" id="scrollTape">
+                  <img src="frame1.jpg" alt="Часть 1">
+                  <img src="frame2.jpg" alt="Часть 2">
+                  <img src="frame3.jpg" alt="Часть 3">
+                  <img src="frame4.jpg" alt="Часть 4">
+                  <img src="frame5.jpg" alt="Часть 5">
+                </div>
+              </div>
+
+              <div class="reader-progress-bar">
+                <span>OURTUNE Reader</span>
+                <div class="reader-track">
+                  <div class="reader-fill" id="readerFill"></div>
+                </div>
+                <span id="readerPercent">0%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Правая колонка подсказок -->
+          <div class="showcase-side">
+            <div class="scene-pill" id="pill-3">
+              <div class="scene-pill-head">Эпизод 4 · Долгожданная встреча</div>
+              <div class="scene-pill-text">Волнение на перроне с букетом цветов и искренние эмоции при встрече поезда.</div>
+            </div>
+            <div class="scene-pill" id="pill-4">
+              <div class="scene-pill-head">Эпизод 5 · Кинематографичный финал</div>
+              <div class="scene-pill-text">Романтичная прогулка по осеннему парку, которая останется в памяти навсегда.</div>
+            </div>
+            <div style="padding: 12px 16px; text-align: center;">
+              <a href="#order" class="nav-btn" style="display:inline-block; width:100%;">Хочу такую же историю →</a>
             </div>
           </div>
         </div>
@@ -594,45 +1194,130 @@
     </div>
   </section>
 
-  <!-- Отзывы -->
-  <section>
-    <div class="container">
+  <!-- Почему это попадает прямо в сердце (Bento Grid) -->
+  <section id="why">
+    <div class="container reveal">
       <div class="section-title">
-        <h2>Они уже подарили эмоции</h2>
-        <p>Ни один плюшевый медведь не сравнится с этим впечатлением</p>
+        <span class="section-tag">Эстетика и персонализация</span>
+        <h2>Подари то, чего нет ни у кого</h2>
+        <p>Цветы завянут, а открытку забудут на полке. Собственная манхва о вашей паре становится семейной реликвией.</p>
       </div>
-      <div class="reviews-grid">
-        <div class="review-card">
-          <div class="stars">★★★★★</div>
-          <div class="review-text">«Заказал на нашу первую годовщину. Девушка просто в восторге. Лица реально похожи, это какая-то магия! Качество пушка 🔥»</div>
-          <div class="review-author">Максим, 24 года</div>
+
+      <div class="bento-grid">
+        <div class="bento-card bento-col-7">
+          <div class="bento-icon">🎭</div>
+          <div class="bento-title">100% узнаваемость ваших лиц</div>
+          <div class="bento-desc">Мы не используем случайных шаблонных персонажей. По 2–3 обычным селфи мы бережно переносим ваши черты лица, прически, родинки и любимую одежду в рисовку топовой романтической манхвы.</div>
         </div>
-        <div class="review-card">
-          <div class="stars">★★★★★</div>
-          <div class="review-text">«Очень боялась, что мы будем выглядеть неестественно. Но получилось 1 в 1, только как идеальные персонажи комикса. Читается на одном дыхании, спасибо огромнейшее!»</div>
-          <div class="review-author">Алина, 21 год</div>
+        <div class="bento-card bento-col-5">
+          <div class="bento-icon">🐾</div>
+          <div class="bento-title">Локальные мемы и питомцы</div>
+          <div class="bento-desc">Та самая лавочка, кружочки в Telegram, смешная куртка с первого свидания или ваш шотландский кот — мы вплетаем в сюжет детали, понятные только вам двоим.</div>
         </div>
-        <div class="review-card">
-          <div class="stars">★★★★★</div>
-          <div class="review-text">«Взяли печатный глянец, чтобы использовать как книгу истории на нашей свадьбе. Гости были в полнейшем шоке от креатива. Обложка супер плотная, цвета сочные.»</div>
-          <div class="review-author">Александр и Катя</div>
+        <div class="bento-card bento-col-5">
+          <div class="bento-icon">⚡</div>
+          <div class="bento-title">Готовность от 24 часов</div>
+          <div class="bento-desc">Забыли про годовщину или до важной даты осталась пара дней? Мы создадим полноценный цифровой шедевр всего за сутки без потери качества.</div>
+        </div>
+        <div class="bento-card bento-col-7">
+          <div class="bento-icon">📖</div>
+          <div class="bento-title">Два формата: Цифровой скролл или VIP-книга</div>
+          <div class="bento-desc">Выбирайте современный бесшовный вебтун под экран телефона или закажите эксклюзивное печатное глянцевое издание в твердой обложке с доставкой до ближайшего СДЭК.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Реакция в 01:24 ночи и Сравнение с художниками -->
+  <section style="padding-top: 20px;">
+    <div class="container reveal">
+      <div class="comparison-grid">
+        <div class="chat-mockup">
+          <div>
+            <div class="chat-header">
+              <div class="chat-avatar">❤️</div>
+              <div>
+                <div style="font-weight: 700; color: #fff;">Любимая</div>
+                <div style="font-size: 0.78rem; color: #fbbf24;">в сети в 01:24 ночи</div>
+              </div>
+            </div>
+            <div class="chat-bubble">
+              Подожди... это что, МЫ?! На нашем вокзале и с нашим котом?! 😭
+              <div class="chat-time">01:23</div>
+            </div>
+            <div class="chat-bubble">
+              Ты что, плакал, пока это делал?.. Я перечитываю уже третий раз, это буквально лучший подарок в моей жизни 💔✨
+              <div class="chat-time">01:24</div>
+            </div>
+            <div class="chat-bubble gold">
+              С нашей годовщиной, родная ❤️
+              <div class="chat-time" style="color: rgba(255,255,255,0.7);">01:25 ✓✓</div>
+            </div>
+          </div>
+          <div style="margin-top: 20px; font-size: 0.85rem; color: var(--text-muted); text-align: center;">
+            Тот самый момент, когда подарок попадает прямо в сердце
+          </div>
+        </div>
+
+        <div class="vs-box">
+          <div class="vs-card bad">
+            <span class="vs-label" style="color: #ef4444;">Обычный художник с биржи</span>
+            <div class="vs-title">30 дней ожидания и от 15 000 ₽</div>
+            <p style="color: var(--text-muted); font-size: 0.92rem;">Долгие согласования, срыв дедлайнов перед праздником, чужой стиль рисовки и высокая цена за каждый отдельный кадр.</p>
+          </div>
+          <div class="vs-card good">
+            <span class="vs-label" style="color: var(--accent-light);">Сервис OURTUNE</span>
+            <div class="vs-title">От 24 часов · Уровень корейской студии</div>
+            <p style="color: #e5e7eb; font-size: 0.92rem;">Три простых шага и ноль нервов. Вы рассказываете историю своими словами и скидываете фото — мы сами пишем сценарий, диалоги и рисуем бесшовную манхву.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Как это работает -->
+  <section style="padding-top: 20px;">
+    <div class="container reveal">
+      <div class="section-title">
+        <span class="section-tag">Простой процесс</span>
+        <h2>Магия в 3 шага</h2>
+        <p>Никаких сложных технических заданий — расскажите историю так, как рассказали бы другу</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-title">Заявка и ваша история</div>
+          <div class="step-text">Выбираете подходящий тариф на сайте и пишете ключевые моменты вашей истории: как познакомились, смешные случаи или важные фразы.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-title">Переход в Telegram и фото</div>
+          <div class="step-text">После нажатия кнопки вы попадаете в наш личный диалог в Telegram, где прикрепляете 3–5 обычных фотографий вашей пары.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-title">Готовый шедевр</div>
+          <div class="step-text">Мы создаем сценарий и отрисовываем единый непрерывный вебтун (или печатаем твердую книгу и отправляем в ближайший к вам СДЭК).</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Тарифы -->
-  <section class="pricing" id="pricing" style="background: rgba(255,255,255,0.01);">
-    <div class="container">
+  <section class="pricing" id="pricing">
+    <div class="container reveal">
       <div class="section-title">
+        <span class="section-tag">Честная стоимость</span>
         <h2>Тарифные планы</h2>
-        <p>Выберите объем истории, подходящий к вашему событию</p>
+        <p>Выберите формат и объем истории, подходящий к вашему событию</p>
       </div>
 
       <div class="pricing-grid">
+        <!-- Тариф 1 -->
         <div class="price-card">
           <div>
             <div class="price-name">Мини-история</div>
+            <div class="price-sub">Идеально для милого сюрприза</div>
             <div class="price-cost">1 990 ₽</div>
             <ul class="price-features">
               <li>15 ключевых кадров (фоток)</li>
@@ -649,10 +1334,12 @@
           </div>
         </div>
 
+        <!-- Тариф 2 -->
         <div class="price-card popular">
           <div class="popular-tag">Хит продаж</div>
           <div>
             <div class="price-name">Полный метр</div>
+            <div class="price-sub">Глубокое погружение в ваши чувства</div>
             <div class="price-cost">3 490 ₽</div>
             <ul class="price-features">
               <li>45 детальных кадров</li>
@@ -669,10 +1356,12 @@
           </div>
         </div>
 
+        <!-- Тариф 3 -->
         <div class="price-card">
           <div>
             <div class="price-name">Печатный глянец</div>
-            <div class="price-cost">14 990 ₽</div>
+            <div class="price-sub">Эксклюзивное физическое издание</div>
+            <div class="price-cost">17 990 ₽</div>
             <ul class="price-features">
               <li>Эксклюзивная полноформатная история</li>
               <li>VIP физический комикс в обложке</li>
@@ -691,36 +1380,70 @@
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section>
-    <div class="container">
+  <!-- Отзывы -->
+  <section style="padding-top: 20px;">
+    <div class="container reveal">
       <div class="section-title">
+        <span class="section-tag">Живые эмоции</span>
+        <h2>Что говорят наши клиенты</h2>
+        <p>Истории пар, которые уже превратили свои воспоминания в манхву</p>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div>
+            <div class="stars">★★★★★</div>
+            <div class="review-text">«Заказал Полный метр на годовщину. Когда девушка увидела на кадрах нашу реальную переписку и нашего спящего кота — эмоции были просто невероятные. Сходство лиц 10 из 10!»</div>
+          </div>
+          <div class="review-author">Максим <span>· Тариф «Полный метр»</span></div>
+        </div>
+        <div class="review-card">
+          <div>
+            <div class="stars">★★★★★</div>
+            <div class="review-text">«Мы сейчас на расстоянии в разных городах, и я решила напомнить парню про день нашей встречи на вокзале. Сделали меньше чем за сутки! Переходы с осенними листьями выглядят как в топовом аниме.»</div>
+          </div>
+          <div class="review-author">Алина <span>· Тариф «Мини-история»</span></div>
+        </div>
+        <div class="review-card">
+          <div>
+            <div class="stars">★★★★★</div>
+            <div class="review-text">«Брали Печатный глянец на годовщину свадьбы. Книга приехала в ближайший СДЭК ровно за неделю, твердая обложка, плотные глянцевые страницы. Теперь лежит на самом видном месте в гостиной!»</div>
+          </div>
+          <div class="review-author">Александр и Екатерина <span>· Тариф «Печатный глянец»</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="padding-top: 20px;">
+    <div class="container reveal">
+      <div class="section-title">
+        <span class="section-tag">Ответы на вопросы</span>
         <h2>Частые вопросы</h2>
-        <p>Всё, что вы хотели узнать перед заказом</p>
       </div>
       <div class="faq-container">
         <details>
-          <summary>Лица правда будут похожи на нас?</summary>
+          <summary>Лица действительно будут похожи на нас?</summary>
           <div class="faq-content">
-            Да! Мы используем передовые алгоритмы анализа лиц (FaceID). Вы будете выглядеть в точности как вы, но стилизованные под эстетику идеальной аниме-манхвы. Никаких случайных чужих лиц.
+            Да! Мы детально анализируем присланные вами фотографии и фиксируем черты лица, прически, цвет глаз и стиль одежды каждого героя, чтобы вы с первого взгляда узнали себя в каждом кадре.
           </div>
         </details>
         <details>
-          <summary>Какие фотографии нужно прислать?</summary>
+          <summary>Какие фотографии нужно будет скинуть?</summary>
           <div class="faq-content">
-            Нам не нужны профессиональные фотосессии. Достаточно 3-5 обычных селфи хорошего качества, где хорошо видно лицо без сильных фильтров, очков на пол-лица или искажений.
+            Профессиональная фотосессия не нужна. Достаточно 3–5 обычных селфи или совместных фото при хорошем освещении, где отчетливо видны ваши лица.
           </div>
         </details>
         <details>
-          <summary>Можно ли добавить в комикс питомца?</summary>
+          <summary>Что если я не умею красиво писать истории?</summary>
           <div class="faq-content">
-            Конечно! Собаки, коты, попугаи — присылайте фото вашего любимца, и мы органично впишем его в историю.
+            Вам не нужно быть писателем! Просто перечислите факты своими словами (где встретились, во что были одеты, какая музыка играла, ваши локальные шутки), а наш сценарист сам превратит это в трогательный сюжет с живыми диалогами.
           </div>
         </details>
         <details>
-          <summary>В каком виде я получу цифровой заказ?</summary>
+          <summary>Как происходит доставка печатной версии?</summary>
           <div class="faq-content">
-            Вы получите специальную ссылку и файл высокого разрешения в виде длинной картинки, специально сверстанной для идеального непрерывного чтения на экране любого смартфона (Webtoon формат).
+            В тарифе «Печатный глянец» мы полностью верстаем книгу, печатаем её в твердом переплете на премиальной глянцевой бумаге и отправляем в ближайший удобный для вас пункт выдачи СДЭК. Весь процесс занимает 1 неделю.
           </div>
         </details>
       </div>
@@ -729,9 +1452,13 @@
 
   <!-- Форма заказа -->
   <section class="order-section" id="order">
-    <div class="container">
+    <div class="container reveal">
       <div class="order-box">
-        <h2 style="font-size: 1.8rem; margin-bottom: 28px; text-align: center;">Оформление заказа</h2>
+        <span class="section-tag" style="text-align: center;">Начните прямо сейчас</span>
+        <h2 style="font-size: 1.9rem; margin-bottom: 10px; text-align: center;">Оформление заказа</h2>
+        <p style="color: var(--text-muted); text-align: center; font-size: 0.92rem; margin-bottom: 28px;">
+          Заполните форму ниже — заявка автоматически сформируется для отправки в наш Telegram
+        </p>
 
         <form id="orderForm" onsubmit="sendOrder(event)">
           
@@ -741,25 +1468,32 @@
           </div>
 
           <div class="form-group">
-            <label>Какой тариф и сколько кадров?</label>
+            <label>Выбранный тариф</label>
             <select id="tariffSelect" onchange="updateFormHint()">
-              <option value="Мини-история (15 кадров)">Мини-история (15 кадров) — 1 990 ₽</option>
-              <option value="Полный метр (45 кадров)" selected>Полный метр (45 кадров) — 3 490 ₽</option>
-              <option value="Печатный глянец (VIP формат)">Печатный глянец (VIP формат) — 17 990 ₽</option>
+              <option value="Мини-история (15 кадров) — 1 990 ₽">Мини-история (15 кадров) — 1 990 ₽</option>
+              <option value="Полный метр (45 кадров) — 3 490 ₽" selected>Полный метр (45 кадров) — 3 490 ₽</option>
+              <option value="Печатный глянец (VIP формат) — 17 990 ₽">Печатный глянец (VIP формат) — 17 990 ₽</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label id="storyLabel">Ваша история</label>
-            <textarea id="storyText" rows="5" required></textarea>
+            <label id="storyLabel">Подробная история (для 45 кадров)</label>
+            <!-- Быстрые кнопки-помощники для заполнения сюжета -->
+            <div class="story-prompts">
+              <span class="prompt-chip" onclick="insertPrompt('Как мы познакомились: ')">+ Знакомство</span>
+              <span class="prompt-chip" onclick="insertPrompt('Запомнившийся момент/поездка: ')">+ Памятный момент</span>
+              <span class="prompt-chip" onclick="insertPrompt('Наши коронные фразы/шутки: ')">+ Локальная шутка</span>
+              <span class="prompt-chip" onclick="insertPrompt('Детали (одежда / питомец / место): ')">+ Питомец / Детали</span>
+            </div>
+            <textarea id="storyText" rows="6" required></textarea>
           </div>
 
           <div class="photo-notice">
-            📸 <strong>Важно:</strong> Прямо сейчас фото прикреплять не нужно. После нажатия кнопки вы перейдете в наш Telegram, где нужно будет просто отправить созданную заявку и прикрепить небольшое количество фотографий лиц для начала нашей работы!
+            📸 <strong>Обратите внимание:</strong> Прямо сейчас прикреплять фотографии не нужно. После нажатия кнопки откроется диалог в Telegram (<strong>@Zdes_reshau_ya</strong>) с вашим готовым текстом заказа — просто отправьте его и прикрепите несколько фотографий для старта работы!
           </div>
 
-          <button type="submit" class="btn-main" style="width: 100%; border: none; cursor: pointer;">
-            Отправить заявку в Telegram
+          <button type="submit" class="btn-main" style="width: 100%;">
+            Отправить заявку в Telegram →
           </button>
         </form>
       </div>
@@ -769,34 +1503,101 @@
   <!-- Футер -->
   <footer>
     <div class="container">
-      <div class="footer-content">
-        <div class="footer-logo">OURTUNE © 2024</div>
-        <p>Создаем персональные истории с любовью.</p>
-      </div>
+      <div style="font-weight: 800; color: #fff; letter-spacing: 1px; font-size: 1.2rem; margin-bottom: 8px;">OURTUNE</div>
+      <p>Персональные романтические вебтуны и печатные манхвы по вашей истории любви.</p>
+      <p style="margin-top: 14px; font-size: 0.8rem; opacity: 0.6;">© 2026 OURTUNE. Все права защищены.</p>
     </div>
   </footer>
 
   <script>
-    // --- Логика липкого скролла для телефона ---
+    // --- 1. Золотые частицы на фоне (Canvas) ---
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    for (let i = 0; i < 45; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.8 + 0.5,
+        speedY: -(Math.random() * 0.35 + 0.1),
+        speedX: (Math.random() - 0.5) * 0.25,
+        alpha: Math.random() * 0.65 + 0.2
+      });
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.y += p.speedY;
+        p.x += p.speedX;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(251, 191, 36, ${p.alpha})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // --- 2. Плавное появление секций при скролле ---
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // --- 3. Липкий скролл смартфона + индикатор прогресса и смена эпизодов ---
     window.addEventListener('scroll', () => {
       const wrapper = document.getElementById('showcase-wrapper');
       const tape = document.getElementById('scrollTape');
       const scrollArea = document.getElementById('scrollArea');
+      const fill = document.getElementById('readerFill');
+      const percentTxt = document.getElementById('readerPercent');
 
       const wrapperTop = wrapper.offsetTop;
       const wrapperScrollableHeight = wrapper.offsetHeight - window.innerHeight;
 
       let progress = (window.scrollY - wrapperTop) / wrapperScrollableHeight;
-      progress = Math.max(0, Math.min(1, progress)); 
+      progress = Math.max(0, Math.min(1, progress));
 
       const maxScroll = tape.offsetHeight - scrollArea.offsetHeight;
-
       if (maxScroll > 0) {
         tape.style.transform = `translateY(-${progress * maxScroll}px)`;
       }
+
+      const pct = Math.round(progress * 100);
+      if (fill && percentTxt) {
+        fill.style.width = `${pct}%`;
+        percentTxt.innerText = `${pct}%`;
+      }
+
+      // Подсветка активного эпизода сбоку от смартфона
+      const activeIdx = Math.min(4, Math.floor(progress * 5));
+      for (let i = 0; i < 5; i++) {
+        const pill = document.getElementById(`pill-${i}`);
+        if (pill) {
+          pill.classList.toggle('active', i === activeIdx);
+        }
+      }
     });
 
-    // --- Логика формы и тарифов ---
+    // --- 4. Выбор тарифа и динамические подсказки ---
     function selectPlan(planName) {
       const select = document.getElementById('tariffSelect');
       for (let i = 0; i < select.options.length; i++) {
@@ -821,21 +1622,30 @@
         label.innerText = 'Подробная история (для 45 кадров)';
         textarea.placeholder = 'Расскажите вашу историю максимально подробно! Чем больше деталей, фраз, шуток и ситуаций вы напишете, тем насыщеннее и интереснее получится комикс на 45 кадров...';
       } else {
-        label.innerText = 'Детальная история для физического комикса';
-        textarea.placeholder = 'Расскажите вашу историю максимально подробно! Чем больше деталей, фраз, шуток и ситуаций вы напишете, тем насыщеннее и интереснее получится ваша эксклюзивная печатная манхва...';
+        label.innerText = 'Детальная история для физического VIP-комикса';
+        textarea.placeholder = 'Расскажите вашу историю максимально подробно! Опишите ключевые события, диалоги, любимые места и важные мелочи, чтобы ваша эксклюзивная печатная манхва получилась незабываемой...';
       }
+    }
+
+    // Вставка структурных подсказок в поле текста
+    function insertPrompt(promptText) {
+      const textarea = document.getElementById('storyText');
+      const prefix = textarea.value.length > 0 && !textarea.value.endsWith('\n') ? '\n' : '';
+      textarea.value += prefix + promptText;
+      textarea.focus();
     }
 
     window.onload = updateFormHint;
 
+    // --- 5. Отправка красиво оформленной заявки в Telegram @Zdes_reshau_ya ---
     function sendOrder(e) {
       e.preventDefault();
       
-      const name = document.getElementById('clientName').value;
+      const name = document.getElementById('clientName').value.trim();
       const tariff = document.getElementById('tariffSelect').value;
-      const story = document.getElementById('storyText').value;
+      const story = document.getElementById('storyText').value.trim();
 
-      const myTelegramUsername = "Zdes_reshau_ya";
+      const myTelegramUsername = "VAV_ls";
 
       const message = encodeURIComponent(
         `Здравствуйте!\n\n` +
