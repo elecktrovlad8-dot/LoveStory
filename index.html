@@ -1,37 +1,126 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="gold">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OURTUNE — Ваша история любви в стиле манхвы</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>OURTUNE — Персональная манхва и вебтун по вашей истории любви</title>
+  <meta name="description" content="Превращаем ваши фотографии, переписки и воспоминания в романтический корейский вебтун или печатную книгу в твердом переплете за 24 часа.">
+  <meta name="theme-color" content="#07080c">
+
+  <!-- Подключение премиальных шрифтов -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400;1,600;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
+    /* ==========================================================================
+       01. DESIGN TOKENS & DYNAMIC AMBIENT THEMES
+       ========================================================================== */
     :root {
+      /* Базовые поверхности */
+      --bg-deep: #050609;
       --bg: #07080c;
-      --bg-secondary: #0d0f17;
-      --card-bg: rgba(20, 23, 34, 0.65);
-      --border: rgba(255, 255, 255, 0.08);
-      --border-gold: rgba(245, 158, 11, 0.35);
+      --bg-secondary: #0c0e16;
+      --bg-elevated: #121521;
+      --card-bg: rgba(18, 21, 33, 0.68);
+      --card-bg-hover: rgba(24, 28, 44, 0.85);
+      --card-glass: rgba(255, 255, 255, 0.03);
+      
+      /* Границы и линии */
+      --border: rgba(255, 255, 255, 0.07);
+      --border-strong: rgba(255, 255, 255, 0.14);
+      --border-gold: rgba(245, 158, 11, 0.38);
+      --border-gold-bright: rgba(251, 191, 36, 0.75);
+
+      /* Акцентная палитра (По умолчанию: Золотой Сеул) */
       --accent: #f59e0b;
       --accent-light: #fbbf24;
+      --accent-ultra: #fef08a;
+      --accent-dark: #b45309;
       --accent-glow: rgba(245, 158, 11, 0.35);
+      --accent-soft: rgba(245, 158, 11, 0.12);
+      --secondary-glow: rgba(139, 92, 246, 0.12);
+
+      /* Градиенты */
+      --gold-gradient: linear-gradient(135deg, #fef08a 0%, #fbbf24 35%, #f59e0b 70%, #d97706 100%);
+      --gold-gradient-hover: linear-gradient(135deg, #ffffff 0%, #fde68a 30%, #f59e0b 75%, #b45309 100%);
+      --surface-gradient: linear-gradient(165deg, rgba(28, 32, 48, 0.75) 0%, rgba(12, 14, 22, 0.92) 100%);
+      --dark-glass: rgba(7, 8, 12, 0.82);
+
+      /* Типографика */
       --text: #f9fafb;
+      --text-secondary: #e5e7eb;
       --text-muted: #9ca3af;
-      --gold-gradient: linear-gradient(135deg, #fde68a 0%, #f59e0b 50%, #d97706 100%);
+      --text-dim: #6b7280;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      /* Статусы */
+      --success: #10b981;
+      --success-bg: rgba(16, 185, 129, 0.12);
+      --danger: #ef4444;
+      --danger-bg: rgba(239, 68, 68, 0.12);
+
+      /* Геометрия и тени */
+      --radius-xs: 8px;
+      --radius-sm: 14px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --radius-xl: 36px;
+      --radius-full: 9999px;
+      --shadow-luxury: 0 25px 60px -15px rgba(0, 0, 0, 0.85), 0 0 40px rgba(245, 158, 11, 0.08);
+      --shadow-card: 0 18px 40px -12px rgba(0, 0, 0, 0.7);
+      --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-smooth: 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-spring: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    * {
+    /* Тема 2: Неоновый Сеул (Кибер-романтика) */
+    html[data-theme="seoul"] {
+      --accent: #ec4899;
+      --accent-light: #f472b6;
+      --accent-ultra: #fbcfe8;
+      --accent-dark: #be185d;
+      --border-gold: rgba(236, 72, 153, 0.4);
+      --border-gold-bright: rgba(244, 114, 182, 0.8);
+      --accent-glow: rgba(236, 72, 153, 0.38);
+      --accent-soft: rgba(236, 72, 153, 0.12);
+      --secondary-glow: rgba(59, 130, 246, 0.16);
+      --gold-gradient: linear-gradient(135deg, #fbcfe8 0%, #f472b6 40%, #ec4899 75%, #8b5cf6 100%);
+    }
+
+    /* Тема 3: Весенняя Сакура (Нежная драма) */
+    html[data-theme="sakura"] {
+      --accent: #fb7185;
+      --accent-light: #fda4af;
+      --accent-ultra: #ffe4e6;
+      --accent-dark: #e11d48;
+      --border-gold: rgba(251, 113, 133, 0.4);
+      --border-gold-bright: rgba(253, 164, 175, 0.8);
+      --accent-glow: rgba(251, 113, 133, 0.35);
+      --accent-soft: rgba(251, 113, 133, 0.12);
+      --secondary-glow: rgba(245, 158, 11, 0.12);
+      --gold-gradient: linear-gradient(135deg, #ffe4e6 0%, #fda4af 40%, #fb7185 75%, #e11d48 100%);
+    }
+
+    /* ==========================================================================
+       02. RESET, BASE & SELECTION
+       ========================================================================== */
+    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Plus Jakarta Sans', sans-serif;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     html {
       scroll-behavior: smooth;
+      font-size: 16px;
+      background-color: var(--bg-deep);
+      color: var(--text);
+      font-family: var(--font-sans);
     }
 
     body {
@@ -40,9 +129,114 @@
       line-height: 1.6;
       overflow-x: hidden;
       position: relative;
+      min-height: 100vh;
     }
 
-    /* Фоновый Canvas с золотыми частицами */
+    ::selection {
+      background: var(--accent);
+      color: #050609;
+    }
+
+    /* Кастомный скроллбар */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-deep);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.14);
+      border-radius: 99px;
+      border: 2px solid var(--bg-deep);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-light);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* ==========================================================================
+       03. CUSTOM LUXURY CURSOR & NOISE OVERLAY
+       ========================================================================== */
+    .cursor-dot,
+    .cursor-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease;
+    }
+
+    .cursor-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent-light);
+      box-shadow: 0 0 12px var(--accent-light);
+    }
+
+    .cursor-ring {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border-gold);
+      background: rgba(245, 158, 11, 0.03);
+      transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .cursor-ring.hovered {
+      width: 56px;
+      height: 56px;
+      border-color: var(--accent-light);
+      background: rgba(245, 158, 11, 0.09);
+    }
+
+    @media (max-width: 992px) {
+      .cursor-dot, .cursor-ring {
+        display: none !important;
+      }
+    }
+
+    /* Кинематографичное зерно пленки поверх фона */
+    .film-grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.028;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.6) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+
+    /* Верхний прогресс-бар чтения всего сайта */
+    .top-scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: var(--gold-gradient);
+      z-index: 1000;
+      box-shadow: 0 0 15px var(--accent-glow);
+      transition: width 0.08s linear;
+    }
+
+    /* ==========================================================================
+       04. AMBIENT GLOWS & CANVAS
+       ========================================================================== */
     #particles-canvas {
       position: fixed;
       top: 0;
@@ -51,34 +245,61 @@
       height: 100vh;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.65;
+      opacity: 0.72;
     }
 
-    /* Фоновые атмосферные свечения */
     .ambient-glow {
       position: fixed;
       border-radius: 50%;
-      filter: blur(130px);
+      filter: blur(140px);
       pointer-events: none;
       z-index: 0;
-    }
-    .glow-1 {
-      width: 550px;
-      height: 550px;
-      background: rgba(245, 158, 11, 0.09);
-      top: -150px;
-      left: -150px;
-    }
-    .glow-2 {
-      width: 600px;
-      height: 600px;
-      background: rgba(139, 92, 246, 0.06);
-      bottom: 10%;
-      right: -200px;
+      transition: background 0.8s ease;
     }
 
+    .glow-1 {
+      width: 620px;
+      height: 620px;
+      background: var(--accent-soft);
+      top: -180px;
+      left: -160px;
+      animation: floatGlow1 16s ease-in-out infinite alternate;
+    }
+
+    .glow-2 {
+      width: 680px;
+      height: 680px;
+      background: var(--secondary-glow);
+      bottom: 8%;
+      right: -220px;
+      animation: floatGlow2 20s ease-in-out infinite alternate;
+    }
+
+    .glow-3 {
+      width: 450px;
+      height: 450px;
+      background: var(--accent-soft);
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.45;
+    }
+
+    @keyframes floatGlow1 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(80px, 60px) scale(1.15); }
+    }
+
+    @keyframes floatGlow2 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-90px, -70px) scale(1.12); }
+    }
+
+    /* ==========================================================================
+       05. LAYOUT CONTAINERS & REVEAL ANIMATIONS
+       ========================================================================== */
     .container {
-      max-width: 1220px;
+      max-width: 1260px;
       margin: 0 auto;
       padding: 0 24px;
       width: 100%;
@@ -86,150 +307,335 @@
       z-index: 2;
     }
 
-    /* Анимация появления блоков при скролле */
     .reveal {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(36px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
     .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
 
-    /* Навигация */
-    header {
-      padding: 18px 0;
+    section {
+      padding: 105px 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent-light);
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 14px;
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      background: var(--accent-soft);
+      border: 1px solid var(--border-gold);
+    }
+
+    .section-title h2 {
+      font-size: clamp(2rem, 3.8vw, 2.95rem);
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -0.8px;
+      line-height: 1.15;
+      color: #ffffff;
+    }
+
+    .section-title h2 em {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 600;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-title p {
+      color: var(--text-muted);
+      font-size: 1.08rem;
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* ==========================================================================
+       06. TOP ANNOUNCEMENT BAR & STICKY NAVIGATION
+       ========================================================================== */
+    .top-bar {
+      background: linear-gradient(90deg, rgba(18, 21, 33, 0.95) 0%, rgba(245, 158, 11, 0.14) 50%, rgba(18, 21, 33, 0.95) 100%);
       border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      padding: 9px 0;
+      font-size: 0.82rem;
+      position: relative;
+      z-index: 101;
+    }
+
+    .top-bar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .slots-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulseLive 2s infinite;
+    }
+
+    @keyframes pulseLive {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.45); opacity: 0.55; }
+    }
+
+    .vibe-switcher {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .vibe-label {
+      color: var(--text-muted);
+      font-size: 0.76rem;
+      margin-right: 4px;
+    }
+
+    .vibe-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.74rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .vibe-btn:hover,
+    .vibe-btn.active {
+      color: #111;
+      background: var(--gold-gradient);
+      border-color: transparent;
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    header {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       position: sticky;
       top: 0;
       z-index: 100;
       background: rgba(7, 8, 12, 0.78);
+      transition: padding 0.3s ease, background 0.3s ease;
     }
+
     .nav-inner {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 20px;
     }
+
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
       text-decoration: none;
     }
+
     .brand-logo-img {
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       object-fit: cover;
       border: 1.5px solid var(--accent-light);
-      box-shadow: 0 0 15px var(--accent-glow);
+      box-shadow: 0 0 18px var(--accent-glow);
     }
+
     .brand-fallback-icon {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #fbbf24, #92400e);
+      background: radial-gradient(circle at 30% 30%, var(--accent-light), var(--accent-dark));
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
-      box-shadow: 0 0 15px var(--accent-glow);
-      border: 1px solid rgba(255,255,255,0.3);
+      font-size: 1.15rem;
+      box-shadow: 0 0 18px var(--accent-glow);
+      border: 1px solid rgba(255, 255, 255, 0.35);
     }
+
+    .brand-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
     .logo-text {
       font-size: 1.45rem;
       font-weight: 800;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
       background: var(--gold-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-transform: uppercase;
+      line-height: 1.1;
     }
+
+    .logo-sub {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
     .nav-links {
       display: flex;
-      gap: 28px;
+      gap: 26px;
       align-items: center;
     }
+
     .nav-links a.link {
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.92rem;
-      font-weight: 500;
-      transition: color 0.2s;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: color 0.2s ease;
+      position: relative;
     }
+
+    .nav-links a.link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0%;
+      height: 2px;
+      background: var(--gold-gradient);
+      transition: width 0.25s ease;
+      border-radius: 2px;
+    }
+
     .nav-links a.link:hover {
       color: #fff;
     }
+
+    .nav-links a.link:hover::after {
+      width: 100%;
+    }
+
     .nav-btn {
-      background: rgba(245, 158, 11, 0.12);
+      background: var(--accent-soft);
       border: 1px solid var(--border-gold);
       color: var(--accent-light);
-      padding: 10px 22px;
-      border-radius: 99px;
+      padding: 11px 24px;
+      border-radius: var(--radius-full);
       font-weight: 700;
       font-size: 0.9rem;
       text-decoration: none;
       transition: all 0.25s ease;
-    }
-    .nav-btn:hover {
-      background: var(--gold-gradient);
-      color: #111;
-      box-shadow: 0 0 25px var(--accent-glow);
-    }
-
-    @media (max-width: 768px) {
-      .nav-links a.link { display: none; }
-    }
-
-    /* Первый экран (Hero) */
-    .hero {
-      padding: 85px 0 60px;
-      text-align: center;
-      position: relative;
-    }
-    .badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 18px;
-      border-radius: 99px;
-      background: rgba(245, 158, 11, 0.1);
+    }
+
+    .nav-btn:hover {
+      background: var(--gold-gradient);
+      color: #0b0c10;
+      border-color: transparent;
+      box-shadow: 0 0 28px var(--accent-glow);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 960px) {
+      .nav-links a.link { display: none; }
+      .top-bar-inner { justify-content: center; text-align: center; }
+    }
+
+    /* ==========================================================================
+       07. HERO SECTION & LUXURY TRUST STATS
+       ========================================================================== */
+    .hero {
+      padding: 78px 0 55px;
+      text-align: center;
+      position: relative;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 20px;
+      border-radius: var(--radius-full);
+      background: var(--accent-soft);
       border: 1px solid var(--border-gold);
       color: var(--accent-light);
       font-size: 0.85rem;
       font-weight: 600;
       margin-bottom: 28px;
-      box-shadow: 0 0 30px rgba(245, 158, 11, 0.15);
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.14);
     }
+
     .badge-dot {
       width: 8px;
       height: 8px;
-      background: #fbbf24;
+      background: var(--accent-light);
       border-radius: 50%;
-      box-shadow: 0 0 8px #fbbf24;
-      animation: pulseDot 2s infinite;
+      box-shadow: 0 0 10px var(--accent-light);
+      animation: pulseLive 2s infinite;
     }
-    @keyframes pulseDot {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.4); opacity: 0.6; }
+
+    .badge-price-pill {
+      background: var(--gold-gradient);
+      color: #090a0f;
+      font-weight: 800;
+      font-size: 0.74rem;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      margin-left: 4px;
     }
 
     h1 {
-      font-size: clamp(2.3rem, 5.2vw, 4.4rem);
+      font-size: clamp(2.35rem, 5.4vw, 4.55rem);
       font-weight: 800;
-      line-height: 1.12;
+      line-height: 1.09;
       margin-bottom: 24px;
-      letter-spacing: -1.5px;
-      max-width: 980px;
+      letter-spacing: -1.6px;
+      max-width: 1020px;
       margin-left: auto;
       margin-right: auto;
       color: #ffffff;
     }
+
     h1 span {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-serif);
       font-style: italic;
       font-weight: 600;
       background: var(--gold-gradient);
@@ -237,126 +643,214 @@
       -webkit-text-fill-color: transparent;
       display: inline;
     }
+
     .hero-sub {
-      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      font-size: clamp(1.05rem, 2vw, 1.24rem);
       color: var(--text-muted);
-      max-width: 680px;
+      max-width: 720px;
       margin: 0 auto 38px;
+      line-height: 1.65;
     }
+
+    .hero-sub strong {
+      color: var(--text-secondary);
+      font-weight: 700;
+    }
+
     .hero-actions {
       display: flex;
       gap: 16px;
       justify-content: center;
       flex-wrap: wrap;
-      margin-bottom: 52px;
+      margin-bottom: 22px;
     }
+
     .btn-main {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
       background: var(--gold-gradient);
-      color: #0b0c10;
+      color: #090a0f;
       font-weight: 800;
       font-size: 1.05rem;
-      padding: 17px 38px;
-      border-radius: 99px;
+      padding: 18px 40px;
+      border-radius: var(--radius-full);
       text-decoration: none;
-      box-shadow: 0 12px 35px var(--accent-glow);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 14px 38px var(--accent-glow);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
       cursor: pointer;
       border: none;
+      position: relative;
+      overflow: hidden;
     }
+
+    .btn-main::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+      transform: rotate(25deg);
+      animation: btnShine 4.5s infinite;
+    }
+
+    @keyframes btnShine {
+      0%, 70% { left: -60%; }
+      100% { left: 140%; }
+    }
+
     .btn-main:hover {
       transform: translateY(-3px);
-      box-shadow: 0 18px 45px rgba(245, 158, 11, 0.55);
+      box-shadow: 0 20px 48px var(--accent-glow);
+      filter: brightness(1.05);
     }
+
     .btn-secondary {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 10px;
       background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-strong);
       color: var(--text);
       font-weight: 600;
       font-size: 1.02rem;
-      padding: 17px 32px;
-      border-radius: 99px;
+      padding: 18px 34px;
+      border-radius: var(--radius-full);
       text-decoration: none;
       transition: all 0.25s ease;
     }
+
     .btn-secondary:hover {
       background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.25);
+      border-color: var(--border-gold);
+      transform: translateY(-2px);
     }
 
-    /* Триггеры доверия под кнопкой */
+    .hero-micro-guarantee {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .hero-micro-guarantee span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
     .hero-stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      max-width: 820px;
+      grid-template-columns: repeat(4, 1fr);
+      max-width: 980px;
       margin: 0 auto;
-      gap: 16px;
-      padding: 22px 28px;
-      background: rgba(20, 23, 34, 0.5);
+      gap: 18px;
+      padding: 26px 30px;
+      background: rgba(18, 21, 33, 0.65);
       border: 1px solid var(--border);
-      border-radius: 24px;
-      backdrop-filter: blur(12px);
+      border-radius: 26px;
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow-card);
     }
+
+    @media (max-width: 820px) {
+      .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .stat-item {
       text-align: center;
+      padding: 6px 10px;
+      border-right: 1px solid var(--border);
     }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    @media (max-width: 820px) {
+      .stat-item { border-right: none; }
+    }
+
     .stat-val {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-weight: 800;
-      color: var(--accent-light);
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       line-height: 1.2;
     }
+
     .stat-lbl {
       font-size: 0.82rem;
       color: var(--text-muted);
-      margin-top: 4px;
+      margin-top: 6px;
+      line-height: 1.35;
     }
 
-    /* Общие стили секций */
-    section {
-      padding: 95px 0;
+    /* Бегущая строка преимуществ (Luxury Marquee) */
+    .marquee-bar {
+      margin-top: 56px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(12, 14, 22, 0.65);
+      padding: 14px 0;
+      overflow: hidden;
       position: relative;
       z-index: 2;
     }
-    .section-title {
-      text-align: center;
-      margin-bottom: 56px;
-    }
-    .section-tag {
-      color: var(--accent-light);
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 10px;
-      display: block;
-    }
-    .section-title h2 {
-      font-size: clamp(1.85rem, 3.5vw, 2.6rem);
-      font-weight: 800;
-      margin-bottom: 12px;
-      letter-spacing: -0.5px;
-    }
-    .section-title p {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      max-width: 600px;
-      margin: 0 auto;
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      gap: 42px;
+      animation: marqueeScroll 34s linear infinite;
     }
 
-    /* --- ЛИПКИЙ СКРОЛЛ РИДЕРА --- */
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .marquee-item i {
+      color: var(--accent-light);
+      font-style: normal;
+    }
+
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ==========================================================================
+       08. STICKY WEBTOON SHOWCASE (ИНТЕРАКТИВНЫЙ РИДЕР СМАРТФОНА)
+       ========================================================================== */
     .showcase-wrapper {
-      height: 380vh;
+      height: 390vh;
       position: relative;
       padding: 0;
     }
+
     .showcase-sticky {
       position: sticky;
       top: 0;
@@ -366,58 +860,102 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      padding: 16px 0;
+      padding: 14px 0;
     }
+
+    .showcase-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .chapter-jump-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 13px;
+      border-radius: var(--radius-full);
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .chapter-jump-btn:hover,
+    .chapter-jump-btn.active {
+      background: var(--accent-soft);
+      border-color: var(--border-gold);
+      color: var(--accent-light);
+    }
+
     .showcase-layout {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 48px;
+      gap: 44px;
       width: 100%;
-      height: 76vh;
-      min-height: 520px;
-      max-height: 850px;
+      height: 75vh;
+      min-height: 510px;
+      max-height: 830px;
     }
 
-    /* Всплывающие карточки сбоку от телефона во время скролла */
     .showcase-side {
-      width: 280px;
+      width: 295px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 16px;
     }
-    @media (max-width: 992px) {
+
+    @media (max-width: 1024px) {
       .showcase-side { display: none; }
     }
+
     .scene-pill {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 16px 18px;
+      border-radius: 20px;
+      padding: 16px 20px;
       transition: all 0.35s ease;
-      opacity: 0.4;
+      opacity: 0.42;
       transform: scale(0.96);
+      cursor: pointer;
+      position: relative;
     }
+
+    .scene-pill:hover {
+      opacity: 0.75;
+    }
+
     .scene-pill.active {
       opacity: 1;
       transform: scale(1.03);
       border-color: var(--border-gold);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(245, 158, 11, 0.15);
-    }
-    .scene-pill-head {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--accent-light);
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-    .scene-pill-text {
-      font-size: 0.9rem;
-      color: var(--text);
-      line-height: 1.4;
+      background: linear-gradient(145deg, rgba(245, 158, 11, 0.12) 0%, rgba(18, 21, 33, 0.92) 100%);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55), 0 0 22px var(--accent-soft);
     }
 
-    /* Смартфон */
+    .scene-pill-head {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--accent-light);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .scene-pill-text {
+      font-size: 0.89rem;
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    /* Титановый смартфон */
     .phone-container {
       display: flex;
       justify-content: center;
@@ -426,29 +964,30 @@
       width: 100%;
       max-width: 380px;
     }
+
     .phone-mockup {
       width: 100%;
       height: 100%;
       background: #050507;
-      border: 9px solid #222631;
-      border-radius: 46px;
-      box-shadow: 
-        0 30px 70px -15px rgba(0, 0, 0, 0.95),
-        0 0 60px rgba(245, 158, 11, 0.18),
-        inset 0 0 0 2px rgba(255,255,255,0.08);
+      border: 9px solid #242834;
+      border-radius: 48px;
+      box-shadow:
+        0 35px 80px -15px rgba(0, 0, 0, 0.95),
+        0 0 65px var(--accent-soft),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.1);
       position: relative;
       overflow: hidden;
       display: flex;
       flex-direction: column;
     }
-    /* Статус-бар и Dynamic Island */
+
     .phone-statusbar {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 36px;
-      padding: 0 22px;
+      height: 38px;
+      padding: 0 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -456,46 +995,63 @@
       font-weight: 700;
       color: #fff;
       z-index: 15;
-      background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, transparent 100%);
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.82) 0%, transparent 100%);
       pointer-events: none;
     }
+
     .phone-notch {
       position: absolute;
       top: 7px;
       left: 50%;
       transform: translateX(-50%);
-      height: 20px;
-      width: 96px;
+      height: 22px;
+      width: 102px;
       background: #000;
       border-radius: 20px;
       z-index: 16;
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 10px;
     }
-    /* Прогресс чтения внутри телефона */
+
+    .phone-notch::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 6px #10b981;
+    }
+
     .reader-progress-bar {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 38px;
-      background: rgba(11, 12, 16, 0.88);
-      backdrop-filter: blur(8px);
-      border-top: 1px solid rgba(255,255,255,0.1);
+      height: 42px;
+      background: rgba(9, 10, 15, 0.92);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
       z-index: 15;
       display: flex;
       align-items: center;
       padding: 0 18px;
       gap: 10px;
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--text-muted);
+      font-family: var(--font-mono);
     }
+
     .reader-track {
       flex: 1;
-      height: 4px;
-      background: rgba(255,255,255,0.12);
+      height: 5px;
+      background: rgba(255, 255, 255, 0.12);
       border-radius: 4px;
       overflow: hidden;
     }
+
     .reader-fill {
       height: 100%;
       width: 0%;
@@ -508,13 +1064,16 @@
       width: 100%;
       overflow: hidden;
       position: relative;
+      background: #08090d;
     }
+
     .webtoon-tape {
       display: flex;
       flex-direction: column;
       width: 100%;
       will-change: transform;
     }
+
     .webtoon-tape img {
       width: 100%;
       height: auto;
@@ -524,12 +1083,216 @@
       user-select: none;
     }
 
-    /* Bento Grid: Почему OURTUNE попадает в сердце */
+    /* ==========================================================================
+       09. BEFORE / AFTER SLIDER (СХОДСТВО ЛИЦ 100%)
+       ========================================================================== */
+    .ba-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 44px;
+      align-items: center;
+    }
+
+    @media (max-width: 960px) {
+      .ba-grid { grid-template-columns: 1fr; }
+    }
+
+    .ba-slider-wrap {
+      position: relative;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid var(--border-gold);
+      box-shadow: var(--shadow-luxury);
+      aspect-ratio: 16 / 11;
+      background: #0d1018;
+      user-select: none;
+    }
+
+    .ba-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 28px;
+    }
+
+    .ba-after {
+      background:
+        radial-gradient(circle at 70% 25%, rgba(251, 191, 36, 0.35), transparent 55%),
+        linear-gradient(145deg, #1e1b2e 0%, #171524 45%, #2b1d28 100%);
+    }
+
+    .ba-before {
+      background:
+        radial-gradient(circle at 30% 35%, rgba(255, 255, 255, 0.12), transparent 60%),
+        linear-gradient(145deg, #181c26 0%, #0f1219 100%);
+      width: 50%;
+      overflow: hidden;
+      border-right: 2px solid var(--accent-light);
+    }
+
+    .ba-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      background: rgba(7, 8, 12, 0.82);
+      border: 1px solid var(--border-strong);
+      width: max-content;
+      z-index: 4;
+    }
+
+    .ba-badge.gold {
+      background: var(--gold-gradient);
+      color: #0b0c10;
+      border-color: transparent;
+      margin-left: auto;
+    }
+
+    .ba-visual-card {
+      margin: auto;
+      width: 86%;
+      max-width: 420px;
+      border-radius: 20px;
+      padding: 22px;
+      background: rgba(10, 12, 18, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
+      text-align: center;
+    }
+
+    .ba-after .ba-visual-card {
+      border-color: var(--border-gold);
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.22);
+    }
+
+    .ba-range {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: ew-resize;
+      z-index: 10;
+    }
+
+    .ba-handle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--gold-gradient);
+      color: #090a0f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      box-shadow: 0 0 25px var(--accent-glow);
+      pointer-events: none;
+      z-index: 9;
+    }
+
+    .feature-checklist {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 16px 20px;
+      border-radius: 18px;
+      transition: border-color 0.25s ease, transform 0.25s ease;
+    }
+
+    .check-item:hover {
+      border-color: var(--border-gold);
+      transform: translateX(4px);
+    }
+
+    .check-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      border: 1px solid var(--border-gold);
+      color: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-weight: 800;
+    }
+
+    /* ==========================================================================
+       10. ART STYLE SWITCHER & BENTO GRID
+       ========================================================================== */
+    .style-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 34px;
+    }
+
+    .style-tab {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 12px 24px;
+      border-radius: var(--radius-full);
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .style-tab:hover,
+    .style-tab.active {
+      background: var(--gold-gradient);
+      color: #090a0f;
+      border-color: transparent;
+      box-shadow: 0 10px 28px var(--accent-glow);
+    }
+
+    .style-showcase-box {
+      background: var(--surface-gradient);
+      border: 1px solid var(--border-gold);
+      border-radius: 28px;
+      padding: 36px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      align-items: center;
+      box-shadow: var(--shadow-card);
+    }
+
+    @media (max-width: 860px) {
+      .style-showcase-box { grid-template-columns: 1fr; padding: 24px; }
+    }
+
     .bento-grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 24px;
     }
+
     .bento-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -537,72 +1300,109 @@
       padding: 36px 32px;
       position: relative;
       overflow: hidden;
-      transition: transform 0.3s ease, border-color 0.3s ease;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
+
+    .bento-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--gold-gradient);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
     .bento-card:hover {
-      transform: translateY(-4px);
+      transform: translateY(-5px);
       border-color: var(--border-gold);
+      box-shadow: var(--shadow-luxury);
     }
+
+    .bento-card:hover::before {
+      opacity: 1;
+    }
+
     .bento-col-7 { grid-column: span 7; }
     .bento-col-5 { grid-column: span 5; }
     .bento-col-6 { grid-column: span 6; }
+    .bento-col-4 { grid-column: span 4; }
+
     @media (max-width: 900px) {
-      .bento-col-7, .bento-col-5, .bento-col-6 { grid-column: span 12; }
+      .bento-col-7, .bento-col-5, .bento-col-6, .bento-col-4 { grid-column: span 12; }
     }
+
     .bento-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: rgba(245, 158, 11, 0.12);
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: var(--accent-soft);
       border: 1px solid var(--border-gold);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.4rem;
+      font-size: 1.45rem;
       margin-bottom: 20px;
     }
+
     .bento-title {
-      font-size: 1.35rem;
+      font-size: 1.38rem;
       font-weight: 800;
       margin-bottom: 10px;
       color: #fff;
     }
+
     .bento-desc {
       color: var(--text-muted);
       font-size: 0.96rem;
       line-height: 1.65;
     }
 
-    /* Блок «Реакция в 01:24 ночи» + Сравнение */
+    /* ==========================================================================
+       11. NIGHT REACTION CHAT & VS COMPARISON
+       ========================================================================== */
     .comparison-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 32px;
       align-items: stretch;
     }
+
     @media (max-width: 900px) {
       .comparison-grid { grid-template-columns: 1fr; }
     }
+
     .chat-mockup {
       background: linear-gradient(160deg, #131622 0%, #0b0d14 100%);
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-gold);
       border-radius: 28px;
       padding: 32px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      box-shadow: var(--shadow-luxury);
     }
+
     .chat-header {
       display: flex;
       align-items: center;
-      gap: 12px;
+      justify-content: space-between;
       padding-bottom: 18px;
       border-bottom: 1px solid var(--border);
       margin-bottom: 24px;
     }
+
+    .chat-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
     .chat-avatar {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       background: var(--gold-gradient);
       display: flex;
@@ -611,6 +1411,7 @@
       font-weight: 800;
       color: #111;
     }
+
     .chat-bubble {
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -621,13 +1422,16 @@
       font-size: 0.96rem;
       position: relative;
     }
+
     .chat-bubble.gold {
-      background: rgba(245, 158, 11, 0.14);
+      background: var(--accent-soft);
       border-color: var(--border-gold);
       border-radius: 18px 18px 4px 18px;
       align-self: flex-end;
+      margin-left: auto;
       color: #fff;
     }
+
     .chat-time {
       font-size: 0.72rem;
       color: var(--text-muted);
@@ -641,20 +1445,24 @@
       gap: 20px;
       justify-content: center;
     }
+
     .vs-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 24px;
       padding: 28px;
     }
+
     .vs-card.bad {
-      opacity: 0.75;
+      opacity: 0.78;
     }
+
     .vs-card.good {
       border: 1.5px solid var(--accent);
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(20, 23, 34, 0.85) 100%);
-      box-shadow: 0 15px 40px rgba(245, 158, 11, 0.12);
+      background: linear-gradient(135deg, var(--accent-soft) 0%, rgba(20, 23, 34, 0.9) 100%);
+      box-shadow: 0 15px 40px var(--accent-soft);
     }
+
     .vs-label {
       font-size: 0.78rem;
       text-transform: uppercase;
@@ -663,171 +1471,240 @@
       margin-bottom: 8px;
       display: inline-block;
     }
+
     .vs-title {
       font-size: 1.35rem;
       font-weight: 800;
       margin-bottom: 12px;
     }
 
-    /* Как это работает (3 шага) */
+    /* ==========================================================================
+       12. 3D VIP BOOK PREVIEW & STEPS
+       ========================================================================== */
     .steps-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 28px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 26px;
     }
+
     .step-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 26px;
       padding: 38px 30px;
       position: relative;
-      transition: transform 0.3s, border-color 0.3s;
+      transition: transform 0.3s ease, border-color 0.3s ease;
     }
+
     .step-card:hover {
       transform: translateY(-5px);
       border-color: var(--border-gold);
     }
+
     .step-number {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-serif);
       font-size: 3.8rem;
       font-style: italic;
       font-weight: 700;
-      color: rgba(245, 158, 11, 0.18);
+      color: var(--accent-soft);
       position: absolute;
       top: 18px;
       right: 28px;
       line-height: 1;
     }
+
     .step-title {
       font-size: 1.3rem;
       font-weight: 800;
       margin-bottom: 12px;
       color: #fff;
     }
+
     .step-text {
       color: var(--text-muted);
       font-size: 0.95rem;
     }
 
-    /* Тарифы */
+    /* ==========================================================================
+       13. PRICING CARDS (NEW CONVERSION PSYCHOLOGY) & ADD-ON CALCULATOR
+       ========================================================================== */
     .pricing-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 28px;
       align-items: stretch;
     }
+
     .price-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 28px;
-      padding: 38px 30px;
+      border-radius: 30px;
+      padding: 40px 32px;
       position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
+
     .price-card:hover {
       transform: translateY(-6px);
       border-color: var(--border-gold);
     }
+
     .price-card.popular {
       border: 2px solid var(--accent);
-      background: linear-gradient(180deg, rgba(245, 158, 11, 0.11) 0%, rgba(20, 23, 34, 0.9) 100%);
-      box-shadow: 0 20px 50px rgba(245, 158, 11, 0.14);
+      background: linear-gradient(180deg, var(--accent-soft) 0%, rgba(18, 21, 33, 0.94) 100%);
+      box-shadow: 0 24px 60px rgba(245, 158, 11, 0.16);
+      transform: scale(1.02);
     }
+
+    @media (max-width: 960px) {
+      .price-card.popular { transform: none; }
+    }
+
     .popular-tag {
       position: absolute;
       top: -14px;
       left: 50%;
       transform: translateX(-50%);
       background: var(--gold-gradient);
-      color: #111;
-      padding: 5px 16px;
-      border-radius: 99px;
+      color: #090a0f;
+      padding: 6px 18px;
+      border-radius: var(--radius-full);
       font-size: 0.75rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
+      white-space: nowrap;
+      box-shadow: 0 6px 20px var(--accent-glow);
     }
+
     .price-name {
-      font-size: 1.45rem;
+      font-size: 1.5rem;
       font-weight: 800;
       margin-bottom: 6px;
-    }
-    .price-sub {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 18px;
-    }
-    .price-cost {
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin-bottom: 24px;
       color: #fff;
     }
-    .price-features {
-      list-style: none;
-      margin-bottom: 32px;
+
+    .price-sub {
+      font-size: 0.88rem;
       color: var(--text-muted);
-      font-size: 0.95rem;
+      margin-bottom: 20px;
     }
-    .price-features li {
-      margin-bottom: 13px;
+
+    .price-block {
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .price-old-row {
       display: flex;
       align-items: center;
       gap: 10px;
+      margin-bottom: 4px;
     }
+
+    .price-old {
+      font-size: 1rem;
+      color: var(--text-dim);
+      text-decoration: line-through;
+      font-weight: 600;
+    }
+
+    .price-save-badge {
+      background: rgba(16, 185, 129, 0.14);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 9px;
+      border-radius: var(--radius-full);
+    }
+
+    .price-cost {
+      font-size: 2.75rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: -1px;
+    }
+
+    .price-per-frame {
+      font-size: 0.78rem;
+      color: var(--accent-light);
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    .price-features {
+      list-style: none;
+      margin-bottom: 30px;
+      color: var(--text-secondary);
+      font-size: 0.94rem;
+    }
+
+    .price-features li {
+      margin-bottom: 13px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.45;
+    }
+
     .price-features li::before {
       content: "✦";
       color: var(--accent-light);
       font-weight: bold;
+      flex-shrink: 0;
     }
 
-    /* Блок с кнопкой и анимацией сбоку */
     .action-row {
       display: flex;
       align-items: center;
       gap: 12px;
       margin-top: 10px;
     }
+
     .btn-select {
       flex: 1;
-      padding: 15px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid var(--border-strong);
       background: rgba(255, 255, 255, 0.06);
       color: #fff;
-      font-weight: 700;
-      font-size: 0.95rem;
+      font-weight: 800;
+      font-size: 0.96rem;
       cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn-select:hover, .price-card.popular .btn-select {
-      background: var(--gold-gradient);
-      color: #111;
-      border-color: transparent;
-      box-shadow: 0 8px 25px var(--accent-glow);
+      transition: all 0.25s ease;
     }
 
-    /* Контейнер для иконок анимации */
+    .btn-select:hover,
+    .price-card.popular .btn-select {
+      background: var(--gold-gradient);
+      color: #090a0f;
+      border-color: transparent;
+      box-shadow: 0 10px 28px var(--accent-glow);
+    }
+
     .anim-box {
-      width: 50px;
-      height: 50px;
+      width: 52px;
+      height: 52px;
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
     }
+
     .price-card.popular .anim-box {
       border-color: var(--border-gold);
-      background: rgba(245, 158, 11, 0.08);
+      background: var(--accent-soft);
     }
 
-    /* Анимация: Телефон (медленный и быстрый скролл) */
     .anim-phone {
       width: 18px;
       height: 32px;
@@ -836,23 +1713,30 @@
       position: relative;
       overflow: hidden;
     }
+
     .price-card.popular .anim-phone {
       border-color: var(--accent-light);
     }
+
     .anim-phone::after {
       content: '';
       position: absolute;
-      top: 0; left: 0; width: 100%; height: 400%;
-      background: repeating-linear-gradient(to bottom, 
-        rgba(255,255,255,0.3) 0, rgba(255,255,255,0.3) 6px, 
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 400%;
+      background: repeating-linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.35) 0, rgba(255, 255, 255, 0.35) 6px,
         transparent 6px, transparent 12px);
       animation: scrollPhone linear infinite;
     }
+
     .price-card.popular .anim-phone::after {
-      background: repeating-linear-gradient(to bottom, 
-        var(--accent-light) 0, var(--accent-light) 6px, 
+      background: repeating-linear-gradient(to bottom,
+        var(--accent-light) 0, var(--accent-light) 6px,
         transparent 6px, transparent 12px);
     }
+
     .anim-phone.slow::after { animation-duration: 4s; }
     .anim-phone.fast::after { animation-duration: 0.9s; }
 
@@ -861,7 +1745,6 @@
       100% { transform: translateY(-50%); }
     }
 
-    /* Анимация: Книга (перелистывание печатной манхвы) */
     .anim-book {
       width: 28px;
       height: 22px;
@@ -870,84 +1753,108 @@
       position: relative;
       perspective: 120px;
     }
+
     .anim-book::before {
       content: '';
       position: absolute;
-      left: 50%; top: -2px; bottom: -2px; width: 2px;
+      left: 50%;
+      top: -2px;
+      bottom: -2px;
+      width: 2px;
       background: var(--accent-light);
       transform: translateX(-50%);
     }
+
     .anim-book::after {
       content: '';
       position: absolute;
-      right: 0; top: 0;
-      width: 50%; height: 100%;
-      background: rgba(245, 158, 11, 0.35);
+      right: 0;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      background: var(--accent-soft);
       border-left: 1px solid var(--accent-light);
       transform-origin: left center;
       animation: flipPage 1.6s ease-in-out infinite;
     }
+
     @keyframes flipPage {
       0%, 15% { transform: rotateY(0deg); }
       85%, 100% { transform: rotateY(-180deg); }
     }
 
-    /* Отзывы */
+    /* ==========================================================================
+       14. REVIEWS, FAQ, ORDER FORM & LIVE TOASTS
+       ========================================================================== */
     .reviews-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
       gap: 24px;
     }
+
     .review-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 24px;
+      border-radius: 26px;
       padding: 32px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      transition: transform 0.25s ease, border-color 0.25s ease;
     }
+
+    .review-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-gold);
+    }
+
     .stars {
       color: var(--accent-light);
       font-size: 1.1rem;
       margin-bottom: 14px;
       letter-spacing: 2px;
     }
+
     .review-text {
-      font-size: 0.98rem;
+      font-size: 0.97rem;
       color: #f3f4f6;
       margin-bottom: 22px;
       line-height: 1.65;
     }
+
     .review-author {
       font-weight: 700;
       font-size: 0.9rem;
       color: var(--accent-light);
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 10px;
     }
+
     .review-author span {
       color: var(--text-muted);
       font-weight: 500;
     }
 
-    /* FAQ */
     .faq-container {
-      max-width: 820px;
+      max-width: 840px;
       margin: 0 auto;
     }
+
     details {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: 20px;
       margin-bottom: 14px;
       overflow: hidden;
-      transition: border-color 0.2s;
+      transition: border-color 0.25s ease;
     }
+
     details[open] {
       border-color: var(--border-gold);
     }
+
     summary {
       padding: 22px 26px;
       font-size: 1.05rem;
@@ -959,17 +1866,21 @@
       align-items: center;
       color: #fff;
     }
+
     summary::-webkit-details-marker { display: none; }
+
     summary::after {
       content: '+';
       color: var(--accent-light);
       font-size: 1.5rem;
       font-weight: 400;
-      transition: transform 0.3s;
+      transition: transform 0.3s ease;
     }
+
     details[open] summary::after {
       transform: rotate(45deg);
     }
+
     .faq-content {
       padding: 0 26px 22px;
       color: var(--text-muted);
@@ -977,98 +1888,165 @@
       line-height: 1.65;
     }
 
-    /* Форма заказа */
     .order-box {
-      max-width: 660px;
+      max-width: 720px;
       margin: 0 auto;
-      background: linear-gradient(180deg, rgba(26, 29, 42, 0.85) 0%, rgba(14, 16, 24, 0.95) 100%);
+      background: linear-gradient(180deg, rgba(24, 28, 42, 0.9) 0%, rgba(12, 14, 22, 0.97) 100%);
       border: 1px solid var(--border-gold);
-      border-radius: 32px;
-      padding: 44px 36px;
-      box-shadow: 0 25px 70px rgba(0,0,0,0.6), 0 0 40px rgba(245, 158, 11, 0.1);
+      border-radius: 34px;
+      padding: 48px 40px;
+      box-shadow: var(--shadow-luxury);
     }
+
     @media (max-width: 600px) {
       .order-box { padding: 30px 20px; }
     }
+
     .form-group {
       margin-bottom: 22px;
     }
+
     .form-group label {
-      display: block;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       font-size: 0.95rem;
       font-weight: 700;
       margin-bottom: 8px;
       color: #f3f4f6;
     }
-    .form-group input, .form-group select, .form-group textarea {
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
       width: 100%;
-      background: rgba(7, 8, 12, 0.8);
-      border: 1px solid var(--border);
+      background: rgba(7, 8, 12, 0.85);
+      border: 1px solid var(--border-strong);
       border-radius: 14px;
       padding: 15px 16px;
       color: #fff;
       outline: none;
       font-size: 1rem;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-      border-color: var(--accent-light);
-      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
-    /* Быстрые подсказки-теги для написания истории */
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent-light);
+      box-shadow: 0 0 0 3px var(--accent-soft);
+    }
+
     .story-prompts {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
+
     .prompt-chip {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border);
       color: var(--text-muted);
       font-size: 0.78rem;
       font-weight: 600;
-      padding: 6px 12px;
-      border-radius: 99px;
+      padding: 7px 13px;
+      border-radius: var(--radius-full);
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
     }
+
     .prompt-chip:hover {
       border-color: var(--border-gold);
       color: var(--accent-light);
-      background: rgba(245, 158, 11, 0.1);
+      background: var(--accent-soft);
     }
 
     .photo-notice {
-      background: rgba(245, 158, 11, 0.08);
+      background: var(--accent-soft);
       border-left: 4px solid var(--accent-light);
-      padding: 16px;
-      border-radius: 10px;
+      padding: 16px 18px;
+      border-radius: 12px;
       font-size: 0.88rem;
-      color: #d1d5db;
+      color: #e5e7eb;
       margin-bottom: 24px;
       line-height: 1.55;
     }
 
-    /* Футер */
+    /* Всплывающее уведомление о недавнем заказе (Social Proof Toast) */
+    .live-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 95;
+      background: rgba(14, 16, 25, 0.92);
+      border: 1px solid var(--border-gold);
+      border-radius: 18px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(14px);
+      transform: translateY(130%);
+      opacity: 0;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+      max-width: 340px;
+      pointer-events: none;
+    }
+
+    .live-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 640px) {
+      .live-toast { display: none; }
+    }
+
     footer {
       border-top: 1px solid var(--border);
-      padding: 48px 0;
+      padding: 56px 0 42px;
       text-align: center;
       color: var(--text-muted);
       font-size: 0.9rem;
       position: relative;
       z-index: 2;
+      background: rgba(5, 6, 9, 0.7);
     }
   </style>
 </head>
 <body>
 
-  <!-- Золотые частицы на фоне -->
+  <!-- Прогресс чтения в самом верху экрана -->
+  <div class="top-scroll-progress" id="topScrollProgress"></div>
+
+  <!-- Кастомный курсор -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Кинематографичный шум и золотые частицы -->
+  <div class="film-grain"></div>
   <canvas id="particles-canvas"></canvas>
   <div class="ambient-glow glow-1"></div>
   <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Верхняя панель: живой статус студии + переключатель атмосферы -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="slots-indicator">
+        <span class="live-dot"></span>
+        <span>На сегодня свободно <strong>3 места</strong> на экспресс-отрисовку за 24 часа</span>
+      </div>
+      <div class="vibe-switcher">
+        <span class="vibe-label">Атмосфера сайта:</span>
+        <button type="button" class="vibe-btn active" onclick="setTheme('gold', this)">✦ Золотой вечер</button>
+        <button type="button" class="vibe-btn" onclick="setTheme('seoul', this)">⚡ Неоновый Сеул</button>
+        <button type="button" class="vibe-btn" onclick="setTheme('sakura', this)">🌸 Весенняя сакура</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Навигация -->
   <header>
@@ -1076,45 +2054,80 @@
       <a href="#" class="brand">
         <img src="logo.jpg" alt="OURTUNE" class="brand-logo-img" onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='flex';">
         <div id="fallbackLogo" class="brand-fallback-icon" style="display:none;">✦</div>
-        <span class="logo-text">OURTUNE</span>
+        <div class="brand-meta">
+          <span class="logo-text">OURTUNE</span>
+          <span class="logo-sub">Manhwa Love Studio</span>
+        </div>
       </a>
       <div class="nav-links">
-        <a href="#showcase-wrapper" class="link">Пример работы</a>
+        <a href="#showcase-wrapper" class="link">Живой пример</a>
+        <a href="#similarity" class="link">100% Сходство</a>
         <a href="#why" class="link">Преимущества</a>
-        <a href="#pricing" class="link">Тарифы</a>
-        <a href="#order" class="nav-btn">Заказать манхву</a>
+        <a href="#pricing" class="link">Тарифы от 1 290 ₽</a>
+        <a href="#order" class="nav-btn">Создать свою манхву ✦</a>
       </div>
     </div>
   </header>
 
-  <!-- Первый экран -->
+  <!-- Первый экран (Hero) -->
   <section class="hero">
     <div class="container">
       <div class="badge">
         <span class="badge-dot"></span>
         Превращаем ваши фото и воспоминания в романтический вебтун
+        <span class="badge-price-pill">ХИТ 2026</span>
       </div>
+
       <h1><span>В одном непрерывном вебтуне вас ждёт</span> ваша история любви</h1>
-      <p class="hero-sub">Подарок, который попадает прямо в сердце. 100% узнаваемость ваших лиц, любимые локации, переписки и шутки на уровне топовой корейской студии за 24 часа.</p>
-      
+
+      <p class="hero-sub">
+        Подарок, который доводит до мурашек и слез счастья. <strong>100% узнаваемость ваших лиц</strong>, любимые локации, ночные переписки и локальные шутки на уровне топовой корейской студии — <strong>всего от 1 290 ₽ и за 24 часа</strong>.
+      </p>
+
       <div class="hero-actions">
         <a href="#order" class="btn-main">Создать комикс для пары ✦</a>
         <a href="#showcase-wrapper" class="btn-secondary">Смотреть живой пример ↓</a>
       </div>
 
+      <div class="hero-micro-guarantee">
+        <span>✓ Достаточно 2–3 обычных селфи</span>
+        <span>✓ Сценарий пишем за вас</span>
+        <span>✓ Бесплатные правки деталей</span>
+      </div>
+
       <div class="hero-stats">
         <div class="stat-item">
           <div class="stat-val">100% сходство</div>
-          <div class="stat-lbl">Переносим ваши черты лица и стиль по 2–3 фото</div>
+          <div class="stat-lbl">Переносим черты лица, прически и стиль по обычным фото</div>
         </div>
         <div class="stat-item">
-          <div class="stat-val">от 24 часов</div>
-          <div class="stat-lbl">Готовность цифрового скролл-вебтуна</div>
+          <div class="stat-val">от 1 290 ₽</div>
+          <div class="stat-lbl">По цене букета цветов — но останется в памяти на всю жизнь</div>
         </div>
         <div class="stat-item">
-          <div class="stat-val">Бесшовный 9:16</div>
-          <div class="stat-lbl">Идеально для чтения с экрана смартфона</div>
+          <div class="stat-val">за 24 часа</div>
+          <div class="stat-lbl">Быстрая готовность цифрового вертикального вебтуна 9:16</div>
         </div>
+        <div class="stat-item">
+          <div class="stat-val">1 480+ пар</div>
+          <div class="stat-lbl">Уже подарили друг другу свою историю в формате манхвы</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Бегущая строка триггеров -->
+    <div class="marquee-bar">
+      <div class="marquee-track">
+        <span class="marquee-item"><i>✦</i> 100% УЗНАВАЕМОСТЬ ЛИЦ ПО 3 ФОТО</span>
+        <span class="marquee-item"><i>✦</i> ВАШИ РЕАЛЬНЫЕ ПЕРЕПИСКИ И ШУТКИ В СЮЖЕТЕ</span>
+        <span class="marquee-item"><i>✦</i> ДОБАВИМ ЛЮБИМОГО ПИТОМЦА БЕСПЛАТНО</span>
+        <span class="marquee-item"><i>✦</i> ГОТОВНОСТЬ ЦИФРОВОГО ВЕБТУНА ОТ 24 ЧАСОВ</span>
+        <span class="marquee-item"><i>✦</i> VIP-ПЕЧАТЬ В ТВЕРДОЙ ОБЛОЖКЕ С ДОСТАВКОЙ СДЭК</span>
+        <span class="marquee-item"><i>✦</i> 100% УЗНАВАЕМОСТЬ ЛИЦ ПО 3 ФОТО</span>
+        <span class="marquee-item"><i>✦</i> ВАШИ РЕАЛЬНЫЕ ПЕРЕПИСКИ И ШУТКИ В СЮЖЕТЕ</span>
+        <span class="marquee-item"><i>✦</i> ДОБАВИМ ЛЮБИМОГО ПИТОМЦА БЕСПЛАТНО</span>
+        <span class="marquee-item"><i>✦</i> ГОТОВНОСТЬ ЦИФРОВОГО ВЕБТУНА ОТ 24 ЧАСОВ</span>
+        <span class="marquee-item"><i>✦</i> VIP-ПЕЧАТЬ В ТВЕРДОЙ ОБЛОЖКЕ С ДОСТАВКОЙ СДЭК</span>
       </div>
     </div>
   </section>
@@ -1123,25 +2136,34 @@
   <section class="showcase-wrapper" id="showcase-wrapper">
     <div class="showcase-sticky">
       <div class="container">
-        <div class="section-title" style="margin-bottom: 18px;">
+        <div class="section-title" style="margin-bottom: 14px;">
           <span class="section-tag">Реальный кейс OURTUNE</span>
-          <h2>Как это выглядит вживую</h2>
-          <p>Просто крутите страницу вниз — история внутри телефона начнет листаться сама</p>
+          <h2>Как это выглядит <em>вживую</em></h2>
+          <p>Крутите страницу вниз или нажимайте на эпизоды — история внутри смартфона оживает</p>
+        </div>
+
+        <!-- Быстрое переключение эпизодов -->
+        <div class="showcase-top-bar">
+          <button type="button" class="chapter-jump-btn active" onclick="jumpToEpisode(0)">Эпизод 1 · Дом и кот</button>
+          <button type="button" class="chapter-jump-btn" onclick="jumpToEpisode(1)">Эпизод 2 · Бесшовный переход</button>
+          <button type="button" class="chapter-jump-btn" onclick="jumpToEpisode(2)">Эпизод 3 · Переписка в пути</button>
+          <button type="button" class="chapter-jump-btn" onclick="jumpToEpisode(3)">Эпизод 4 · Перрон и цветы</button>
+          <button type="button" class="chapter-jump-btn" onclick="jumpToEpisode(4)">Эпизод 5 · Финал в парке</button>
         </div>
 
         <div class="showcase-layout">
-          <!-- Левая колонка подсказок (меняется при прокрутке) -->
+          <!-- Левая колонка подсказок -->
           <div class="showcase-side">
-            <div class="scene-pill active" id="pill-0">
-              <div class="scene-pill-head">Эпизод 1 · Уютные детали</div>
+            <div class="scene-pill active" id="pill-0" onclick="jumpToEpisode(0)">
+              <div class="scene-pill-head"><span>Эпизод 1 · Уютные детали</span> <span>01</span></div>
               <div class="scene-pill-text">Ночь перед отъездом, домашняя атмосфера и даже ваш любимый питомец в кадре.</div>
             </div>
-            <div class="scene-pill" id="pill-1">
-              <div class="scene-pill-head">Эпизод 2 · Магия переходов</div>
+            <div class="scene-pill" id="pill-1" onclick="jumpToEpisode(1)">
+              <div class="scene-pill-head"><span>Эпизод 2 · Магия переходов</span> <span>02</span></div>
               <div class="scene-pill-text">Светящаяся нить с осенними листьями плавно связывает вокзал и поезд без единого шва.</div>
             </div>
-            <div class="scene-pill" id="pill-2">
-              <div class="scene-pill-head">Эпизод 3 · Ваши переписки</div>
+            <div class="scene-pill" id="pill-2" onclick="jumpToEpisode(2)">
+              <div class="scene-pill-head"><span>Эпизод 3 · Ваши переписки</span> <span>03</span></div>
               <div class="scene-pill-text">Кружочки в Telegram, фотографии из поездки и ночные сообщения любимому человеку.</div>
             </div>
           </div>
@@ -1154,10 +2176,10 @@
                 <span>5G 100%</span>
               </div>
               <div class="phone-notch"></div>
-              
+
               <div class="webtoon-scroll" id="scrollArea">
                 <div class="webtoon-tape" id="scrollTape">
-                  <img src="frame1.jpg" alt="Часть 1">
+                  <img src="frame1.jpg" alt="Непрерывная манхва OURTUNE">
                 </div>
               </div>
 
@@ -1173,16 +2195,560 @@
 
           <!-- Правая колонка подсказок -->
           <div class="showcase-side">
-            <div class="scene-pill" id="pill-3">
-              <div class="scene-pill-head">Эпизод 4 · Долгожданная встреча</div>
+            <div class="scene-pill" id="pill-3" onclick="jumpToEpisode(3)">
+              <div class="scene-pill-head"><span>Эпизод 4 · Долгожданная встреча</span> <span>04</span></div>
               <div class="scene-pill-text">Волнение на перроне с букетом цветов и искренние эмоции при встрече поезда.</div>
             </div>
-            <div class="scene-pill" id="pill-4">
-              <div class="scene-pill-head">Эпизод 5 · Кинематографичный финал</div>
+            <div class="scene-pill" id="pill-4" onclick="jumpToEpisode(4)">
+              <div class="scene-pill-head"><span>Эпизод 5 · Кинематографичный финал</span> <span>05</span></div>
               <div class="scene-pill-text">Романтичная прогулка по осеннему парку, которая останется в памяти навсегда.</div>
             </div>
-            <div style="padding: 12px 16px; text-align: center;">
-              <a href="#order" class="nav-btn" style="display:inline-block; width:100%;">Хочу такую же историю →</a>
+            <div style="padding: 8px 4px; text-align: center;">
+              <a href="#order" class="nav-btn" style="display:flex; justify-content:center; width:100%;">Хочу такую же историю за 1 290 ₽ →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ========================================================================
+       ДОПОЛНИТЕЛЬНЫЕ ПРЕМИАЛЬНЫЕ СТИЛИ ДЛЯ ИНТЕРАКТИВНЫХ МОДУЛЕЙ (ЧАСТЬ 2)
+       ======================================================================== -->
+  <style>
+    /* --- Расширенный сканер сходства (До / После) --- */
+    .scanner-stage {
+      position: relative;
+      border-radius: 30px;
+      overflow: hidden;
+      border: 1px solid var(--border-gold);
+      background: #0a0c14;
+      box-shadow: var(--shadow-luxury);
+      aspect-ratio: 16 / 11;
+      min-height: 410px;
+      user-select: none;
+    }
+
+    .scanner-pane {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .scanner-pane.manhwa-side {
+      background:
+        radial-gradient(circle at 72% 28%, rgba(245, 158, 11, 0.28), transparent 52%),
+        radial-gradient(circle at 25% 80%, rgba(236, 72, 153, 0.2), transparent 55%),
+        linear-gradient(145deg, #1b162a 0%, #111320 50%, #241723 100%);
+    }
+
+    .scanner-pane.photo-side {
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.08), transparent 60%),
+        linear-gradient(145deg, #141821 0%, #0b0d13 100%);
+      clip-path: inset(0 50% 0 0);
+    }
+
+    .scanner-divider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2px;
+      background: var(--gold-gradient);
+      box-shadow: 0 0 20px var(--accent-light);
+      z-index: 8;
+      pointer-events: none;
+    }
+
+    .scanner-portrait-stage {
+      position: relative;
+      margin: auto;
+      width: 100%;
+      max-width: 440px;
+      height: 270px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(8, 10, 16, 0.72);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 18px;
+    }
+
+    .manhwa-side .scanner-portrait-stage {
+      border-color: var(--border-gold);
+      background: linear-gradient(160deg, rgba(35, 24, 46, 0.86) 0%, rgba(15, 14, 26, 0.9) 100%);
+      box-shadow: inset 0 0 40px rgba(245, 158, 11, 0.14);
+    }
+
+    /* Точки биометрического захвата черт лица */
+    .bio-node {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 11px;
+      border-radius: var(--radius-full);
+      background: rgba(7, 8, 12, 0.88);
+      border: 1px solid var(--border-gold);
+      color: var(--accent-light);
+      font-size: 0.7rem;
+      font-weight: 700;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+      z-index: 5;
+      white-space: nowrap;
+      animation: floatNode 3.5s ease-in-out infinite alternate;
+    }
+
+    .bio-node::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      box-shadow: 0 0 8px var(--accent-light);
+    }
+
+    .bio-node.n1 { top: 16%; left: 8%; animation-delay: 0s; }
+    .bio-node.n2 { top: 22%; right: 7%; animation-delay: 0.8s; }
+    .bio-node.n3 { bottom: 20%; left: 10%; animation-delay: 1.4s; }
+    .bio-node.n4 { bottom: 16%; right: 9%; animation-delay: 2.1s; }
+
+    @keyframes floatNode {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
+    }
+
+    .scanner-preset-btns {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .scanner-preset-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 7px 14px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .scanner-preset-btn:hover {
+      border-color: var(--border-gold);
+      color: var(--accent-light);
+      background: var(--accent-soft);
+    }
+
+    /* --- Студия выбора жанра и рисовки --- */
+    .genre-preview-visual {
+      border-radius: 22px;
+      padding: 28px;
+      border: 1px solid var(--border-strong);
+      position: relative;
+      overflow: hidden;
+      min-height: 290px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.4s ease;
+      background: radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.25), transparent 60%), #10131f;
+    }
+
+    .genre-dialogue-bubble {
+      background: rgba(255, 255, 255, 0.95);
+      color: #090a0f;
+      padding: 14px 18px;
+      border-radius: 18px 18px 18px 4px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      max-width: 85%;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+      position: relative;
+      margin-symmetric: auto;
+    }
+
+    .genre-dialogue-sub {
+      background: rgba(7, 8, 12, 0.85);
+      border: 1px solid var(--border-gold);
+      color: var(--accent-light);
+      padding: 10px 15px;
+      border-radius: 14px 14px 4px 14px;
+      font-size: 0.82rem;
+      font-style: italic;
+      align-self: flex-end;
+      margin-top: 12px;
+    }
+
+    .genre-specs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 22px 0;
+    }
+
+    .genre-spec-pill {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+
+    .genre-spec-pill span {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .genre-spec-pill strong {
+      font-size: 0.92rem;
+      color: #fff;
+    }
+
+    /* --- Мини-виджеты внутри Bento Grid --- */
+    .bento-mini-widget {
+      margin-top: 22px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      background: rgba(7, 8, 12, 0.65);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .tg-circle-demo {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-light);
+      background: radial-gradient(circle at 35% 35%, #fbbf24, #7c2d12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 800;
+      flex-shrink: 0;
+      box-shadow: 0 0 15px var(--accent-glow);
+      animation: pulseLive 2.4s infinite;
+    }
+
+    .waveform-bars {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 22px;
+    }
+
+    .waveform-bars span {
+      width: 3px;
+      background: var(--accent-light);
+      border-radius: 3px;
+      animation: waveBounce 1.2s ease-in-out infinite;
+    }
+
+    .waveform-bars span:nth-child(1) { height: 8px; animation-delay: 0.1s; }
+    .waveform-bars span:nth-child(2) { height: 18px; animation-delay: 0.3s; }
+    .waveform-bars span:nth-child(3) { height: 12px; animation-delay: 0.2s; }
+    .waveform-bars span:nth-child(4) { height: 22px; animation-delay: 0.5s; }
+    .waveform-bars span:nth-child(5) { height: 10px; animation-delay: 0.15s; }
+    .waveform-bars span:nth-child(6) { height: 16px; animation-delay: 0.4s; }
+    .waveform-bars span:nth-child(7) { height: 9px; animation-delay: 0.25s; }
+
+    @keyframes waveBounce {
+      0%, 100% { transform: scaleY(0.55); opacity: 0.6; }
+      50% { transform: scaleY(1.15); opacity: 1; }
+    }
+
+    /* --- Матрица поводов (Occasion Selector) --- */
+    .occasion-pills {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .occasion-pill {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 11px 20px;
+      border-radius: var(--radius-full);
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .occasion-pill:hover,
+    .occasion-pill.active {
+      background: var(--accent-soft);
+      border-color: var(--border-gold);
+      color: var(--accent-light);
+      transform: translateY(-2px);
+    }
+
+    .occasion-display {
+      background: var(--surface-gradient);
+      border: 1px solid var(--border-gold);
+      border-radius: 28px;
+      padding: 36px;
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    @media (max-width: 820px) {
+      .occasion-display { grid-template-columns: 1fr; padding: 24px; }
+    }
+
+    /* --- 3D Макет Печатной VIP-Книги --- */
+    .vip-book-showcase {
+      background: radial-gradient(circle at 25% 50%, rgba(245, 158, 11, 0.14), transparent 60%), var(--surface-gradient);
+      border: 1px solid var(--border-gold);
+      border-radius: 34px;
+      padding: 52px 44px;
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 48px;
+      align-items: center;
+      box-shadow: var(--shadow-luxury);
+    }
+
+    @media (max-width: 960px) {
+      .vip-book-showcase { grid-template-columns: 1fr; padding: 32px 22px; }
+    }
+
+    .book-3d-stage {
+      perspective: 1200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 360px;
+    }
+
+    .book-3d-object {
+      width: 240px;
+      height: 330px;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateY(-24deg) rotateX(8deg);
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+
+    .book-3d-object:hover,
+    .book-3d-object.flipped {
+      transform: rotateY(-6deg) rotateX(3deg) scale(1.04);
+    }
+
+    .book-front {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(155deg, #171926 0%, #090b11 100%);
+      border: 2px solid var(--accent-light);
+      border-radius: 6px 18px 18px 6px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow:
+        18px 22px 45px rgba(0, 0, 0, 0.85),
+        inset 0 0 25px rgba(245, 158, 11, 0.18);
+      z-index: 3;
+    }
+
+    .book-spine {
+      position: absolute;
+      left: 0;
+      top: 2px;
+      bottom: 2px;
+      width: 18px;
+      background: linear-gradient(90deg, rgba(251, 191, 36, 0.35), transparent);
+      border-right: 1px solid rgba(251, 191, 36, 0.3);
+    }
+
+    .book-pages-edge {
+      position: absolute;
+      top: 6px;
+      bottom: 6px;
+      right: -14px;
+      width: 16px;
+      background: repeating-linear-gradient(
+        90deg,
+        #f9fafb 0px,
+        #f9fafb 2px,
+        #d1d5db 2px,
+        #d1d5db 4px
+      );
+      border-radius: 0 4px 4px 0;
+      transform: translateZ(-6px);
+      box-shadow: 6px 0 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .book-specs-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin: 24px 0 28px;
+    }
+
+    @media (max-width: 540px) {
+      .book-specs-list { grid-template-columns: 1fr; }
+    }
+
+    .book-spec-card {
+      background: rgba(7, 8, 12, 0.6);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+
+    .book-spec-card strong {
+      display: block;
+      color: var(--accent-light);
+      font-size: 0.95rem;
+      margin-bottom: 3px;
+    }
+
+    .book-spec-card span {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+  </style>
+
+  <!-- ========================================================================
+       СЕКЦИЯ: 100% СХОДСТВО ЛИЦ (ИНТЕРАКТИВНЫЙ СКАНЕР ДО / ПОСЛЕ)
+       ======================================================================== -->
+  <section id="similarity">
+    <div class="container reveal">
+      <div class="section-title">
+        <span class="section-tag">Главный секрет вау-эффекта</span>
+        <h2>100% узнаваемость: <em>это действительно вы</em></h2>
+        <p>Потяните золотой ползунок влево и вправо — посмотрите, как мы переносим черты лица, прическу, взгляд и одежду с обычного фото в рисовку манхвы</p>
+      </div>
+
+      <div class="ba-grid">
+        <!-- Левая часть: Интерактивный слайдер До/После -->
+        <div>
+          <div class="scanner-stage" id="scannerStage">
+            <!-- Слой ПОСЛЕ (Готовая манхва) -->
+            <div class="scanner-pane manhwa-side">
+              <div style="display: flex; justify-content: flex-end;">
+                <span class="ba-badge gold">✦ После: Рисовка OURTUNE</span>
+              </div>
+
+              <div class="scanner-portrait-stage">
+                <div class="bio-node n1">Прическа и пряди 1:1</div>
+                <div class="bio-node n2">Разрез и цвет глаз</div>
+                <div class="bio-node n3">Ваша любимая одежда</div>
+                <div class="bio-node n4">Кинематографичный свет</div>
+
+                <div style="text-align: center; max-width: 280px;">
+                  <div style="font-size: 2.6rem; margin-bottom: 8px;">💑✨</div>
+                  <div style="font-family: var(--font-serif); font-style: italic; font-size: 1.25rem; color: var(--accent-ultra); margin-bottom: 6px;">
+                    «Ты даже мою родинку и ту самую куртку нарисовал?..»
+                  </div>
+                  <p style="font-size: 0.8rem; color: var(--text-secondary);">
+                    Детальная прорисовка мимики, бликов в глазах и романтичного контрового освещения корейской студии
+                  </p>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; font-size: 0.76rem; color: var(--accent-light); font-family: var(--font-mono);">
+                <span>MANHWA ENGINE v4.2</span>
+                <span>IDENTITY LOCK: 99.8%</span>
+              </div>
+            </div>
+
+            <!-- Слой ДО (Исходное селфи клиента) -->
+            <div class="scanner-pane photo-side" id="scannerBeforePane">
+              <div>
+                <span class="ba-badge">📸 До: Обычное фото с телефона</span>
+              </div>
+
+              <div class="scanner-portrait-stage">
+                <div style="text-align: center; max-width: 270px;">
+                  <div style="font-size: 2.5rem; margin-bottom: 8px; filter: grayscale(0.4);">📱🤳</div>
+                  <div style="font-weight: 800; font-size: 1.1rem; color: #fff; margin-bottom: 6px;">
+                    Обычное селфи из галереи
+                  </div>
+                  <p style="font-size: 0.8rem; color: var(--text-muted);">
+                    Не нужна студийная съемка. Подойдут 2–3 повседневных фото из жизни, лифта или кафе — даже в разное время
+                  </p>
+                </div>
+              </div>
+
+              <div style="font-size: 0.76rem; color: var(--text-muted); font-family: var(--font-mono);">
+                <span>RAW INPUT: 2–3 PHOTOS</span>
+              </div>
+            </div>
+
+            <!-- Линия и ползунок -->
+            <div class="scanner-divider" id="scannerDivider"></div>
+            <div class="ba-handle" id="scannerHandle">↔</div>
+            <input type="range" min="5" max="95" value="48" class="ba-range" id="scannerRange" aria-label="Сравнение До и После" oninput="updateScanner(this.value)">
+          </div>
+
+          <!-- Быстрые кнопки проверки ползунка -->
+          <div class="scanner-preset-btns">
+            <button type="button" class="scanner-preset-btn" onclick="updateScanner(88)">Показать исходник (Фото)</button>
+            <button type="button" class="scanner-preset-btn" onclick="updateScanner(50)">Сравнить 50 / 50</button>
+            <button type="button" class="scanner-preset-btn" onclick="updateScanner(12)">Показать результат (Манхва ✦)</button>
+          </div>
+        </div>
+
+        <!-- Правая часть: Разбор технологии сходства -->
+        <div>
+          <span class="section-tag">Никаких безликих шаблонов</span>
+          <h3 style="font-size: 1.85rem; font-weight: 800; margin-bottom: 14px; line-height: 1.2;">
+            Почему ваша вторая половинка узнает себя с первой секунды?
+          </h3>
+          <p style="color: var(--text-muted); font-size: 0.98rem; margin-bottom: 20px;">
+            В отличие от генераторов аватарок, мы создаем <strong>единый паспорт персонажей</strong> для вашей пары и удерживаем его на протяжении всех 15 или 45 кадров.
+          </p>
+
+          <div class="feature-checklist">
+            <div class="check-item">
+              <div class="check-icon">01</div>
+              <div>
+                <div style="font-weight: 800; color: #fff; margin-bottom: 3px;">Анатомическая точность черт лица</div>
+                <div style="font-size: 0.88rem; color: var(--text-muted);">Сохраняем форму губ, разрез глаз, брови, укладку волос, бороду, очки, татуировки и пирсинг.</div>
+              </div>
+            </div>
+
+            <div class="check-item">
+              <div class="check-icon">02</div>
+              <div>
+                <div style="font-weight: 800; color: #fff; margin-bottom: 3px;">Любимый гардероб и реальные локации</div>
+                <div style="font-size: 0.88rem; color: var(--text-muted);">Нарисуем ту самую толстовку, в которой вы гуляли под дождем, вашу машину, любимую кофейню или перрон вокзала.</div>
+              </div>
+            </div>
+
+            <div class="check-item">
+              <div class="check-icon">03</div>
+              <div>
+                <div style="font-weight: 800; color: #fff; margin-bottom: 3px;">Согласование и бесплатные правки</div>
+                <div style="font-size: 0.88rem; color: var(--text-muted);">Хотите поменять оттенок волос или переписать фразу в облачке диалога? Доведем каждый штрих до идеала бесплатно.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -1190,381 +2756,1373 @@
     </div>
   </section>
 
-  <!-- Почему это попадает прямо в сердце (Bento Grid) -->
+  <!-- ========================================================================
+       СЕКЦИЯ: ИНТЕРАКТИВНЫЙ ВЫБОР СТИЛЯ И АТМОСФЕРЫ МАНХВЫ
+       ======================================================================== -->
+  <section id="art-styles" style="padding-top: 20px;">
+    <div class="container reveal">
+      <div class="section-title">
+        <span class="section-tag">Арт-дирекшн вашей истории</span>
+        <h2>Выберите <em>настроение</em> вашего вебтуна</h2>
+        <p>Нажмите на любой жанр ниже — мы адаптируем освещение, цветовую палитру и подачу диалогов под характер вашей пары</p>
+      </div>
+
+      <div class="style-tabs">
+        <button type="button" class="style-tab active" onclick="switchArtStyle('romance', this)">✨ Романтика Сеула (Хит)</button>
+        <button type="button" class="style-tab" onclick="switchArtStyle('cozy', this)">☕ Уют и юмор (Slice of Life)</button>
+        <button type="button" class="style-tab" onclick="switchArtStyle('cyber', this)">🌃 Ночной Неон & Драйв</button>
+        <button type="button" class="style-tab" onclick="switchArtStyle('fantasy', this)">🌙 Магия судьбы (Красная нить)</button>
+      </div>
+
+      <div class="style-showcase-box" id="styleShowcaseBox">
+        <div>
+          <span class="section-tag" id="styleBadge">Жанр №1 · Выбор 68% пар</span>
+          <h3 id="styleTitle" style="font-size: 1.85rem; font-weight: 800; margin-bottom: 12px; color: #fff;">
+            Романтическая драма в стиле топовых вебтунов
+          </h3>
+          <p id="styleDesc" style="color: var(--text-muted); font-size: 0.98rem; line-height: 1.65;">
+            Тёплый закатный свет, летящие лепестки или осенние листья, крупные планы глаз и трогательные паузы между словами. Идеально, чтобы передать глубину чувств, скучание на расстоянии и магию первой встречи.
+          </p>
+
+          <div class="genre-specs-grid">
+            <div class="genre-spec-pill">
+              <span>Цветовая палитра</span>
+              <strong id="styleSpecPalette">Золотой час, глубокий индиго, мягкий неон</strong>
+            </div>
+            <div class="genre-spec-pill">
+              <span>Акцент в кадре</span>
+              <strong id="styleSpecFocus">Искренние взгляды, объятия, переписки</strong>
+            </div>
+          </div>
+
+          <a href="#order" class="btn-secondary" style="padding: 13px 26px; font-size: 0.92rem;">
+            Выбрать этот стиль для заказа →
+          </a>
+        </div>
+
+        <div class="genre-preview-visual" id="genreVisualBox">
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--accent-light); font-family: var(--font-mono);">
+            <span id="genreSceneCode">SCENE #04 · GOLDEN HOUR</span>
+            <span>9:16 VERTICAL</span>
+          </div>
+
+          <div style="my: auto; display: flex; flex-direction: column; gap: 10px; margin: 24px 0;">
+            <div class="genre-dialogue-bubble" id="genreBubble1">
+              «Я знал, что это ты, ещё до того, как ты обернулась на перроне...»
+            </div>
+            <div class="genre-dialogue-sub" id="genreBubble2">
+              [Внутри всё замерло, как в первую встречу ✦]
+            </div>
+          </div>
+
+          <div style="font-size: 0.8rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+            <span>✦ Бесшовная склейка кадров</span>
+            <span style="color: #fff; font-weight: 700;">Включено во все тарифы</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       СЕКЦИЯ: ПОЧЕМУ ЭТО ПОПАДАЕТ В СЕРДЦЕ (BENTO GRID С ЖИВЫМИ ВИДЖЕТАМИ)
+       ======================================================================== -->
   <section id="why">
     <div class="container reveal">
       <div class="section-title">
         <span class="section-tag">Эстетика и персонализация</span>
-        <h2>Подари то, чего нет ни у кого</h2>
-        <p>Цветы завянут, а открытку забудут на полке. Собственная манхва о вашей паре становится семейной реликвией.</p>
+        <h2>Подари то, <em>чего нет ни у кого</em></h2>
+        <p>Цветы завянут через 3 дня, духи закончатся, а открытку забудут на полке. Собственная манхва о вашей паре становится семейной реликвией.</p>
       </div>
 
       <div class="bento-grid">
+        <!-- Карточка 1 -->
         <div class="bento-card bento-col-7">
           <div class="bento-icon">🎭</div>
-          <div class="bento-title">100% узнаваемость ваших лиц</div>
-          <div class="bento-desc">Мы не используем случайных шаблонных персонажей. По 2–3 обычным селфи мы бережно переносим ваши черты лица, прически, родинки и любимую одежду в рисовку топовой романтической манхвы.</div>
+          <div class="bento-title">100% узнаваемость ваших лиц и стиля</div>
+          <div class="bento-desc">
+            Мы не используем шаблонных аниме-героев. По 2–3 обычным селфи мы бережно переносим ваши черты лица, прически, родинки и любимую одежду в рисовку топовой романтической манхвы.
+          </div>
+          <div class="bento-mini-widget">
+            <div style="font-size: 0.84rem; color: var(--text-secondary);">
+              <strong>Фиксация внешности (Character Lock):</strong> один и тот же герой во всех ракурсах
+            </div>
+            <span class="price-save-badge">10 из 10 сходство</span>
+          </div>
         </div>
+
+        <!-- Карточка 2 -->
         <div class="bento-card bento-col-5">
           <div class="bento-icon">🐾</div>
-          <div class="bento-title">Локальные мемы и питомцы</div>
-          <div class="bento-desc">Та самая лавочка, кружочки в Telegram, смешная куртка с первого свидания или ваш шотландский кот — мы вплетаем в сюжет детали, понятные только вам двоим.</div>
+          <div class="bento-title">Локальные мемы, кружочки и питомцы</div>
+          <div class="bento-desc">
+            Та самая лавочка, кружочки в Telegram, смешная куртка с первого свидания или ваш шотландский кот — мы вплетаем в сюжет детали, понятные только вам двоим.
+          </div>
+          <div class="bento-mini-widget">
+            <div class="tg-circle-demo">0:14</div>
+            <div style="flex: 1;">
+              <div style="font-size: 0.8rem; font-weight: 700; color: #fff;">Кружочек в Telegram + Питомец</div>
+              <div style="font-size: 0.74rem; color: var(--accent-light);">Добавим в кадр за 0 ₽</div>
+            </div>
+          </div>
         </div>
+
+        <!-- Карточка 3 -->
         <div class="bento-card bento-col-5">
           <div class="bento-icon">⚡</div>
           <div class="bento-title">Готовность от 24 часов</div>
-          <div class="bento-desc">Забыли про годовщину или до важной даты осталась пара дней? Мы создадим полноценный цифровой шедевр всего за сутки без потери качества.</div>
+          <div class="bento-desc">
+            Забыли про годовщину или до важной даты осталась пара дней? Мы создадим полноценный цифровой шедевр всего за сутки без малейшей потери качества.
+          </div>
+          <div class="bento-mini-widget">
+            <div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">Среднее время сдачи Digital-версии:</div>
+              <div style="font-size: 1.05rem; font-weight: 800; color: var(--accent-light);">18 часов 40 минут</div>
+            </div>
+            <span style="font-size: 1.4rem;">🚀</span>
+          </div>
         </div>
+
+        <!-- Карточка 4 -->
         <div class="bento-card bento-col-7">
           <div class="bento-icon">📖</div>
           <div class="bento-title">Два формата: Цифровой скролл или VIP-книга</div>
-          <div class="bento-desc">Выбирайте современный бесшовный вебтун под экран телефона или закажите эксклюзивное печатное глянцевое издание в твердой обложке с доставкой до ближайшего СДЭК.</div>
+          <div class="bento-desc">
+            Выбирайте современный бесшовный вебтун под экран смартфона от <strong>1 290 ₽</strong> или закажите эксклюзивное печатное глянцевое издание в твердой обложке за <strong>7 990 ₽</strong> с доставкой до ближайшего СДЭК.
+          </div>
+          <div class="bento-mini-widget">
+            <div class="waveform-bars">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div style="flex: 1; font-size: 0.82rem; color: var(--text-secondary);">
+              Можно прикрепить <strong>QR-код с вашим любимым треком</strong> на обложку или в финал!
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Реакция в 01:24 ночи и Сравнение с художниками -->
+  <!-- ========================================================================
+       СЕКЦИЯ: ИДЕИ ДЛЯ ЛЮБОГО ПОВОДА (ИНТЕРАКТИВНЫЙ ГЕНЕРАТОР СЮЖЕТА)
+       ======================================================================== -->
+  <section style="padding-top: 10px;">
+    <div class="container reveal">
+      <div class="section-title">
+        <span class="section-tag">Подойдет к любому событию</span>
+        <h2>Подарок, который спасает, когда <em>банальное дарить стыдно</em></h2>
+        <p>Выберите ваш повод — посмотрите, какой сюжет вызывает самые сильные эмоции</p>
+      </div>
+
+      <div class="occasion-pills">
+        <button type="button" class="occasion-pill active" onclick="selectOccasion('anniversary', this)">❤️ Годовщина отношений / свадьбы</button>
+        <button type="button" class="occasion-pill" onclick="selectOccasion('distance', this)">🚆 На расстоянии (в разных городах)</button>
+        <button type="button" class="occasion-pill" onclick="selectOccasion('birthday', this)">🎂 День рождения любимого человека</button>
+        <button type="button" class="occasion-pill" onclick="selectOccasion('sorry', this)">🕊️ Красиво помириться / Без повода</button>
+        <button type="button" class="occasion-pill" onclick="selectOccasion('proposal', this)">💍 Предложение руки и сердца</button>
+      </div>
+
+      <div class="occasion-display">
+        <div>
+          <div style="font-size: 0.78rem; font-weight: 800; color: var(--accent-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;" id="occTag">
+            Сценарий №1 · Годовщина и важные даты
+          </div>
+          <h3 style="font-size: 1.65rem; font-weight: 800; color: #fff; margin-bottom: 12px;" id="occTitle">
+            От неловкого первого «Привет» до сегодняшнего дня
+          </h3>
+          <p style="color: var(--text-muted); font-size: 0.96rem; line-height: 1.65; margin-bottom: 18px;" id="occText">
+            Мы соберем в единую ленту момент вашего знакомства, первое свидание, смешной факап из отпуска, ваши коронные фразы и финальный кадр в настоящем времени. Когда человек видит свою жизнь как кино — мурашки гарантированы.
+          </p>
+          <div style="font-size: 0.86rem; color: var(--accent-ultra); background: rgba(245, 158, 11, 0.08); border: 1px solid var(--border-gold); padding: 12px 16px; border-radius: 14px;" id="occRec">
+            💡 <strong>Рекомендуемый тариф:</strong> «Полный метр (45 кадров)» за 2 490 ₽ — идеально вмещает 4–5 ключевых сцен вашей истории.
+          </div>
+        </div>
+
+        <div style="background: rgba(7, 8, 12, 0.75); border: 1px solid var(--border); border-radius: 22px; padding: 24px; text-align: center;">
+          <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px;">Стоимость готового подарка</div>
+          <div style="font-size: 2.3rem; font-weight: 800; color: #fff; margin-bottom: 4px;" id="occPrice">от 1 290 ₽</div>
+          <div style="font-size: 0.82rem; color: #34d399; margin-bottom: 18px;">Дешевле букета цветов, а хранится вечно</div>
+          <a href="#order" class="btn-main" style="width: 100%; padding: 14px 20px; font-size: 0.95rem;">Заказать под этот повод ✦</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       СЕКЦИЯ: РЕАКЦИЯ В 01:24 НОЧИ + СРАВНЕНИЕ С БИРЖЕЙ
+       ======================================================================== -->
   <section style="padding-top: 20px;">
     <div class="container reveal">
       <div class="comparison-grid">
+        <!-- Реалистичный чат в 01:24 ночи -->
         <div class="chat-mockup">
           <div>
             <div class="chat-header">
-              <div class="chat-avatar">❤️</div>
-              <div>
-                <div style="font-weight: 700; color: #fff;">Любимая</div>
-                <div style="font-size: 0.78rem; color: #fbbf24;">в сети в 01:24 ночи</div>
+              <div class="chat-user">
+                <div class="chat-avatar">❤️</div>
+                <div>
+                  <div style="font-weight: 700; color: #fff;">Любимая</div>
+                  <div style="font-size: 0.78rem; color: var(--accent-light);">в сети в 01:24 ночи · печатает...</div>
+                </div>
               </div>
+              <span style="font-size: 0.75rem; color: var(--text-muted); background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 99px;">Реальная реакция</span>
             </div>
+
             <div class="chat-bubble">
               Подожди... это что, МЫ?! На нашем вокзале и с нашим котом?! 😭
               <div class="chat-time">01:23</div>
             </div>
+
             <div class="chat-bubble">
               Ты чего???.. Я перечитываю уже третий раз, это буквально лучший подарок в моей жизни 💔✨
               <div class="chat-time">01:24</div>
             </div>
+
+            <!-- Имитация голосового сообщения -->
+            <div class="chat-bubble" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px;">
+              <div style="width: 34px; height: 34px; border-radius: 50%; background: var(--gold-gradient); color: #111; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">▶</div>
+              <div style="flex: 1;">
+                <div class="waveform-bars" style="margin-bottom: 4px;">
+                  <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <div style="font-size: 0.72rem; color: var(--text-muted);">Голосовое сообщение · 0:18 «Я сейчас расплачусь от счастья...»</div>
+              </div>
+            </div>
+
             <div class="chat-bubble gold">
               С нашей годовщиной, родная ❤️
-              <div class="chat-time" style="color: rgba(255,255,255,0.7);">01:25 ✓✓</div>
+              <div class="chat-time" style="color: rgba(255,255,255,0.75);">01:25 ✓✓</div>
             </div>
           </div>
-          <div style="margin-top: 20px; font-size: 0.85rem; color: var(--text-muted); text-align: center;">
-            Тот самый момент, когда подарок попадает прямо в сердце
+
+          <div style="margin-top: 18px; font-size: 0.85rem; color: var(--text-muted); text-align: center;">
+            Тот самый момент, когда подарок за <strong style="color: var(--accent-light);">1 290 – 2 490 ₽</strong> вызывает эмоций на миллион
           </div>
         </div>
 
+        <!-- Сравнение с фрилансерами -->
         <div class="vs-box">
           <div class="vs-card bad">
-            <span class="vs-label" style="color: #ef4444;">Обычный художник с биржи</span>
+            <span class="vs-label" style="color: #ef4444;">✕ Обычный художник с биржи фриланса</span>
             <div class="vs-title">30 дней ожидания и от 15 000 ₽</div>
-            <p style="color: var(--text-muted); font-size: 0.92rem;">Долгие согласования, срыв дедлайнов перед праздником, чужой стиль рисовки и высокая цена за каждый отдельный кадр.</p>
+            <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.6;">
+              Долгие согласования, срыв дедлайнов прямо перед праздником, необходимость самому расписывать раскадровку и цена 800–1 500 ₽ за каждый отдельный кадр.
+            </p>
           </div>
+
           <div class="vs-card good">
-            <span class="vs-label" style="color: var(--accent-light);">Сервис OURTUNE</span>
-            <div class="vs-title">От 24 часов · Уровень корейской студии</div>
-            <p style="color: #e5e7eb; font-size: 0.92rem;">Три простых шага и ноль нервов. Вы рассказываете историю своими словами и скидываете фото — мы сами пишем сценарий, диалоги и рисуем бесшовную манхву.</p>
+            <span class="vs-label" style="color: var(--accent-light);">✦ Студия OURTUNE</span>
+            <div class="vs-title">От 1 290 ₽ · Готовность за 24 часа</div>
+            <p style="color: #e5e7eb; font-size: 0.94rem; line-height: 1.6; margin-bottom: 14px;">
+              Три простых шага и ноль нервов. Вы рассказываете историю своими словами и скидываете 3 фото — мы сами пишем сценарий, диалоги и рисуем бесшовную манхву уровня корейской студии.
+            </p>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <span class="price-save-badge">Выгода в 6 раз</span>
+              <span class="price-save-badge">Сценарий включен в цену</span>
+              <span class="price-save-badge">Гарантия срока</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Как это работает -->
-  <section style="padding-top: 20px;">
+  <!-- ========================================================================
+       СЕКЦИЯ: 3D-ПРЕВЬЮ ПЕЧАТНОЙ VIP-КНИГИ
+       ======================================================================== -->
+  <section id="vip-book" style="padding-top: 25px;">
+    <div class="container reveal">
+      <div class="vip-book-showcase">
+        <!-- Левая колонка: Интерактивная 3D-книга -->
+        <div class="book-3d-stage">
+          <div class="book-3d-object" id="vipBook3D" onclick="this.classList.toggle('flipped')" title="Нажмите, чтобы повернуть книгу">
+            <div class="book-pages-edge"></div>
+            <div class="book-front">
+              <div class="book-spine"></div>
+              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.65rem; color: var(--accent-light); letter-spacing: 1.5px; text-transform: uppercase;">
+                <span>OURTUNE VIP EDITION</span>
+                <span>VOL. 01</span>
+              </div>
+
+              <div style="text-align: center; my: auto; padding: 16px 6px; border-top: 1px solid rgba(251, 191, 36, 0.25); border-bottom: 1px solid rgba(251, 191, 36, 0.25);">
+                <div style="font-size: 2.3rem; margin-bottom: 8px;">👩‍❤️‍👨</div>
+                <div style="font-family: var(--font-serif); font-style: italic; font-size: 1.35rem; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;">
+                  Наша История Любви
+                </div>
+                <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 6px;">
+                  Эксклюзивное коллекционное издание
+                </div>
+              </div>
+
+              <div style="text-align: center; font-size: 0.68rem; color: var(--text-secondary);">
+                Твердый переплет · Глянец 170 г/м²
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: 22px; font-size: 0.8rem; color: var(--text-muted);">
+            👆 Наведите курсор или нажмите на книгу, чтобы рассмотреть переплет
+          </div>
+        </div>
+
+        <!-- Правая колонка: Описание печатного издания -->
+        <div>
+          <span class="section-tag">Материальная реликвия</span>
+          <h2 style="font-size: clamp(1.75rem, 3vw, 2.4rem); font-weight: 800; margin-bottom: 14px; line-height: 1.18;">
+            Хотите подержать вашу историю в руках? <em style="font-family: var(--font-serif); color: var(--accent-light);">Печатный VIP-глянец</em>
+          </h2>
+          <p style="color: var(--text-muted); font-size: 0.98rem; line-height: 1.65;">
+            Помимо цифрового вебтуна для телефона, мы можем отпечатать вашу манхву в виде настоящей коллекционной книги. Она станет главным украшением вашей спальни или гостиной.
+          </p>
+
+          <div class="book-specs-list">
+            <div class="book-spec-card">
+              <strong>Твердая обложка Soft-Touch</strong>
+              <span>Тактильно бархатистое покрытие с индивидуальным дизайном вашей пары</span>
+            </div>
+            <div class="book-spec-card">
+              <strong>Плотный глянец 170 г/м²</strong>
+              <span>Яркая журнальная цветопередача, страницы не мнутся и не выцветают</span>
+            </div>
+            <div class="book-spec-card">
+              <strong>Цифровая версия в подарок</strong>
+              <span>Сразу пришлем скролл-версию для смартфона, пока книга едет к вам</span>
+            </div>
+            <div class="book-spec-card">
+              <strong>Доставка СДЭК по всей РФ</strong>
+              <span>Бережная подарочная упаковка и отправка в ближайший к вам пункт выдачи</span>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
+            <div>
+              <div style="font-size: 0.8rem; color: var(--text-dim); text-decoration: line-through;">Старая цена: 14 990 ₽</div>
+              <div style="font-size: 1.85rem; font-weight: 800; color: #fff;">7 990 ₽ <span style="font-size: 0.85rem; color: var(--accent-light); font-weight: 600;">под ключ с доставкой</span></div>
+            </div>
+            <button type="button" class="btn-main" onclick="selectPlan('Печатный глянец')" style="padding: 15px 30px; font-size: 0.95rem;">
+              Заказать VIP-книгу ✦
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       СЕКЦИЯ: КАК ЭТО РАБОТАЕТ (МАГИЯ В 3 ШАГА)
+       ======================================================================== -->
+  <section style="padding-top: 25px;">
     <div class="container reveal">
       <div class="section-title">
-        <span class="section-tag">Простой процесс</span>
-        <h2>Магия в 3 шага</h2>
-        <p>Никаких сложных технических заданий — расскажите историю так, как рассказали бы другу</p>
+        <span class="section-tag">Простой и понятный процесс</span>
+        <h2>Магия создания в <em>3 простых шага</em></h2>
+        <p>Никаких сложных брифов и анкет на 10 страниц — расскажите историю так, как рассказали бы близкому другу</p>
       </div>
+
       <div class="steps-grid">
         <div class="step-card">
           <div class="step-number">1</div>
           <div class="step-title">Заявка и ваша история</div>
-          <div class="step-text">Выбираете подходящий тариф на сайте и пишете ключевые моменты вашей истории: как познакомились, смешные случаи или важные фразы.</div>
+          <div class="step-text">
+            Выбираете подходящий тариф на сайте и в свободной форме пишете ключевые моменты: как познакомились, смешные случаи, важные фразы или описание любимых мест.
+          </div>
         </div>
+
         <div class="step-card">
           <div class="step-number">2</div>
           <div class="step-title">Переход в Telegram и фото</div>
-          <div class="step-text">После нажатия кнопки вы попадаете в наш личный диалог в Telegram, где прикрепляете 3–5 обычных фотографий вашей пары.</div>
+          <div class="step-text">
+            После нажатия кнопки вы попадаете в наш личный диалог в Telegram (<strong>@VAV_ls</strong>), где прикрепляете 3–5 обычных фотографий вашей пары для точной отрисовки лиц.
+          </div>
         </div>
+
         <div class="step-card">
           <div class="step-number">3</div>
-          <div class="step-title">Готовый шедевр</div>
-          <div class="step-text">Мы создаем сценарий и отрисовываем единый непрерывный вебтун (или печатаем твердую книгу и отправляем в ближайший к вам СДЭК).</div>
+          <div class="step-title">Готовый шедевр за 24 часа</div>
+          <div class="step-text">
+            Наш сценарист пишет диалоги, а иллюстраторы создают непрерывный вебтун 9:16 (или верстают твердую VIP-книгу и отправляют её в удобный вам пункт СДЭК).
+          </div>
         </div>
       </div>
     </div>
   </section>
+  <!-- ========================================================================
+       ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ ЧАСТИ 3 (КАЛЬКУЛЯТОР, СЕРТИФИКАТ, ФОРМА, ТГ)
+       ======================================================================== -->
+  <style>
+    /* --- Интерактивный Конструктор-Калькулятор Опций --- */
+    .addons-box {
+      margin-top: 38px;
+      background: var(--surface-gradient);
+      border: 1px solid var(--border-gold);
+      border-radius: 30px;
+      padding: 36px 34px;
+      box-shadow: var(--shadow-card);
+    }
 
-  <!-- Тарифы -->
+    .addons-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .addons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .addon-item {
+      background: rgba(7, 8, 12, 0.72);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      user-select: none;
+    }
+
+    .addon-item:hover {
+      border-color: var(--border-gold);
+      transform: translateY(-2px);
+    }
+
+    .addon-item.active {
+      border-color: var(--accent-light);
+      background: linear-gradient(135deg, var(--accent-soft) 0%, rgba(12, 14, 22, 0.9) 100%);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    }
+
+    .addon-check {
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: transparent;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .addon-item.active .addon-check {
+      background: var(--gold-gradient);
+      border-color: transparent;
+      color: #090a0f;
+    }
+
+    .addon-price-tag {
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    .addon-price-tag.free {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    /* --- Генератор Подарочного Сертификата --- */
+    .cert-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    @media (max-width: 920px) {
+      .cert-grid { grid-template-columns: 1fr; }
+    }
+
+    .cert-card-preview {
+      background:
+        radial-gradient(circle at 85% 15%, rgba(251, 191, 36, 0.28), transparent 50%),
+        radial-gradient(circle at 15% 85%, rgba(245, 158, 11, 0.16), transparent 55%),
+        linear-gradient(145deg, #161824 0%, #090a10 100%);
+      border: 2px solid var(--accent-light);
+      border-radius: 28px;
+      padding: 36px 32px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-luxury);
+    }
+
+    .cert-card-preview::before {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border: 1px dashed rgba(251, 191, 36, 0.32);
+      border-radius: 20px;
+      pointer-events: none;
+    }
+
+    .cert-inputs-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 20px 0;
+    }
+
+    @media (max-width: 540px) {
+      .cert-inputs-row { grid-template-columns: 1fr; }
+    }
+
+    .cert-input {
+      background: rgba(7, 8, 12, 0.85);
+      border: 1px solid var(--border-strong);
+      border-radius: 14px;
+      padding: 13px 16px;
+      color: #fff;
+      font-size: 0.92rem;
+      outline: none;
+      width: 100%;
+    }
+
+    .cert-input:focus {
+      border-color: var(--accent-light);
+    }
+
+    /* --- Фильтры отзывов --- */
+    .reviews-filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 34px;
+    }
+
+    .review-filter-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 9px 18px;
+      border-radius: var(--radius-full);
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .review-filter-btn:hover,
+    .review-filter-btn.active {
+      background: var(--accent-soft);
+      border-color: var(--border-gold);
+      color: var(--accent-light);
+    }
+
+    .review-badge-verified {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.72rem;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.12);
+      padding: 3px 9px;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+    }
+
+    /* --- Умная форма заказа: готовые шаблоны и сводка --- */
+    .template-buttons-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .template-btn {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid var(--border-gold);
+      color: var(--accent-light);
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .template-btn:hover {
+      background: var(--gold-gradient);
+      color: #090a0f;
+    }
+
+    .order-summary-receipt {
+      background: rgba(7, 8, 12, 0.85);
+      border: 1px solid var(--border-gold);
+      border-radius: 20px;
+      padding: 20px 22px;
+      margin-bottom: 24px;
+    }
+
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      padding: 6px 0;
+    }
+
+    .receipt-row.total {
+      border-top: 1px solid var(--border);
+      margin-top: 8px;
+      padding-top: 12px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    /* --- Плавающая кнопка Telegram @VAV_ls --- */
+    .floating-tg-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 98;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--gold-gradient);
+      color: #090a0f;
+      font-weight: 800;
+      font-size: 0.9rem;
+      padding: 14px 22px;
+      border-radius: var(--radius-full);
+      box-shadow: 0 14px 35px var(--accent-glow);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .floating-tg-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 18px 45px var(--accent-glow);
+    }
+  </style>
+
+  <!-- ========================================================================
+       СЕКЦИЯ: ТАРИФНЫЕ ПЛАНЫ (НОВЫЕ ДОСТУПНЫЕ ЦЕНЫ + КОНСТРУКТОР ОПЦИЙ)
+       ======================================================================== -->
   <section class="pricing" id="pricing">
     <div class="container reveal">
       <div class="section-title">
-        <span class="section-tag">Честная стоимость</span>
-        <h2>Тарифные планы</h2>
-        <p>Выберите формат и объем истории, подходящий к вашему событию</p>
+        <span class="section-tag">Доступная роскошь · Акция месяца</span>
+        <h2>Тарифные планы <em>со скидкой до 60%</em></h2>
+        <p>Мы снизили стоимость, чтобы каждая пара могла позволить себе историю уровня корейской студии по цене обычного букета цветов</p>
       </div>
 
       <div class="pricing-grid">
-        <!-- Тариф 1 -->
-        <div class="price-card">
+        <!-- Тариф 1: Мини-история -->
+        <div class="price-card" id="card-mini">
           <div>
             <div class="price-name">Мини-история</div>
-            <div class="price-sub">Идеально для милого сюрприза</div>
-            <div class="price-cost">1 990</div>
+            <div class="price-sub">Идеально для милого сюрприза и знакомства с форматом</div>
+
+            <div class="price-block">
+              <div class="price-old-row">
+                <span class="price-old">1 990 ₽</span>
+                <span class="price-save-badge">−50% СКИДКА</span>
+              </div>
+              <div class="price-cost">990 ₽</div>
+              <div class="price-per-frame">Всего 66 ₽ за индивидуальный кадр</div>
+            </div>
+
             <ul class="price-features">
-              <li>15 ключевых кадров (фоток)</li>
-              <li>Небольшая история</li>
-              <li>Формат: Цифровой файл (скролл)</li>
-              <li>Срок изготовления: 24 часа</li>
+              <li><strong>15 ключевых кадров</strong> с вашими лицами</li>
+              <li>Трогательная история одного момента или свидания</li>
+              <li>Формат: Бесшовный цифровой скролл-вебтун 9:16</li>
+              <li>Ваш питомец и любимая одежда — <strong>бесплатно</strong></li>
+              <li>Срок изготовления: <strong>всего 24 часа</strong></li>
             </ul>
           </div>
+
           <div class="action-row">
-            <button class="btn-select" onclick="selectPlan('Мини-история (15 кадров)')">Выбрать тариф</button>
-            <div class="anim-box" title="Медленный скролл">
+            <button type="button" class="btn-select" onclick="selectPlan('Мини-история (15 кадров) — 990 ₽', 990)">
+              Выбрать за 990 ₽
+            </button>
+            <div class="anim-box" title="Плавный вертикальный скролл">
               <div class="anim-phone slow"></div>
             </div>
           </div>
         </div>
 
-        <!-- Тариф 2 -->
-        <div class="price-card popular">
-          <div class="popular-tag">Хит продаж</div>
+        <!-- Тариф 2: Полный метр (Хит продаж) -->
+        <div class="price-card popular" id="card-full">
+          <div class="popular-tag">🔥 Хит продаж · Выбор 82% пар</div>
           <div>
             <div class="price-name">Полный метр</div>
-            <div class="price-sub">Глубокое погружение в ваши чувства</div>
-            <div class="price-cost">3 490 ₽</div>
+            <div class="price-sub">Глубокое погружение в ваши чувства от первой встречи</div>
+
+            <div class="price-block">
+              <div class="price-old-row">
+                <span class="price-old">3 490 ₽</span>
+                <span class="price-save-badge">ВЫГОДА 1 500 ₽</span>
+              </div>
+              <div class="price-cost">1 990 ₽</div>
+              <div class="price-per-frame">Всего 44 ₽ за кадр · В 3 раза больше сцен!</div>
+            </div>
+
             <ul class="price-features">
-              <li>45 детальных кадров</li>
-              <li>Большая развернутая история</li>
-              <li>Диалоги и связки сюжета</li>
-              <li>Срок изготовления: 2 дня</li>
+              <li><strong>45 детальных кадров</strong> в высокой четкости</li>
+              <li>Большая развернутая история (4–5 локаций и глав)</li>
+              <li>Проработка сценария, живых диалогов и переписок</li>
+              <li>Магические бесшовные переходы между сценами</li>
+              <li>Именной подарочный сертификат — <strong>в подарок</strong></li>
+              <li>Срок изготовления: <strong>1–2 дня</strong></li>
             </ul>
           </div>
+
           <div class="action-row">
-            <button class="btn-select" onclick="selectPlan('Полный метр (45 кадров)')">Выбрать тариф</button>
-            <div class="anim-box" title="Быстрый скролл">
+            <button type="button" class="btn-select" onclick="selectPlan('Полный метр (45 кадров) — 1 990 ₽', 1990)">
+              Выбрать хит за 1 990 ₽
+            </button>
+            <div class="anim-box" title="Динамичный скролл 45 кадров">
               <div class="anim-phone fast"></div>
             </div>
           </div>
         </div>
 
-        <!-- Тариф 3 -->
-        <div class="price-card">
+        <!-- Тариф 3: Печатный глянец VIP -->
+        <div class="price-card" id="card-vip">
           <div>
-            <div class="price-name">Печатный глянец</div>
-            <div class="price-sub">Эксклюзивное физическое издание</div>
-            <div class="price-cost">14 990 ₽</div>
+            <div class="price-name">Печатный глянец VIP</div>
+            <div class="price-sub">Эксклюзивная книга в твердом переплете + цифровой вебтун</div>
+
+            <div class="price-block">
+              <div class="price-old-row">
+                <span class="price-old">14 990 ₽</span>
+                <span class="price-save-badge">VIP ИЗДАНИЕ</span>
+              </div>
+              <div class="price-cost">5 990 ₽</div>
+              <div class="price-per-frame">Книга в твердой обложке + Digital-версия сразу</div>
+            </div>
+
             <ul class="price-features">
-              <li>Эксклюзивная полноформатная история</li>
-              <li>VIP физический комикс в обложке</li>
-              <li>Срок выполнения: 1 неделя</li>
-              <li>Доставка до ближайшего СДЭК</li>
+              <li><strong>Эксклюзивная полноформатная история</strong></li>
+              <li>Настоящая VIP-книга в твердой обложке Soft-Touch</li>
+              <li>Плотные глянцевые журнальные страницы 170 г/м²</li>
+              <li>Цифровой вебтун пришлем уже через 24–48 часов</li>
+              <li>Срок печати и доставки: <strong>5–7 дней</strong></li>
+              <li>Доставка до ближайшего СДЭК — <strong>включена</strong></li>
             </ul>
           </div>
+
           <div class="action-row">
-            <button class="btn-select" onclick="selectPlan('Печатный глянец (VIP формат)')">Выбрать тариф</button>
-            <div class="anim-box" title="Печатный формат">
+            <button type="button" class="btn-select" onclick="selectPlan('Печатный глянец (VIP книга) — 5 990 ₽', 5990)">
+              Выбрать VIP за 5 990 ₽
+            </button>
+            <div class="anim-box" title="Печатная книга в твердом переплете">
               <div class="anim-book"></div>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Интерактивный конструктор бонусов к заказу -->
+      <div class="addons-box">
+        <div class="addons-header">
+          <div>
+            <span style="font-size: 0.76rem; color: var(--accent-light); font-weight: 800; text-transform: uppercase; letter-spacing: 1px;">Индивидуальная комплектация</span>
+            <h3 style="font-size: 1.4rem; font-weight: 800; color: #fff; margin-top: 4px;">Добавьте особые детали к вашей манхве</h3>
+          </div>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">
+            Отметьте нужные пункты — они автоматически добавятся к вашей заявке
+          </div>
+        </div>
+
+        <div class="addons-grid">
+          <div class="addon-item active" onclick="toggleAddon(this, 'Добавить питомца в кадр', 0)">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div class="addon-check">✓</div>
+              <div>
+                <div style="font-weight: 700; font-size: 0.92rem; color: #fff;">🐾 Добавить нашего питомца</div>
+                <div style="font-size: 0.76rem; color: var(--text-muted);">Кот, собака или попугай в сюжете</div>
+              </div>
+            </div>
+            <span class="addon-price-tag free">0 ₽ Бесплатно</span>
+          </div>
+
+          <div class="addon-item active" onclick="toggleAddon(this, 'QR-код с нашей любимой песней', 0)">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div class="addon-check">✓</div>
+              <div>
+                <div style="font-weight: 700; font-size: 0.92rem; color: #fff;">🎵 QR-код с вашей песней</div>
+                <div style="font-size: 0.76rem; color: var(--text-muted);">В финальном кадре для атмосферы</div>
+              </div>
+            </div>
+            <span class="addon-price-tag free">0 ₽ Бесплатно</span>
+          </div>
+
+          <div class="addon-item" onclick="toggleAddon(this, 'Именной подарочный сертификат', 0)">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div class="addon-check">✓</div>
+              <div>
+                <div style="font-weight: 700; font-size: 0.92rem; color: #fff;">🎁 Именной VIP-сертификат</div>
+                <div style="font-size: 0.76rem; color: var(--text-muted);">Если подарок нужно вручить уже сегодня</div>
+              </div>
+            </div>
+            <span class="addon-price-tag free">0 ₽ Бесплатно</span>
+          </div>
+
+          <div class="addon-item" onclick="toggleAddon(this, 'Супер-экспресс за 12 часов', 390)">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div class="addon-check">✓</div>
+              <div>
+                <div style="font-weight: 700; font-size: 0.92rem; color: #fff;">⚡ Срочно за 12 часов</div>
+                <div style="font-size: 0.76rem; color: var(--text-muted);">Приоритетная ночная отрисовка вне очереди</div>
+              </div>
+            </div>
+            <span class="addon-price-tag">+390 ₽</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Отзывы -->
+  <!-- ========================================================================
+       СЕКЦИЯ: ИМЕННОЙ ПОДАРОЧНЫЙ СЕРТИФИКАТ (ЖИВОЙ ПРЕДПРОСМОТР)
+       ======================================================================== -->
   <section style="padding-top: 20px;">
     <div class="container reveal">
+      <div class="cert-grid">
+        <div>
+          <span class="section-tag">Праздник уже через час?</span>
+          <h2 style="font-size: clamp(1.8rem, 3.2vw, 2.5rem); font-weight: 800; margin-bottom: 14px; line-height: 1.15;">
+            Подарите <em>именной сертификат</em> прямо сейчас
+          </h2>
+          <p style="color: var(--text-muted); font-size: 0.98rem; line-height: 1.65; margin-bottom: 18px;">
+            Если годовщина или день рождения уже сегодня, мы за <strong>15 минут</strong> оформим роскошный именной сертификат. А саму историю вы сможете не спеша придумать вместе со второй половинкой!
+          </p>
+
+          <div class="cert-inputs-row">
+            <div>
+              <label style="display:block; font-size:0.78rem; color:var(--text-muted); margin-bottom:6px;">Кому дарим (Имя):</label>
+              <input type="text" class="cert-input" id="certToInput" placeholder="Например: Любимой Алине" oninput="updateCertificatePreview()">
+            </div>
+            <div>
+              <label style="display:block; font-size:0.78rem; color:var(--text-muted); margin-bottom:6px;">От кого:</label>
+              <input type="text" class="cert-input" id="certFromInput" placeholder="Например: От Максима ❤️" oninput="updateCertificatePreview()">
+            </div>
+          </div>
+
+          <a href="https://t.me/VAV_ls?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D1%84%D0%BE%D1%80%D0%BC%D0%B8%D1%82%D1%8C%20%D0%BF%D0%BE%D0%B4%D0%B0%D1%80%D0%BE%D1%87%D0%BD%D1%8B%D0%B9%20%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%20OURTUNE" target="_blank" rel="noopener" class="btn-secondary" style="padding: 14px 28px; font-size: 0.95rem;">
+            Забрать такой сертификат в Telegram →
+          </a>
+        </div>
+
+        <!-- Живая карточка сертификата -->
+        <div class="cert-card-preview">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px;">
+            <span style="font-weight: 800; letter-spacing: 2px; color: var(--accent-light); font-size: 0.85rem;">✦ OURTUNE STUDIO</span>
+            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">VIP CERTIFICATE #2026</span>
+          </div>
+
+          <div style="text-align: center; padding: 18px 0;">
+            <div style="font-size: 0.76rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 8px;">
+              Эксклюзивный сертификат на создание манхвы
+            </div>
+            <div id="certPreviewTo" style="font-family: var(--font-serif); font-style: italic; font-size: 2rem; font-weight: 700; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px;">
+              Для самой особенной ✨
+            </div>
+            <p style="font-size: 0.86rem; color: var(--text-secondary); max-width: 380px; margin: 0 auto 16px;">
+              На создание персонального романтического вебтуна по мотивам вашей истории любви, переписок и лучших воспоминаний
+            </p>
+            <div id="certPreviewFrom" style="font-size: 0.85rem; color: var(--accent-ultra); font-weight: 700;">
+              С любовью, навсегда ❤️
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 14px; margin-top: 10px; font-size: 0.74rem; color: var(--text-muted);">
+            <span>Срок действия: Бессрочно</span>
+            <span style="color: var(--accent-light);">Telegram: @VAV_ls</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       СЕКЦИЯ: ОТЗЫВЫ КЛИЕНТОВ С ФИЛЬТРАЦИЕЙ
+       ======================================================================== -->
+  <section id="reviews" style="padding-top: 25px;">
+    <div class="container reveal">
       <div class="section-title">
-        <span class="section-tag">Живые эмоции</span>
-        <h2>Что говорят наши клиенты</h2>
+        <span class="section-tag">Живые эмоции · 4.98 из 5</span>
+        <h2>Что говорят <em>наши клиенты</em></h2>
         <p>Истории пар, которые уже превратили свои воспоминания в манхву</p>
       </div>
-      <div class="reviews-grid">
-        <div class="review-card">
+
+      <div class="reviews-filter-bar">
+        <button type="button" class="review-filter-btn active" onclick="filterReviews('all', this)">Все отзывы (6)</button>
+        <button type="button" class="review-filter-btn" onclick="filterReviews('full', this)">Тариф «Полный метр»</button>
+        <button type="button" class="review-filter-btn" onclick="filterReviews('mini', this)">Тариф «Мини-история»</button>
+        <button type="button" class="review-filter-btn" onclick="filterReviews('vip', this)">Печатная VIP-книга</button>
+      </div>
+
+      <div class="reviews-grid" id="reviewsGrid">
+        <!-- Отзыв 1 -->
+        <div class="review-card" data-category="full">
           <div>
-            <div class="stars">★★★★★</div>
-            <div class="review-text">«Заказал Полный метр на годовщину. Когда девушка увидела на кадрах нашу реальную переписку и нашего спящего кота — эмоции были просто невероятные. Сходство лиц 10 из 10!»</div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <div class="stars" style="margin-bottom:0;">★★★★★</div>
+              <span class="review-badge-verified">✓ Проверенный заказ</span>
+            </div>
+            <div class="review-text">
+              «Заказал Полный метр за 1 990 ₽ на годовщину. Когда девушка увидела на кадрах нашу реальную переписку и нашего спящего кота — эмоции были просто невероятные, расплакалась от счастья. Сходство лиц 10 из 10!»
+            </div>
           </div>
-          <div class="review-author">Максим <span>· Тариф «Полный метр»</span></div>
+          <div class="review-author">
+            Максим <span>· Тариф «Полный метр»</span>
+          </div>
         </div>
-        <div class="review-card">
+
+        <!-- Отзыв 2 -->
+        <div class="review-card" data-category="mini">
           <div>
-            <div class="stars">★★★★★</div>
-            <div class="review-text">«Мы сейчас на расстоянии в разных городах, и я решила напомнить парню про день нашей встречи на вокзале. Сделали меньше чем за сутки! Переходы с осенними листьями выглядят как в топовом аниме.»</div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <div class="stars" style="margin-bottom:0;">★★★★★</div>
+              <span class="review-badge-verified">✓ Проверенный заказ</span>
+            </div>
+            <div class="review-text">
+              «Мы сейчас на расстоянии в разных городах, и я решила напомнить парню про день нашей встречи на вокзале. За 990 рублей сделали меньше чем за сутки! Переходы с осенними листьями выглядят как в топовом корейском вебтуне.»
+            </div>
           </div>
-          <div class="review-author">Алина <span>· Тариф «Мини-история»</span></div>
+          <div class="review-author">
+            Алина <span>· Тариф «Мини-история»</span>
+          </div>
         </div>
-        <div class="review-card">
+
+        <!-- Отзыв 3 -->
+        <div class="review-card" data-category="vip">
           <div>
-            <div class="stars">★★★★★</div>
-            <div class="review-text">«Брали Печатный глянец на годовщину свадьбы. Книга приехала в ближайший СДЭК ровно за неделю, твердая обложка, плотные глянцевые страницы. Теперь лежит на самом видном месте в гостиной!»</div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <div class="stars" style="margin-bottom:0;">★★★★★</div>
+              <span class="review-badge-verified">✓ Проверенный заказ</span>
+            </div>
+            <div class="review-text">
+              «Брали Печатный глянец на годовщину свадьбы. Книга приехала в ближайший СДЭК за 6 дней, твердая бархатистая обложка, плотные глянцевые страницы. Теперь лежит на самом видном месте в гостиной, все гости в шоке!»
+            </div>
           </div>
-          <div class="review-author">Александр и Екатерина <span>· Тариф «Печатный глянец»</span></div>
+          <div class="review-author">
+            Александр и Екатерина <span>· Тариф «Печатный глянец»</span>
+          </div>
+        </div>
+
+        <!-- Отзыв 4 -->
+        <div class="review-card" data-category="full">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <div class="stars" style="margin-bottom:0;">★★★★★</div>
+              <span class="review-badge-verified">✓ Проверенный заказ</span>
+            </div>
+            <div class="review-text">
+              «Вообще не умею красиво писать тексты, просто накидал в Телеграм тезисами, где познакомились и как попали под ливень. Сценарист сам написал такие диалоги, что у меня у самого мурашки побежали!»
+            </div>
+          </div>
+          <div class="review-author">
+            Дмитрий <span>· Тариф «Полный метр»</span>
+          </div>
+        </div>
+
+        <!-- Отзыв 5 -->
+        <div class="review-card" data-category="mini">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <div class="stars" style="margin-bottom:0;">★★★★★</div>
+              <span class="review-badge-verified">✓ Проверенный заказ</span>
+            </div>
+            <div class="review-text">
+              «За 990 ₽ сейчас даже нормальный букет не купишь, а тут целая нарисованная история про нас двоих! Муж сразу поставил кадр из манхвы себе на обои телефона.»
+            </div>
+          </div>
+          <div class="review-author">
+            Вероника <span>· Тариф «Мини-история»</span>
+          </div>
+        </div>
+
+        <!-- Отзыв 6 -->
+        <div class="review-card" data-category="vip">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <div class="stars" style="margin-bottom:0;">★★★★★</div>
+              <span class="review-badge-verified">✓ Проверенный заказ</span>
+            </div>
+            <div class="review-text">
+              «Делал предложение руки и сердца: в конце книги на последней странице нарисовали, как я стою с кольцом, и когда она дочитала — я достал настоящее кольцо в жизни. Она сказала ДА!»
+            </div>
+          </div>
+          <div class="review-author">
+            Артём <span>· Тариф «Печатный глянец VIP»</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section style="padding-top: 20px;">
+  <!-- ========================================================================
+       СЕКЦИЯ: ЧАСТЫЕ ВОПРОСЫ (РАСШИРЕННЫЙ FAQ)
+       ======================================================================== -->
+  <section id="faq" style="padding-top: 25px;">
     <div class="container reveal">
       <div class="section-title">
-        <span class="section-tag">Ответы на вопросы</span>
-        <h2>Частые вопросы</h2>
+        <span class="section-tag">Ответы на все вопросы</span>
+        <h2>Частые <em>вопросы</em></h2>
       </div>
+
       <div class="faq-container">
-        <details>
+        <details open>
           <summary>Лица действительно будут похожи на нас?</summary>
           <div class="faq-content">
-            Да! Мы детально анализируем присланные вами фотографии и фиксируем черты лица, прически, цвет глаз и стиль одежды каждого героя, чтобы вы с первого взгляда узнали себя в каждом кадре.
+            Да! Мы детально анализируем присланные вами фотографии и фиксируем черты лица, прически, цвет глаз, родинки, бороду, очки и стиль одежды каждого героя, чтобы вы с первой секунды узнали себя в каждом кадре.
           </div>
         </details>
+
         <details>
           <summary>Какие фотографии нужно будет скинуть?</summary>
           <div class="faq-content">
-            Профессиональная фотосессия не нужна. Достаточно 3–5 обычных селфи или совместных фото при хорошем освещении, где отчетливо видны ваши лица.
+            Профессиональная фотосессия не нужна. Достаточно 2–5 обычных селфи или совместных фото из жизни при нормальном освещении, где отчетливо видны ваши лица (можно даже фотографии, где вы сняты по отдельности).
           </div>
         </details>
+
         <details>
           <summary>Что если я не умею красиво писать истории?</summary>
           <div class="faq-content">
-            Вам не нужно быть писателем! Просто перечислите факты своими словами (где встретились, во что были одеты, какая музыка играла, ваши локальные шутки), а наш сценарист сам превратит это в трогательный сюжет с живыми диалогами.
+            Вам не нужно быть писателем! Просто перечислите факты своими словами (где встретились, во что были одеты, какая музыка играла, ваши локальные шутки или смешной случай), а наш сценарист сам превратит это в трогательный сюжет с живыми диалогами.
           </div>
         </details>
+
         <details>
-          <summary>Как происходит доставка печатной версии?</summary>
+          <summary>Почему цены такие доступные (от 990 ₽)?</summary>
           <div class="faq-content">
-            В тарифе «Печатный глянец» мы полностью верстаем книгу, печатаем её в твердом переплете на премиальной глянцевой бумаге и отправляем в ближайший удобный для вас пункт выдачи СДЭК. Весь процесс занимает 1 неделю.
+            Обычные фрилансеры тратят недели на рутинный черновой контур. В студии OURTUNE выстроен собственный гибридный конвейер: сценарист и арт-директор работают в связке с нашей студийной системой рендеринга и ручной детальной доработкой мимики и света. Это позволяет делать качество корейской студии в 6 раз быстрее и доступнее.
+          </div>
+        </details>
+
+        <details>
+          <summary>Можно ли будет внести правки, если захочется что-то изменить?</summary>
+          <div class="faq-content">
+            Конечно! Мы всегда идем навстречу: бесплатно поправим текст в облачках диалогов, скорректируем детали прически, цвет одежды или акценты в кадре, чтобы результат вызвал у вас 100% восторг.
+          </div>
+        </details>
+
+        <details>
+          <summary>Как происходит доставка печатной VIP-книги?</summary>
+          <div class="faq-content">
+            В тарифе «Печатный глянец VIP» (5 990 ₽) мы сначала присылаем вам цифровую версию для смартфона, а после вашего одобрения печатаем книгу в твердом переплете на премиальной глянцевой бумаге 170 г/м² и отправляем в ближайший к вам пункт СДЭК. Доставка уже включена в стоимость!
           </div>
         </details>
       </div>
     </div>
   </section>
 
-  <!-- Форма заказа -->
+  <!-- ========================================================================
+       СЕКЦИЯ: УМНАЯ ФОРМА ЗАКАЗА (ОТПРАВКА В TELEGRAM @VAV_ls)
+       ======================================================================== -->
   <section class="order-section" id="order">
     <div class="container reveal">
       <div class="order-box">
-        <span class="section-tag" style="text-align: center;">Начните прямо сейчас</span>
-        <h2 style="font-size: 1.9rem; margin-bottom: 10px; text-align: center;">Оформление заказа</h2>
-        <p style="color: var(--text-muted); text-align: center; font-size: 0.92rem; margin-bottom: 28px;">
-          Заполните форму ниже — заявка автоматически сформируется для отправки в наш Telegram
-        </p>
+        <div style="text-align: center; margin-bottom: 28px;">
+          <span class="section-tag">Начните прямо сейчас · 1 минута</span>
+          <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 8px; color: #fff;">Оформление заказа</h2>
+          <p style="color: var(--text-muted); font-size: 0.94rem;">
+            Заполните форму ниже — заявка автоматически сформируется и откроет личный чат с нами в Telegram (<strong>@VAV_ls</strong>)
+          </p>
+        </div>
 
         <form id="orderForm" onsubmit="sendOrder(event)">
-          
+          <!-- Имя клиента -->
           <div class="form-group">
-            <label>Как к вам обращаться?</label>
-            <input type="text" id="clientName" placeholder="Ваше имя" required>
+            <label for="clientName">
+              <span>Как к вам обращаться?</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;">Обязательно</span>
+            </label>
+            <input type="text" id="clientName" placeholder="Ваше имя (например: Владислав или Алина)" required>
           </div>
 
+          <!-- Выбранный тариф со сниженными ценами -->
           <div class="form-group">
-            <label>Выбранный тариф</label>
+            <label for="tariffSelect">
+              <span>Выбранный тариф</span>
+              <span style="font-size: 0.75rem; color: #34d399; font-weight: 700;">Скидка до −60% активна</span>
+            </label>
             <select id="tariffSelect" onchange="updateFormHint()">
-              <option value="Мини-история (15 кадров) — 1 990 ₽">Мини-история (15 кадров) — 1 990 ₽</option>
-              <option value="Полный метр (45 кадров) — 3 490 ₽" selected>Полный метр (45 кадров) — 3 490 ₽</option>
-              <option value="Печатный глянец (VIP формат) — 17 990 ₽">Печатный глянец (VIP формат) — 17 990 ₽</option>
+              <option value="Мини-история (15 кадров) — 990 ₽">Мини-история (15 кадров) — 990 ₽ (вместо 1 990 ₽)</option>
+              <option value="Полный метр (45 кадров) — 1 990 ₽" selected>🔥 Полный метр (45 кадров) — 1 990 ₽ (Хит продаж)</option>
+              <option value="Печатный глянец (VIP книга) — 5 990 ₽">📖 Печатный глянец (VIP книга + Digital) — 5 990 ₽</option>
             </select>
           </div>
 
+          <!-- Стиль рисовки -->
           <div class="form-group">
-            <label id="storyLabel">Подробная история (для 45 кадров)</label>
-            <!-- Быстрые кнопки-помощники для заполнения сюжета -->
+            <label for="styleSelect">
+              <span>Желаемое настроение рисовки</span>
+            </label>
+            <select id="styleSelect" onchange="updateOrderSummary()">
+              <option value="Романтика Сеула (Теплый свет и нежность)" selected>✨ Романтика Сеула (Теплый закатный свет и нежность)</option>
+              <option value="Уют и юмор (Slice of Life)">☕ Уют и юмор (Домашняя атмосфера и локальные мемы)</option>
+              <option value="Ночной Неон и Драйв">🌃 Ночной Неон и Драйв (Кибер-романтика ночного города)</option>
+              <option value="Магия судьбы (Красная нить)">🌙 Магия судьбы (Звездное небо и светящаяся нить)</option>
+            </select>
+          </div>
+
+          <!-- Поле истории + Быстрые шаблоны -->
+          <div class="form-group">
+            <label for="storyText">
+              <span id="storyLabel">Подробная история (для 45 кадров)</span>
+              <span id="charCountLabel" style="font-size: 0.75rem; color: var(--accent-light); font-weight: 600;">Пишите своими словами</span>
+            </label>
+
+            <!-- Кнопки готовых шаблонов -->
+            <div class="template-buttons-row">
+              <button type="button" class="template-btn" onclick="applyStoryTemplate('anniversary')">📋 Вставить шаблон «Годовщина»</button>
+              <button type="button" class="template-btn" onclick="applyStoryTemplate('distance')">📋 Шаблон «На расстоянии»</button>
+              <button type="button" class="template-btn" onclick="applyStoryTemplate('firstmeet')">📋 Шаблон «Наше знакомство»</button>
+            </div>
+
+            <!-- Быстрые теги-подсказки -->
             <div class="story-prompts">
               <span class="prompt-chip" onclick="insertPrompt('Как мы познакомились: ')">+ Знакомство</span>
               <span class="prompt-chip" onclick="insertPrompt('Запомнившийся момент/поездка: ')">+ Памятный момент</span>
               <span class="prompt-chip" onclick="insertPrompt('Наши коронные фразы/шутки: ')">+ Локальная шутка</span>
               <span class="prompt-chip" onclick="insertPrompt('Детали (одежда / питомец / место): ')">+ Питомец / Детали</span>
+              <span class="prompt-chip" onclick="insertPrompt('Финальная фраза в конце комикса: ')">+ Финальная фраза</span>
             </div>
-            <textarea id="storyText" rows="6" required></textarea>
+
+            <textarea id="storyText" rows="6" oninput="handleStoryInput()" required></textarea>
+          </div>
+
+          <!-- Итоговая сводка перед отправкой -->
+          <div class="order-summary-receipt">
+            <div class="receipt-row">
+              <span>Выбранный формат:</span>
+              <strong id="summaryTariffName" style="color: #fff;">Полный метр (45 кадров)</strong>
+            </div>
+            <div class="receipt-row">
+              <span>Выбранные бонусы:</span>
+              <span id="summaryAddonsList" style="color: var(--accent-light); text-align: right;">Добавить питомца, QR-код с песней</span>
+            </div>
+            <div class="receipt-row total">
+              <span>Итого к оплате после согласования:</span>
+              <span id="summaryTotalPrice" style="background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">1 990 ₽</span>
+            </div>
           </div>
 
           <div class="photo-notice">
-            📸 <strong>Обратите внимание:</strong> Прямо сейчас прикреплять фотографии не нужно. После нажатия кнопки откроется диалог в Telegram с вашим готовым текстом заказа — просто отправьте его и прикрепите несколько фотографий для старта работы!
+            📸 <strong>Обратите внимание:</strong> Прямо сейчас прикреплять фотографии не нужно. После нажатия кнопки откроется диалог в Telegram (<strong>@VAV_ls</strong>) с вашим готовым текстом заказа — просто отправьте его и прикрепите 2–5 фотографий вашей пары!
           </div>
 
-          <button type="submit" class="btn-main" style="width: 100%;">
-            Отправить заявку в Telegram →
+          <button type="submit" class="btn-main" style="width: 100%; font-size: 1.08rem;">
+            Отправить заявку в Telegram @VAV_ls →
           </button>
+
+          <div style="text-align: center; margin-top: 14px;">
+            <a href="https://t.me/VAV_ls" target="_blank" rel="noopener" style="font-size: 0.82rem; color: var(--text-muted); text-decoration: underline;">
+              Или напишите нам напрямую в Telegram: @VAV_ls
+            </a>
+          </div>
         </form>
       </div>
     </div>
   </section>
 
+  <!-- Живое всплывающее уведомление (Social Proof) -->
+  <div class="live-toast" id="liveToast">
+    <div style="width: 38px; height: 38px; border-radius: 50%; background: var(--gold-gradient); color: #111; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0;">✦</div>
+    <div>
+      <div id="toastTitle" style="font-size: 0.82rem; font-weight: 800; color: #fff;">Новый заказ · 3 мин назад</div>
+      <div id="toastDesc" style="font-size: 0.76rem; color: var(--text-muted);">Екатерина (Москва) выбрала «Полный метр» за 1 990 ₽</div>
+    </div>
+  </div>
+
+  <!-- Плавающая кнопка быстрого перехода в Telegram @VAV_ls -->
+  <a href="https://t.me/VAV_ls" target="_blank" rel="noopener" class="floating-tg-btn" title="Написать в Telegram @VAV_ls">
+    <span>✈️</span>
+    <span>Чат в Telegram @VAV_ls</span>
+  </a>
+
   <!-- Футер -->
   <footer>
     <div class="container">
-      <div style="font-weight: 800; color: #fff; letter-spacing: 1px; font-size: 1.2rem; margin-bottom: 8px;">OURTUNE</div>
-      <p>Персональные романтические вебтуны и печатные манхвы по вашей истории любви.</p>
-      <p style="margin-top: 14px; font-size: 0.8rem; opacity: 0.6;">© 2026 OURTUNE. Все права защищены.</p>
+      <div style="font-weight: 800; color: #fff; letter-spacing: 1.5px; font-size: 1.35rem; margin-bottom: 8px; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block;">
+        OURTUNE
+      </div>
+      <p style="max-width: 520px; margin: 0 auto 14px;">
+        Персональные романтические вебтуны и печатные манхвы в твердом переплете по вашей истории любви.
+      </p>
+      <div style="display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; margin-bottom: 18px; font-size: 0.86rem;">
+        <a href="#showcase-wrapper" style="color: var(--text-secondary);">Живой пример</a>
+        <a href="#similarity" style="color: var(--text-secondary);">100% Сходство</a>
+        <a href="#pricing" style="color: var(--text-secondary);">Тарифы от 990 ₽</a>
+        <a href="https://t.me/VAV_ls" target="_blank" rel="noopener" style="color: var(--accent-light); font-weight: 700;">Telegram: @VAV_ls</a>
+      </div>
+      <p style="font-size: 0.78rem; opacity: 0.55;">© 2026 OURTUNE Studio. Все права защищены.</p>
     </div>
   </footer>
 
+  <!-- ========================================================================
+       ПОЛНЫЙ ДВИЖОК САЙТА (JAVASCRIPT)
+       ======================================================================== -->
   <script>
+    // Константа вашего Telegram-аккаунта
+    const TELEGRAM_USERNAME = "VAV_ls";
+
+    // Состояние выбранных бонусов и цен
+    let selectedAddons = [
+      { name: "Добавить питомца в кадр", price: 0 },
+      { name: "QR-код с нашей любимой песней", price: 0 }
+    ];
+
+    // --- 0. Автосинхронизация сниженных цен (990 ₽ / 1 990 ₽ / 5 990 ₽) по всему сайту ---
+    function syncLowerPricesAcrossPage() {
+      document.querySelectorAll('a.link[href="#pricing"]').forEach(el => {
+        el.innerText = 'Тарифы от 990 ₽';
+      });
+      document.querySelectorAll('.hero-sub strong').forEach(el => {
+        if (el.innerText.includes('1 290')) {
+          el.innerText = 'всего от 990 ₽ и за 24 часа';
+        }
+      });
+      document.querySelectorAll('.stat-val').forEach(el => {
+        if (el.innerText.includes('1 290')) {
+          el.innerText = 'от 990 ₽';
+        }
+      });
+      document.querySelectorAll('.showcase-side .nav-btn').forEach(el => {
+        el.innerText = 'Хочу такую же историю за 990 ₽ →';
+      });
+      const occPrice = document.getElementById('occPrice');
+      if (occPrice) occPrice.innerText = 'от 990 ₽';
+      const occRec = document.getElementById('occRec');
+      if (occRec) {
+        occRec.innerHTML = '💡 <strong>Рекомендуемый тариф:</strong> «Полный метр (45 кадров)» за 1 990 ₽ — идеально вмещает 4–5 ключевых сцен вашей истории.';
+      }
+      // Обновляем цену VIP-книги во 2-й части
+      const vipSection = document.getElementById('vip-book');
+      if (vipSection) {
+        vipSection.innerHTML = vipSection.innerHTML.replace('7 990 ₽', '5 990 ₽');
+      }
+    }
+
     // --- 1. Золотые частицы на фоне (Canvas) ---
     const canvas = document.getElementById('particles-canvas');
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas ? canvas.getContext('2d') : null;
     let particles = [];
+    let particleColorRGB = '251, 191, 36';
 
     function resizeCanvas() {
+      if (!canvas) return;
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    for (let i = 0; i < 45; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        radius: Math.random() * 1.8 + 0.5,
-        speedY: -(Math.random() * 0.35 + 0.1),
-        speedX: (Math.random() - 0.5) * 0.25,
-        alpha: Math.random() * 0.65 + 0.2
-      });
+    if (canvas) {
+      for (let i = 0; i < 48; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.9 + 0.5,
+          speedY: -(Math.random() * 0.36 + 0.1),
+          speedX: (Math.random() - 0.5) * 0.25,
+          alpha: Math.random() * 0.65 + 0.2
+        });
+      }
+
+      function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          p.y += p.speedY;
+          p.x += p.speedX;
+          if (p.y < 0) p.y = canvas.height;
+          if (p.x < 0) p.x = canvas.width;
+          if (p.x > canvas.width) p.x = 0;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${particleColorRGB}, ${p.alpha})`;
+          ctx.fill();
+        });
+        requestAnimationFrame(animateParticles);
+      }
+      animateParticles();
     }
 
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.y += p.speedY;
-        p.x += p.speedX;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
+    // --- 2. Переключатель атмосферы сайта (Vibe Switcher) ---
+    function setTheme(themeName, btnEl) {
+      document.documentElement.setAttribute('data-theme', themeName);
+      document.querySelectorAll('.vibe-btn').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
 
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(251, 191, 36, ${p.alpha})`;
-        ctx.fill();
-      });
-      requestAnimationFrame(animateParticles);
+      if (themeName === 'seoul') {
+        particleColorRGB = '244, 114, 182';
+      } else if (themeName === 'sakura') {
+        particleColorRGB = '253, 164, 175';
+      } else {
+        particleColorRGB = '251, 191, 36';
+      }
     }
-    animateParticles();
 
-    // --- 2. Плавное появление секций при скролле ---
+    // --- 3. Кастомный курсор ---
+    const cursorDot = document.getElementById('cursorDot');
+    const cursorRing = document.getElementById('cursorRing');
+
+    window.addEventListener('mousemove', (e) => {
+      if (!cursorDot || !cursorRing) return;
+      cursorDot.style.left = `${e.clientX}px`;
+      cursorDot.style.top = `${e.clientY}px`;
+      cursorRing.style.left = `${e.clientX}px`;
+      cursorRing.style.top = `${e.clientY}px`;
+    });
+
+    document.querySelectorAll('a, button, summary, .addon-item, .scene-pill').forEach(el => {
+      el.addEventListener('mouseenter', () => cursorRing && cursorRing.classList.add('hovered'));
+      el.addEventListener('mouseleave', () => cursorRing && cursorRing.classList.remove('hovered'));
+    });
+
+    // --- 4. Плавное появление секций при скролле ---
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
         }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.1 });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // --- 3. Липкий скролл смартфона + индикатор прогресса и смена эпизодов ---
+    // --- 5. Липкий скролл смартфона + верхний прогресс-бар + прыжки по эпизодам ---
     window.addEventListener('scroll', () => {
+      // Верхний прогресс-бар всей страницы
+      const topBar = document.getElementById('topScrollProgress');
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (topBar && docHeight > 0) {
+        const totalPct = Math.min(100, Math.max(0, (window.scrollY / docHeight) * 100));
+        topBar.style.width = `${totalPct}%`;
+      }
+
+      // Скролл внутри смартфона
       const wrapper = document.getElementById('showcase-wrapper');
       const tape = document.getElementById('scrollTape');
       const scrollArea = document.getElementById('scrollArea');
       const fill = document.getElementById('readerFill');
       const percentTxt = document.getElementById('readerPercent');
+
+      if (!wrapper || !tape || !scrollArea) return;
 
       const wrapperTop = wrapper.offsetTop;
       const wrapperScrollableHeight = wrapper.offsetHeight - window.innerHeight;
@@ -1583,75 +4141,402 @@
         percentTxt.innerText = `${pct}%`;
       }
 
-      // Подсветка активного эпизода сбоку от смартфона
       const activeIdx = Math.min(4, Math.floor(progress * 5));
       for (let i = 0; i < 5; i++) {
         const pill = document.getElementById(`pill-${i}`);
-        if (pill) {
-          pill.classList.toggle('active', i === activeIdx);
-        }
+        if (pill) pill.classList.toggle('active', i === activeIdx);
       }
+
+      const jumpBtns = document.querySelectorAll('.chapter-jump-btn');
+      jumpBtns.forEach((btn, idx) => {
+        btn.classList.toggle('active', idx === activeIdx);
+      });
     });
 
-    // --- 4. Выбор тарифа и динамические подсказки ---
+    function jumpToEpisode(episodeIdx) {
+      const wrapper = document.getElementById('showcase-wrapper');
+      if (!wrapper) return;
+      const wrapperTop = wrapper.offsetTop;
+      const wrapperScrollableHeight = wrapper.offsetHeight - window.innerHeight;
+      const targetProgress = (episodeIdx + 0.1) / 5;
+      window.scrollTo({
+        top: wrapperTop + wrapperScrollableHeight * targetProgress,
+        behavior: 'smooth'
+      });
+    }
+
+    // --- 6. Интерактивный сканер 100% сходства (До / После) ---
+    function updateScanner(val) {
+      const beforePane = document.getElementById('scannerBeforePane');
+      const divider = document.getElementById('scannerDivider');
+      const handle = document.getElementById('scannerHandle');
+      const rangeInput = document.getElementById('scannerRange');
+
+      const pct = Math.max(5, Math.min(95, Number(val)));
+      if (beforePane) beforePane.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+      if (divider) divider.style.left = `${pct}%`;
+      if (handle) handle.style.left = `${pct}%`;
+      if (rangeInput && Number(rangeInput.value) !== pct) rangeInput.value = pct;
+    }
+
+    // --- 7. Переключатель жанра и настроения рисовки ---
+    const ART_STYLES_DATA = {
+      romance: {
+        badge: 'Жанр №1 · Выбор 68% пар',
+        title: 'Романтическая драма в стиле топовых вебтунов',
+        desc: 'Тёплый закатный свет, летящие лепестки или осенние листья, крупные планы глаз и трогательные паузы между словами. Идеально, чтобы передать глубину чувств и магию первой встречи.',
+        palette: 'Золотой час, глубокий индиго, мягкий неон',
+        focus: 'Искренние взгляды, объятия, переписки',
+        code: 'SCENE #04 · GOLDEN HOUR',
+        b1: '«Я знал, что это ты, ещё до того, как ты обернулась на перроне...»',
+        b2: '[Внутри всё замерло, как в первую встречу ✦]',
+        selectValue: 'Романтика Сеула (Теплый свет и нежность)'
+      },
+      cozy: {
+        badge: 'Жанр №2 · Максимум улыбок и уюта',
+        title: 'Домашний уют, локальные шутки и ваш питомец',
+        desc: 'Живая мимика, смешные утренние сцены, совместная готовка, сериалы под пледом и ваши коронные фразы, понятные только вам двоим.',
+        palette: 'Теплый карамельный, кремовый, мягкий янтарь',
+        focus: 'Локальные мемы, питомец, милые привычки',
+        code: 'SCENE #02 · COZY HOME',
+        b1: '«Ты опять съел последнюю пельмешку и валишь всё на кота?!»',
+        b2: '[Кот делает вид, что вообще тут ни при чём 🐾]',
+        selectValue: 'Уют и юмор (Slice of Life)'
+      },
+      cyber: {
+        badge: 'Жанр №3 · Эстетика ночного мегаполиса',
+        title: 'Ночной Неон, скорость и притяжение',
+        desc: 'Огни ночного города, отражения в мокром асфальте, ночные поездки в машине под любимый плейлист и кинематографичный контраст света.',
+        palette: 'Пурпурный неон, сапфировый, электрический циан',
+        focus: 'Ночные прогулки, авто, музыка, страсть',
+        code: 'SCENE #07 · MIDNIGHT DRIVE',
+        b1: '«Весь город спит. Давай просто включим наш трек и поедем куда глаза глядят.»',
+        b2: '[02:15 ночи · На повторе любимая песня 🌃]',
+        selectValue: 'Ночной Неон и Драйв'
+      },
+      fantasy: {
+        badge: 'Жанр №4 · Символизм и судьба',
+        title: 'Красная нить судьбы и магия вашей встречи',
+        desc: 'Светящаяся нить, связывающая вас сквозь города и время, звездное небо и ощущение, что ваша встреча была предрешена свыше.',
+        palette: 'Звездное золото, бархатный космос, алый шелк',
+        focus: 'Судьбоносные совпадения, связь на расстоянии',
+        code: 'SCENE #09 · DESTINY THREAD',
+        b1: '«Среди миллионов людей в этом городе вселенная всё равно свела нас в одной точке.»',
+        b2: '[Нить судьбы засветилась ярче ✨]',
+        selectValue: 'Магия судьбы (Красная нить)'
+      }
+    };
+
+    function switchArtStyle(styleKey, btnEl) {
+      const data = ART_STYLES_DATA[styleKey];
+      if (!data) return;
+
+      document.querySelectorAll('.style-tab').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+
+      document.getElementById('styleBadge').innerText = data.badge;
+      document.getElementById('styleTitle').innerText = data.title;
+      document.getElementById('styleDesc').innerText = data.desc;
+      document.getElementById('styleSpecPalette').innerText = data.palette;
+      document.getElementById('styleSpecFocus').innerText = data.focus;
+      document.getElementById('genreSceneCode').innerText = data.code;
+      document.getElementById('genreBubble1').innerText = data.b1;
+      document.getElementById('genreBubble2').innerText = data.b2;
+
+      const styleSelect = document.getElementById('styleSelect');
+      if (styleSelect) {
+        for (let i = 0; i < styleSelect.options.length; i++) {
+          if (styleSelect.options[i].value === data.selectValue) {
+            styleSelect.selectedIndex = i;
+            break;
+          }
+        }
+      }
+    }
+
+    // --- 8. Селектор повода для подарка ---
+    const OCCASIONS_DATA = {
+      anniversary: {
+        tag: 'Сценарий №1 · Годовщина и важные даты',
+        title: 'От неловкого первого «Привет» до сегодняшнего дня',
+        text: 'Мы соберем в единую ленту момент вашего знакомства, первое свидание, смешной случай из поездки, ваши коронные фразы и финальный кадр в настоящем времени.',
+        rec: '💡 <strong>Рекомендуемый тариф:</strong> «Полный метр (45 кадров)» за 1 990 ₽ — идеально вмещает 4–5 ключевых сцен вашей истории.',
+        price: '1 990 ₽'
+      },
+      distance: {
+        tag: 'Сценарий №2 · Отношения на расстоянии',
+        title: 'Когда между вами километры, но сердца бьются в унисон',
+        text: 'Ночные кружочки в Telegram, ожидание поезда или самолета, светящаяся нить между вашими городами и долгожданные объятия на перроне.',
+        rec: '💡 <strong>Рекомендуемый тариф:</strong> «Мини-история (15 кадров)» за 990 ₽ или «Полный метр» за 1 990 ₽.',
+        price: 'от 990 ₽'
+      },
+      birthday: {
+        tag: 'Сценарий №3 · День рождения любимого человека',
+        title: 'Сделать вторую половинку главным героем собственного шедевра',
+        text: 'Покажите, за какие мелочи, улыбку и характер вы так сильно любите человека. Такой подарок выделяется среди любых материальных вещей.',
+        rec: '💡 <strong>Рекомендуемый тариф:</strong> «Полный метр (45 кадров)» за 1 990 ₽ или «Печатный глянец VIP» за 5 990 ₽.',
+        price: '1 990 ₽'
+      },
+      sorry: {
+        tag: 'Сценарий №4 · Красиво помириться или порадовать без повода',
+        title: 'Искренний жест, который растопит любое сердце за 2 минуты чтения',
+        text: 'Когда обычные слова кажутся сухими, нарисованная история о том, как сильно вы дорожите вашими отношениями, говорит громче тысячи извинений.',
+        rec: '💡 <strong>Рекомендуемый тариф:</strong> «Мини-история (15 кадров)» за 990 ₽ — готовность за 24 часа.',
+        price: '990 ₽'
+      },
+      proposal: {
+        tag: 'Сценарий №5 · Предложение руки и сердца / Свадьба',
+        title: 'Финальный кадр, после которого вы достаете настоящее кольцо',
+        text: 'Ваша половинка листает книгу или вебтун о вашей любви, доходит до финальной сцены, где герой произносит заветный вопрос — и видит вас с кольцом наяву.',
+        rec: '💡 <strong>Рекомендуемый тариф:</strong> «Печатный глянец VIP» в твердом переплете за 5 990 ₽.',
+        price: '5 990 ₽'
+      }
+    };
+
+    function selectOccasion(key, btnEl) {
+      const data = OCCASIONS_DATA[key];
+      if (!data) return;
+      document.querySelectorAll('.occasion-pill').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+
+      document.getElementById('occTag').innerText = data.tag;
+      document.getElementById('occTitle').innerText = data.title;
+      document.getElementById('occText').innerText = data.text;
+      document.getElementById('occRec').innerHTML = data.rec;
+      document.getElementById('occPrice').innerText = data.price;
+    }
+
+    // --- 9. Выбор тарифа, калькулятор бонусов и обновление формы ---
     function selectPlan(planName) {
       const select = document.getElementById('tariffSelect');
-      for (let i = 0; i < select.options.length; i++) {
-        if (select.options[i].text.includes(planName.split(' ')[0])) {
-          select.selectedIndex = i;
-          break;
+      if (select) {
+        for (let i = 0; i < select.options.length; i++) {
+          if (select.options[i].value.includes(planName.split(' ')[0])) {
+            select.selectedIndex = i;
+            break;
+          }
         }
       }
       updateFormHint();
-      document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+      const orderSection = document.getElementById('order');
+      if (orderSection) orderSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function toggleAddon(el, addonName, addonPrice) {
+      el.classList.toggle('active');
+      const existsIdx = selectedAddons.findIndex(a => a.name === addonName);
+      if (el.classList.contains('active')) {
+        if (existsIdx === -1) selectedAddons.push({ name: addonName, price: addonPrice });
+      } else {
+        if (existsIdx !== -1) selectedAddons.splice(existsIdx, 1);
+      }
+      updateOrderSummary();
     }
 
     function updateFormHint() {
-      const tariff = document.getElementById('tariffSelect').value;
+      const select = document.getElementById('tariffSelect');
       const label = document.getElementById('storyLabel');
       const textarea = document.getElementById('storyText');
+      if (!select || !label || !textarea) return;
 
+      const tariff = select.value;
       if (tariff.includes('Мини')) {
-        label.innerText = 'Небольшая история (для 15 кадров)';
+        label.innerText = 'Небольшая история (для 15 кадров — 990 ₽)';
         textarea.placeholder = 'Напишите небольшую историю (как познакомились, или опишите один смешной/романтичный момент). Для 15 кадров этого объема будет вполне достаточно...';
       } else if (tariff.includes('Полный')) {
-        label.innerText = 'Подробная история (для 45 кадров)';
-        textarea.placeholder = 'Расскажите вашу историю максимально подробно! Чем больше деталей, фраз, шуток и ситуаций вы напишете, тем насыщеннее и интереснее получится комикс на 45 кадров...';
+        label.innerText = 'Подробная история (для 45 кадров — 1 990 ₽)';
+        textarea.placeholder = 'Расскажите вашу историю своими словами! Чем больше деталей, фраз, шуток и ситуаций вы напишете, тем насыщеннее получится комикс на 45 кадров...';
       } else {
-        label.innerText = 'Детальная история для физического VIP-комикса';
-        textarea.placeholder = 'Расскажите вашу историю максимально подробно! Опишите ключевые события, диалоги, любимые места и важные мелочи, чтобы ваша эксклюзивная печатная манхва получилась незабываемой...';
+        label.innerText = 'Детальная история для физического VIP-комикса (5 990 ₽)';
+        textarea.placeholder = 'Опишите ключевые события, диалоги, любимые места и важные мелочи, чтобы ваша эксклюзивная печатная манхва в твердом переплете получилась незабываемой...';
       }
+      updateOrderSummary();
     }
 
-    // Вставка структурных подсказок в поле текста
+    function updateOrderSummary() {
+      const select = document.getElementById('tariffSelect');
+      if (!select) return;
+
+      const val = select.value;
+      let basePrice = 1990;
+      let shortName = 'Полный метр (45 кадров)';
+
+      if (val.includes('Мини')) {
+        basePrice = 990;
+        shortName = 'Мини-история (15 кадров)';
+      } else if (val.includes('Печатный')) {
+        basePrice = 5990;
+        shortName = 'Печатный глянец (VIP книга)';
+      }
+
+      const addonsExtra = selectedAddons.reduce((sum, item) => sum + item.price, 0);
+      const total = basePrice + addonsExtra;
+
+      const nameEl = document.getElementById('summaryTariffName');
+      const addonsEl = document.getElementById('summaryAddonsList');
+      const totalEl = document.getElementById('summaryTotalPrice');
+
+      if (nameEl) nameEl.innerText = shortName;
+      if (addonsEl) {
+        addonsEl.innerText = selectedAddons.length > 0
+          ? selectedAddons.map(a => a.name).join(', ')
+          : 'Стандартная комплектация';
+      }
+      if (totalEl) totalEl.innerText = `${total.toLocaleString('ru-RU')} ₽`;
+    }
+
+    // --- 10. Вставка подсказок и готовых шаблонов сюжета ---
     function insertPrompt(promptText) {
       const textarea = document.getElementById('storyText');
+      if (!textarea) return;
       const prefix = textarea.value.length > 0 && !textarea.value.endsWith('\n') ? '\n' : '';
       textarea.value += prefix + promptText;
       textarea.focus();
+      handleStoryInput();
     }
 
-    window.onload = updateFormHint;
+    function applyStoryTemplate(type) {
+      const textarea = document.getElementById('storyText');
+      if (!textarea) return;
 
-    // --- 5. Отправка красиво оформленной заявки в Telegram @Zdes_reshau_ya ---
+      const templates = {
+        anniversary:
+          `1. Как мы познакомились: \n` +
+          `2. Наше самое запоминающееся свидание или поездка: \n` +
+          `3. Наши локальные шутки / коронные фразы: \n` +
+          `4. Важные детали (наш питомец, любимая одежда, место): \n` +
+          `5. Что написать в финальном кадре: «С нашей годовщиной, люблю тебя!»`,
+        distance:
+          `1. В каких мы сейчас городах и как общаемся (кружочки в ТГ, ночные звонки): \n` +
+          `2. Самый теплый момент нашей последней встречи (вокзал/аэропорт/прогулка): \n` +
+          `3. Детали (наш питомец, букет цветов, любимая толстовка): \n` +
+          `4. Финальная фраза: «Расстояние ничего не значит, когда ты в моем сердце ❤️»`,
+        firstmeet:
+          `1. Где и при каких обстоятельствах мы впервые увиделись: \n` +
+          `2. Первое впечатление друг о друге и смешной момент: \n` +
+          `3. Как всё переросло в отношения: \n` +
+          `4. Детали внешности и одежды, которые важно отразить: `
+      };
+
+      if (templates[type]) {
+        textarea.value = templates[type];
+        textarea.focus();
+        handleStoryInput();
+      }
+    }
+
+    function handleStoryInput() {
+      const textarea = document.getElementById('storyText');
+      const countLbl = document.getElementById('charCountLabel');
+      if (!textarea || !countLbl) return;
+      const len = textarea.value.trim().length;
+      if (len === 0) {
+        countLbl.innerText = 'Пишите своими словами';
+      } else {
+        countLbl.innerText = `Отлично! Символов: ${len} ✓`;
+      }
+      try {
+        localStorage.setItem('ourtune_story_draft', textarea.value);
+      } catch (e) {}
+    }
+
+    // --- 11. Живой предпросмотр подарочного сертификата ---
+    function updateCertificatePreview() {
+      const toVal = document.getElementById('certToInput')?.value.trim();
+      const fromVal = document.getElementById('certFromInput')?.value.trim();
+      const previewTo = document.getElementById('certPreviewTo');
+      const previewFrom = document.getElementById('certPreviewFrom');
+
+      if (previewTo) previewTo.innerText = toVal ? `${toVal} ✨` : 'Для самой особенной ✨';
+      if (previewFrom) previewFrom.innerText = fromVal ? `${fromVal}` : 'С любовью, навсегда ❤️';
+    }
+
+    // --- 12. Фильтрация отзывов ---
+    function filterReviews(category, btnEl) {
+      document.querySelectorAll('.review-filter-btn').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+
+      document.querySelectorAll('#reviewsGrid .review-card').forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // --- 13. Отправка красиво оформленной заявки в Telegram @VAV_ls ---
     function sendOrder(e) {
       e.preventDefault();
-      
+
       const name = document.getElementById('clientName').value.trim();
       const tariff = document.getElementById('tariffSelect').value;
+      const style = document.getElementById('styleSelect') ? document.getElementById('styleSelect').value : 'Романтика Сеула';
       const story = document.getElementById('storyText').value.trim();
-
-      const myTelegramUsername = "VAV_ls";
+      const totalText = document.getElementById('summaryTotalPrice') ? document.getElementById('summaryTotalPrice').innerText : '';
+      const addonsText = selectedAddons.length > 0
+        ? selectedAddons.map(a => `• ${a.name}`).join('\n')
+        : '• Без доп. опций';
 
       const message = encodeURIComponent(
-        `Здравствуйте!\n\n` +
-        `Имя: ${name}\n` +
-        `Тариф: ${tariff}\n\n` +
-        `Текст истории:\n${story}`
+        `Здравствуйте! Хочу заказать манхву OURTUNE ✦\n\n` +
+        `👤 Имя: ${name}\n` +
+        `💎 Тариф: ${tariff}\n` +
+        `🎨 Стиль рисовки: ${style}\n` +
+        `🎁 Выбранные бонусы:\n${addonsText}\n` +
+        `💰 Итоговая сумма: ${totalText}\n\n` +
+        `📖 Наша история:\n${story}\n\n` +
+        `📸 Фотографии сейчас прикреплю ниже 👇`
       );
 
-      window.open(`https://t.me/${myTelegramUsername}?text=${message}`, '_blank');
+      window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${message}`, '_blank');
     }
+
+    // --- 14. Живые уведомления Social Proof (ненавязчиво раз в 22 секунды) ---
+    const TOAST_EVENTS = [
+      { title: 'Новый заказ · 2 мин назад', desc: 'Екатерина (Москва) выбрала «Полный метр» за 1 990 ₽' },
+      { title: 'Заказ сдан · 11 мин назад', desc: 'Максим (СПб) получил готовый вебтун на 45 кадров' },
+      { title: 'Новый заказ · 18 мин назад', desc: 'Алина заказала «Мини-историю» за 990 ₽' },
+      { title: 'VIP-доставка · 34 мин назад', desc: 'Отправлена печатная книга в СДЭК (Екатеринбург)' }
+    ];
+    let toastIndex = 0;
+
+    function triggerSocialToast() {
+      const toast = document.getElementById('liveToast');
+      const tTitle = document.getElementById('toastTitle');
+      const tDesc = document.getElementById('toastDesc');
+      if (!toast || !tTitle || !tDesc) return;
+
+      const item = TOAST_EVENTS[toastIndex % TOAST_EVENTS.length];
+      tTitle.innerText = item.title;
+      tDesc.innerText = item.desc;
+      toastIndex++;
+
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 5200);
+    }
+
+    // Инициализация при загрузке
+    window.addEventListener('DOMContentLoaded', () => {
+      syncLowerPricesAcrossPage();
+      updateFormHint();
+      updateScanner(48);
+
+      // Восстановление черновика истории, если клиент случайно обновил страницу
+      try {
+        const savedDraft = localStorage.getItem('ourtune_story_draft');
+        const textarea = document.getElementById('storyText');
+        if (savedDraft && textarea && !textarea.value) {
+          textarea.value = savedDraft;
+          handleStoryInput();
+        }
+      } catch (e) {}
+
+      setTimeout(triggerSocialToast, 7000);
+      setInterval(triggerSocialToast, 24000);
+    });
   </script>
 </body>
 </html>
