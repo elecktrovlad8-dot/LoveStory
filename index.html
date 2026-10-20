@@ -1,618 +1,628 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="gold">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>OURTUNE — Персональная манхва и 3D-книга по вашей истории любви от 990 ₽</title>
-  <meta name="description" content="Превращаем ваши фотографии и переписки в романтический корейский вебтун или печатную VIP-книгу за 24 часа. Цены от 990 ₽.">
-  <meta name="theme-color" content="#06070b">
-
-  <!-- Премиальные шрифты -->
+  <title>OURTUNE — Ваша история любви в стиле манхвы от 390 ₽</title>
+  <meta name="description" content="Превращаем ваши фото и воспоминания в романтический вебтун за 24 часа. 100% узнаваемость лиц, любимые локации и печатные VIP-издания.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <style>
-    /* ==========================================================================
-       01. ПЕРЕМЕННЫЕ, ДИНАМИЧЕСКИЙ ЦВЕТ СКРОЛЛА И ТЕМЫ
-       ========================================================================== */
     :root {
-      --bg-deep: #05060a;
-      --bg: #07080d;
-      --card-bg: rgba(17, 20, 32, 0.72);
+      --bg: #06070b;
+      --bg-secondary: #0c0e16;
+      --card-bg: rgba(18, 21, 32, 0.68);
+      --card-bg-hover: rgba(24, 28, 42, 0.82);
       --border: rgba(255, 255, 255, 0.08);
-      --border-strong: rgba(255, 255, 255, 0.16);
-      --border-gold: rgba(245, 158, 11, 0.42);
-
-      /* Динамический сдвиг оттенка при скролле (управляется из JS) */
-      --scroll-hue: 38;
-      --scroll-rot: 0deg;
-
+      --border-gold: rgba(245, 158, 11, 0.4);
       --accent: #f59e0b;
       --accent-light: #fbbf24;
-      --accent-ultra: #fef08a;
-      --accent-dark: #b45309;
-      --accent-glow: rgba(245, 158, 11, 0.36);
-      --accent-soft: rgba(245, 158, 11, 0.12);
-
-      --gold-gradient: linear-gradient(135deg, #fef08a 0%, #fbbf24 38%, #f59e0b 72%, #d97706 100%);
-      --surface-gradient: linear-gradient(160deg, rgba(26, 30, 46, 0.82) 0%, rgba(11, 13, 21, 0.94) 100%);
-
+      --accent-glow: rgba(245, 158, 11, 0.35);
       --text: #f9fafb;
-      --text-secondary: #e5e7eb;
       --text-muted: #9ca3af;
-      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-serif: 'Playfair Display', Georgia, serif;
-      --font-mono: 'JetBrains Mono', monospace;
-
-      --radius-md: 20px;
-      --radius-lg: 28px;
-      --radius-full: 9999px;
-      --shadow-luxury: 0 24px 60px -15px rgba(0, 0, 0, 0.85), 0 0 40px var(--accent-soft);
+      --success: #10b981;
+      --danger: #ef4444;
+      --gold-gradient: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #d97706 100%);
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    html[data-theme="seoul"] {
-      --accent: #ec4899;
-      --accent-light: #f472b6;
-      --accent-ultra: #fbcfe8;
-      --accent-dark: #be185d;
-      --border-gold: rgba(236, 72, 153, 0.45);
-      --accent-glow: rgba(236, 72, 153, 0.38);
-      --accent-soft: rgba(236, 72, 153, 0.13);
-      --gold-gradient: linear-gradient(135deg, #fbcfe8 0%, #f472b6 40%, #ec4899 75%, #8b5cf6 100%);
-    }
-
-    html[data-theme="sakura"] {
-      --accent: #fb7185;
-      --accent-light: #fda4af;
-      --accent-ultra: #ffe4e6;
-      --accent-dark: #e11d48;
-      --border-gold: rgba(251, 113, 133, 0.45);
-      --accent-glow: rgba(251, 113, 133, 0.35);
-      --accent-soft: rgba(251, 113, 133, 0.13);
-      --gold-gradient: linear-gradient(135deg, #ffe4e6 0%, #fda4af 40%, #fb7185 75%, #e11d48 100%);
-    }
-
-    /* ==========================================================================
-       02. БАЗОВЫЙ СБРОС И ПЛАВНЫЙ ИНТЕРФЕЙС
-       ========================================================================== */
-    *, *::before, *::after {
+    * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      -webkit-tap-highlight-color: transparent;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     html {
       scroll-behavior: smooth;
-      background-color: var(--bg-deep);
-      color: var(--text);
-      font-family: var(--font-sans);
+      color-scheme: dark;
     }
 
     body {
       background-color: var(--bg);
       color: var(--text);
-      line-height: 1.55;
+      line-height: 1.6;
       overflow-x: hidden;
       position: relative;
+      selection-background-color: var(--accent);
     }
 
-    ::-webkit-scrollbar { width: 7px; }
-    ::-webkit-scrollbar-track { background: var(--bg-deep); }
-    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); border-radius: 99px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--accent-light); }
-
-    a { color: inherit; text-decoration: none; }
-    button, input, select, textarea { font-family: inherit; }
-    img { max-width: 100%; display: block; }
-
-    .container {
-      max-width: 1220px;
-      margin: 0 auto;
-      padding: 0 20px;
-      position: relative;
-      z-index: 3;
+    ::selection {
+      background: rgba(245, 158, 11, 0.3);
+      color: #fff;
     }
 
-    section {
-      padding: 64px 0;
-      position: relative;
-      z-index: 3;
-    }
-
-    /* ==========================================================================
-       03. КИНЕТИЧЕСКИЙ ФОН, МЕНЯЮЩИЙ ЦВЕТ ОТ СКРОЛЛА + 3D-ТОТЕМЫ
-       ========================================================================== */
-    .top-scroll-progress {
+    /* Прогресс-бар скролла всей страницы */
+    .page-progress {
       position: fixed;
       top: 0;
       left: 0;
       height: 3px;
       width: 0%;
       background: var(--gold-gradient);
-      z-index: 1000;
-      box-shadow: 0 0 14px var(--accent-glow);
+      z-index: 9999;
+      box-shadow: 0 0 12px var(--accent-light);
+      transition: width 0.08s linear;
+      pointer-events: none;
     }
 
+    /* Фоновый Canvas с золотыми частицами */
     #particles-canvas {
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.7;
+      opacity: 0.65;
     }
 
-    .dynamic-aura {
+    /* Фоновые атмосферные свечения */
+    .ambient-glow {
       position: fixed;
       border-radius: 50%;
-      filter: blur(135px);
+      filter: blur(130px);
       pointer-events: none;
       z-index: 0;
-      transition: background 0.4s ease;
-    }
-
-    .aura-1 {
-      width: 560px;
-      height: 560px;
-      top: -140px;
-      left: -140px;
-      background: hsla(var(--scroll-hue), 92%, 55%, 0.14);
-    }
-
-    .aura-2 {
-      width: 600px;
-      height: 600px;
-      bottom: -160px;
-      right: -140px;
-      background: hsla(calc(var(--scroll-hue) + 45), 85%, 55%, 0.12);
-    }
-
-    /* Парящие 3D-предметы, которые крутятся вместе со скроллом */
-    .scroll-totems-layer {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-      perspective: 900px;
-      overflow: hidden;
-    }
-
-    .scroll-totem {
-      position: absolute;
-      width: 58px;
-      height: 58px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.01));
-      border: 1px solid var(--border-gold);
-      backdrop-filter: blur(8px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.45rem;
-      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5), inset 0 0 15px var(--accent-soft);
       will-change: transform;
     }
-
-    .totem-1 { top: 18%; left: 4%; }
-    .totem-2 { top: 46%; right: 4%; width: 66px; height: 66px; border-radius: 50%; }
-    .totem-3 { top: 76%; left: 5%; width: 50px; height: 50px; }
-
-    @media (max-width: 1100px) {
-      .scroll-totem { opacity: 0.32; transform: scale(0.75); }
+    .glow-1 {
+      width: 560px;
+      height: 560px;
+      background: rgba(245, 158, 11, 0.085);
+      top: -160px;
+      left: -160px;
+    }
+    .glow-2 {
+      width: 620px;
+      height: 620px;
+      background: rgba(139, 92, 246, 0.055);
+      bottom: 8%;
+      right: -200px;
     }
 
-    /* Кастомный курсор для ПК */
-    .cursor-dot, .cursor-ring {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: 9999;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-    }
-    .cursor-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--accent-light);
-      box-shadow: 0 0 10px var(--accent-light);
-    }
-    .cursor-ring {
-      width: 34px;
-      height: 34px;
-      border: 1px solid var(--border-gold);
-      transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
-    }
-    .cursor-ring.hovered {
-      width: 52px;
-      height: 52px;
-      background: var(--accent-soft);
-      border-color: var(--accent-light);
-    }
-    @media (max-width: 992px) {
-      .cursor-dot, .cursor-ring { display: none !important; }
-    }
-
-    /* ==========================================================================
-       04. ВЕРХНЯЯ ПАНЕЛЬ И ШАПКА
-       ========================================================================== */
-    .top-bar {
-      background: rgba(12, 14, 22, 0.92);
-      border-bottom: 1px solid var(--border);
-      padding: 8px 0;
-      font-size: 0.8rem;
+    .container {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 0 24px;
+      width: 100%;
       position: relative;
-      z-index: 101;
+      z-index: 2;
     }
 
-    .top-bar-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
+    /* Система плавного появления при скролле */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.85s var(--ease-out-expo), transform 0.85s var(--ease-out-expo);
+      will-change: opacity, transform;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    .slots-indicator {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-secondary);
+    /* Интерактивные карточки с подсветкой курсора (Spotlight + 3D Tilt) */
+    .spotlight-card {
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: transform 0.25s ease-out, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .spotlight-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(251, 191, 36, 0.11),
+        transparent 45%
+      );
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .spotlight-card:hover::before {
+      opacity: 1;
+    }
+    .spotlight-card > * {
+      position: relative;
+      z-index: 2;
     }
 
-    .live-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #10b981;
-      box-shadow: 0 0 10px #10b981;
-      animation: pulseLive 2s infinite;
-    }
-
-    @keyframes pulseLive {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.4); opacity: 0.55; }
-    }
-
-    .vibe-switcher {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .vibe-btn {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      padding: 4px 11px;
-      border-radius: var(--radius-full);
-      font-size: 0.74rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .vibe-btn.active, .vibe-btn:hover {
-      background: var(--gold-gradient);
-      color: #090a0f;
-      border-color: transparent;
-      box-shadow: 0 0 12px var(--accent-glow);
-    }
-
+    /* Навигация */
     header {
-      padding: 13px 0;
+      padding: 16px 0;
       border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(7, 8, 13, 0.8);
+      background: rgba(6, 7, 11, 0.8);
+      transition: padding 0.3s ease, background 0.3s ease;
     }
-
     .nav-inner {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 16px;
     }
-
     .brand {
       display: flex;
       align-items: center;
-      gap: 11px;
+      gap: 12px;
+      text-decoration: none;
     }
-
     .brand-logo-img {
       width: 40px;
       height: 40px;
       border-radius: 50%;
       object-fit: cover;
       border: 1.5px solid var(--accent-light);
-      box-shadow: 0 0 16px var(--accent-glow);
+      box-shadow: 0 0 15px var(--accent-glow);
     }
-
     .brand-fallback-icon {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
-      background: var(--gold-gradient);
-      color: #090a0f;
+      background: radial-gradient(circle at 30% 30%, #fbbf24, #92400e);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 800;
+      font-size: 1.1rem;
+      box-shadow: 0 0 15px var(--accent-glow);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
     }
-
     .logo-text {
-      font-size: 1.38rem;
+      font-size: 1.4rem;
       font-weight: 800;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.6px;
       background: var(--gold-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      line-height: 1.05;
-    }
-
-    .logo-sub {
-      font-size: 0.65rem;
-      color: var(--text-muted);
-      letter-spacing: 1.1px;
       text-transform: uppercase;
-      display: block;
     }
-
     .nav-links {
       display: flex;
-      gap: 22px;
+      gap: 26px;
       align-items: center;
     }
-
     .nav-links a.link {
       color: var(--text-muted);
-      font-size: 0.88rem;
+      text-decoration: none;
+      font-size: 0.9rem;
       font-weight: 600;
-      transition: color 0.2s ease;
+      transition: color 0.2s;
+      position: relative;
     }
-
-    .nav-links a.link:hover { color: #fff; }
-
-    .nav-btn {
-      background: var(--accent-soft);
-      border: 1px solid var(--border-gold);
-      color: var(--accent-light);
-      padding: 10px 20px;
-      border-radius: var(--radius-full);
-      font-weight: 700;
-      font-size: 0.86rem;
-      transition: all 0.25s ease;
+    .nav-links a.link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--gold-gradient);
+      transition: width 0.25s ease;
+    }
+    .nav-links a.link:hover {
+      color: #fff;
+    }
+    .nav-links a.link:hover::after {
+      width: 100%;
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .live-slots-pill {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
+      padding: 7px 13px;
+      border-radius: 99px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #34d399;
     }
-
+    .live-slots-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      animation: pulseDot 2s infinite;
+    }
+    .nav-btn {
+      background: rgba(245, 158, 11, 0.14);
+      border: 1px solid var(--border-gold);
+      color: var(--accent-light);
+      padding: 10px 22px;
+      border-radius: 99px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
     .nav-btn:hover {
       background: var(--gold-gradient);
-      color: #090a0f;
-      border-color: transparent;
-      box-shadow: 0 0 24px var(--accent-glow);
+      color: #111;
+      box-shadow: 0 0 25px var(--accent-glow);
+      transform: translateY(-1px);
     }
 
-    @media (max-width: 920px) {
-      .nav-links a.link { display: none; }
-      .top-bar-inner { justify-content: center; text-align: center; }
+    @media (max-width: 960px) {
+      .nav-links a.link, .live-slots-pill { display: none; }
     }
 
-    /* ==========================================================================
-       05. ТИПОГРАФИКА И КНОПКИ
-       ========================================================================== */
-    .section-title {
+    /* Первый экран (Hero) */
+    .hero {
+      padding: 76px 0 56px;
       text-align: center;
-      margin-bottom: 40px;
+      position: relative;
     }
-
-    .section-tag {
+    .badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      color: var(--accent-light);
-      font-size: 0.74rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1.6px;
-      margin-bottom: 10px;
-      padding: 5px 14px;
-      border-radius: var(--radius-full);
-      background: var(--accent-soft);
+      gap: 10px;
+      padding: 8px 18px;
+      border-radius: 99px;
+      background: rgba(245, 158, 11, 0.1);
       border: 1px solid var(--border-gold);
+      color: var(--accent-light);
+      font-size: 0.84rem;
+      font-weight: 600;
+      margin-bottom: 26px;
+      box-shadow: 0 0 30px rgba(245, 158, 11, 0.14);
     }
-
-    .section-title h2 {
-      font-size: clamp(1.85rem, 3.5vw, 2.7rem);
+    .badge-price-tag {
+      background: var(--gold-gradient);
+      color: #0b0c10;
       font-weight: 800;
-      letter-spacing: -0.7px;
-      line-height: 1.15;
-      margin-bottom: 10px;
+      padding: 2px 9px;
+      border-radius: 99px;
+      font-size: 0.76rem;
+    }
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      background: #fbbf24;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #fbbf24;
+      animation: pulseDot 2s infinite;
+    }
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.55; }
     }
 
-    .section-title h2 em {
-      font-family: var(--font-serif);
+    h1 {
+      font-size: clamp(2.25rem, 5.2vw, 4.35rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 22px;
+      letter-spacing: -1.5px;
+      max-width: 980px;
+      margin-left: auto;
+      margin-right: auto;
+      color: #ffffff;
+    }
+    h1 span {
+      font-family: 'Playfair Display', serif;
       font-style: italic;
       font-weight: 600;
       background: var(--gold-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      display: inline;
     }
-
-    .section-title p {
+    .hero-sub {
+      font-size: clamp(1.02rem, 1.9vw, 1.22rem);
       color: var(--text-muted);
-      font-size: 1rem;
-      max-width: 600px;
-      margin: 0 auto;
+      max-width: 690px;
+      margin: 0 auto 34px;
     }
-
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
     .btn-main {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
       background: var(--gold-gradient);
-      color: #090a0f;
+      color: #0b0c10;
       font-weight: 800;
-      font-size: 1rem;
-      padding: 16px 34px;
-      border-radius: var(--radius-full);
-      box-shadow: 0 12px 32px var(--accent-glow);
-      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      font-size: 1.03rem;
+      padding: 17px 36px;
+      border-radius: 99px;
+      text-decoration: none;
+      box-shadow: 0 12px 35px var(--accent-glow);
+      transition: transform 0.22s var(--ease-out-expo), box-shadow 0.25s ease;
       cursor: pointer;
       border: none;
       position: relative;
       overflow: hidden;
     }
-
-    .btn-main:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 18px 42px var(--accent-glow);
+    .btn-main::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: rgba(255,255,255,0.45);
+      transform: rotate(30deg);
+      animation: sheen 4.5s infinite;
+      pointer-events: none;
     }
-
+    @keyframes sheen {
+      0%, 75% { left: -60%; }
+      100% { left: 130%; }
+    }
+    .btn-main:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 18px 45px rgba(245, 158, 11, 0.55);
+    }
     .btn-secondary {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-strong);
+      background: rgba(255, 255, 255, 0.045);
+      border: 1px solid var(--border);
       color: var(--text);
       font-weight: 600;
-      font-size: 0.96rem;
-      padding: 16px 28px;
-      border-radius: var(--radius-full);
-      transition: all 0.22s ease;
+      font-size: 1rem;
+      padding: 17px 30px;
+      border-radius: 99px;
+      text-decoration: none;
+      transition: all 0.25s ease;
       cursor: pointer;
     }
-
     .btn-secondary:hover {
-      border-color: var(--border-gold);
       background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.28);
+      transform: translateY(-2px);
     }
 
-    /* ==========================================================================
-       06. КОМПАКТНЫЙ И МОЩНЫЙ HERO-ЭКРАН
-       ========================================================================== */
-    .hero {
-      padding: 50px 0 35px;
-      text-align: center;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 7px 16px;
-      border-radius: var(--radius-full);
-      background: var(--accent-soft);
-      border: 1px solid var(--border-gold);
-      color: var(--accent-light);
-      font-size: 0.82rem;
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
-
-    .badge-price-pill {
-      background: var(--gold-gradient);
-      color: #090a0f;
-      font-weight: 800;
-      font-size: 0.72rem;
-      padding: 2px 9px;
-      border-radius: var(--radius-full);
-    }
-
-    h1 {
-      font-size: clamp(2.1rem, 4.8vw, 4rem);
-      font-weight: 800;
-      line-height: 1.08;
-      letter-spacing: -1.4px;
-      max-width: 940px;
-      margin: 0 auto 18px;
-    }
-
-    h1 span {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-weight: 600;
-      background: var(--gold-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-sub {
-      font-size: clamp(1rem, 1.8vw, 1.16rem);
-      color: var(--text-muted);
-      max-width: 680px;
-      margin: 0 auto 28px;
-    }
-
-    .hero-sub strong { color: #fff; }
-
-    .hero-actions {
-      display: flex;
-      gap: 14px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 32px;
-    }
-
+    /* Триггеры доверия под кнопкой */
     .hero-stats {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       max-width: 920px;
       margin: 0 auto;
-      gap: 14px;
-      padding: 20px 24px;
-      background: var(--card-bg);
+      gap: 16px;
+      padding: 22px 26px;
+      background: rgba(18, 21, 32, 0.6);
       border: 1px solid var(--border);
       border-radius: 24px;
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(14px);
     }
-
-    @media (max-width: 760px) {
-      .hero-stats { grid-template-columns: repeat(2, 1fr); padding: 16px; }
+    @media (max-width: 768px) {
+      .hero-stats { grid-template-columns: repeat(2, 1fr); }
     }
-
     .stat-item {
       text-align: center;
       padding: 4px 8px;
-      border-right: 1px solid var(--border);
     }
-    .stat-item:last-child { border-right: none; }
-    @media (max-width: 760px) { .stat-item { border-right: none; } }
-
     .stat-val {
-      font-size: 1.38rem;
+      font-size: 1.35rem;
       font-weight: 800;
-      background: var(--gold-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: var(--accent-light);
+      line-height: 1.2;
     }
-
     .stat-lbl {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
-      margin-top: 3px;
+      margin-top: 4px;
     }
 
-    /* ==========================================================================
-       07. ИНТЕРАКТИВНЫЙ СМАРТФОН-РИДЕР + СКАНЕР 100% СХОДСТВА В ОДНОЙ СЕКЦИИ
-       ========================================================================== */
+    /* Общие стили секций */
+    section {
+      padding: 88px 0;
+      position: relative;
+      z-index: 2;
+    }
+    .section-title {
+      text-align: center;
+      margin-bottom: 52px;
+    }
+    .section-tag {
+      color: var(--accent-light);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.6px;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .section-title h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 800;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    .section-title p {
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    /* --- ИНТЕРАКТИВНЫЙ ДО/ПОСЛЕ СЛАЙДЕР (ФОТО -> МАНХВА) --- */
+    .transform-showcase {
+      max-width: 980px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 28px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+    }
+    .transform-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+    .transform-tab {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 9px 18px;
+      border-radius: 99px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .transform-tab.active, .transform-tab:hover {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: var(--border-gold);
+      color: var(--accent-light);
+    }
+    .ba-slider-wrap {
+      position: relative;
+      width: 100%;
+      height: 430px;
+      border-radius: 22px;
+      overflow: hidden;
+      user-select: none;
+      border: 1px solid rgba(255,255,255,0.1);
+      cursor: ew-resize;
+      background: #090b11;
+    }
+    @media (max-width: 640px) {
+      .ba-slider-wrap { height: 340px; }
+      .transform-showcase { padding: 16px; }
+    }
+    .ba-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ba-before {
+      z-index: 1;
+    }
+    .ba-after {
+      z-index: 2;
+      clip-path: inset(0 0 0 50%);
+    }
+    .ba-badge {
+      position: absolute;
+      top: 16px;
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      z-index: 5;
+      backdrop-filter: blur(10px);
+      pointer-events: none;
+    }
+    .ba-badge.left {
+      left: 16px;
+      background: rgba(0, 0, 0, 0.65);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #e5e7eb;
+    }
+    .ba-badge.right {
+      right: 16px;
+      background: rgba(245, 158, 11, 0.88);
+      color: #0b0c10;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+    }
+    .ba-handle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 3px;
+      background: var(--accent-light);
+      z-index: 6;
+      transform: translateX(-50%);
+      box-shadow: 0 0 15px var(--accent-light);
+      pointer-events: none;
+    }
+    .ba-handle-circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--gold-gradient);
+      color: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 0.95rem;
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.7);
+      border: 2px solid #fff;
+    }
+    .ba-caption-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+      padding: 0 6px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* --- ЛИПКИЙ СКРОЛЛ РИДЕРА --- */
     .showcase-wrapper {
-      height: 240vh; /* В 1.7 раза короче и динамичнее прежнего! */
+      height: 360vh;
       position: relative;
       padding: 0;
     }
-
     .showcase-sticky {
       position: sticky;
       top: 0;
@@ -622,78 +632,49 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      padding: 10px 0;
+      padding: 16px 0;
     }
-
-    .showcase-top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 12px;
-      flex-wrap: wrap;
-    }
-
-    .chapter-jump-btn {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      padding: 6px 12px;
-      border-radius: var(--radius-full);
-      font-size: 0.74rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .chapter-jump-btn.active, .chapter-jump-btn:hover {
-      background: var(--accent-soft);
-      border-color: var(--border-gold);
-      color: var(--accent-light);
-    }
-
     .showcase-layout {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 36px;
+      gap: 44px;
       width: 100%;
-      height: 73vh;
-      min-height: 490px;
-      max-height: 780px;
+      height: 75vh;
+      min-height: 510px;
+      max-height: 820px;
     }
 
     .showcase-side {
       width: 290px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 16px;
     }
-
-    @media (max-width: 1024px) {
+    @media (max-width: 992px) {
       .showcase-side { display: none; }
     }
-
     .scene-pill {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 18px;
-      padding: 14px 18px;
-      transition: all 0.3s ease;
-      opacity: 0.45;
+      padding: 16px 18px;
+      transition: all 0.35s var(--ease-out-expo);
+      opacity: 0.42;
+      transform: scale(0.96);
       cursor: pointer;
     }
-
+    .scene-pill:hover {
+      opacity: 0.8;
+    }
     .scene-pill.active {
       opacity: 1;
       transform: scale(1.03);
       border-color: var(--border-gold);
-      background: linear-gradient(145deg, var(--accent-soft) 0%, rgba(18, 21, 33, 0.92) 100%);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(245, 158, 11, 0.16);
     }
-
     .scene-pill-head {
-      font-size: 0.73rem;
+      font-size: 0.76rem;
       font-weight: 800;
       color: var(--accent-light);
       text-transform: uppercase;
@@ -701,34 +682,38 @@
       display: flex;
       justify-content: space-between;
     }
-
     .scene-pill-text {
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       color: var(--text);
+      line-height: 1.42;
     }
 
+    /* Смартфон */
     .phone-container {
       display: flex;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
+      position: relative;
       height: 100%;
       width: 100%;
-      max-width: 365px;
+      max-width: 370px;
     }
-
     .phone-mockup {
       width: 100%;
       height: 100%;
       background: #050507;
-      border: 8px solid #242834;
+      border: 9px solid #222631;
       border-radius: 46px;
-      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.95), 0 0 55px var(--accent-soft);
+      box-shadow: 
+        0 30px 70px -15px rgba(0, 0, 0, 0.95),
+        0 0 60px rgba(245, 158, 11, 0.18),
+        inset 0 0 0 2px rgba(255,255,255,0.08);
       position: relative;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      touch-action: pan-y;
     }
-
     .phone-statusbar {
       position: absolute;
       top: 0;
@@ -739,14 +724,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       font-weight: 700;
       color: #fff;
       z-index: 15;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+      background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
       pointer-events: none;
     }
-
     .phone-notch {
       position: absolute;
       top: 7px;
@@ -757,6 +741,66 @@
       background: #000;
       border-radius: 20px;
       z-index: 16;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .phone-Controls-top {
+      position: absolute;
+      top: 40px;
+      right: 14px;
+      z-index: 18;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .phone-mini-btn {
+      background: rgba(11, 12, 16, 0.78);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.82rem;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.2s;
+    }
+    .phone-mini-btn:hover, .phone-mini-btn.active {
+      border-color: var(--accent-light);
+      color: var(--accent-light);
+      transform: scale(1.08);
+    }
+    .reader-progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background: rgba(11, 12, 16, 0.9);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      z-index: 15;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 10px;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+    .reader-track {
+      flex: 1;
+      height: 4px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .reader-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--gold-gradient);
+      transition: width 0.08s linear;
     }
 
     .webtoon-scroll {
@@ -764,1614 +808,1846 @@
       width: 100%;
       overflow: hidden;
       position: relative;
-      background: #08090d;
+      cursor: pointer;
     }
-
     .webtoon-tape {
       display: flex;
       flex-direction: column;
       width: 100%;
       will-change: transform;
     }
+    .webtoon-tape img {
+      width: 100%;
+      height: auto;
+      display: block;
+      user-select: none;
+    }
 
-    .reader-progress-bar {
+    /* Всплывающее сердечко при двойном клике по экрану смартфона */
+    .tap-heart {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 40px;
-      background: rgba(9, 10, 15, 0.92);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      z-index: 15;
+      font-size: 2.6rem;
+      pointer-events: none;
+      z-index: 25;
+      transform: translate(-50%, -50%) scale(0);
+      animation: heartBurst 0.8s var(--ease-out-expo) forwards;
+    }
+    @keyframes heartBurst {
+      0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+      50% { transform: translate(-50%, -65%) scale(1.25); opacity: 1; }
+      100% { transform: translate(-50%, -95%) scale(1); opacity: 0; }
+    }
+
+    /* Мобильные пиллы эпизодов под телефоном */
+    .mobile-ep-bar {
+      display: none;
+      gap: 6px;
+      margin-top: 12px;
+      justify-content: center;
+    }
+    @media (max-width: 992px) {
+      .mobile-ep-bar { display: flex; }
+    }
+    .mobile-ep-dot {
+      padding: 5px 11px;
+      border-radius: 99px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .mobile-ep-dot.active {
+      background: rgba(245, 158, 11, 0.18);
+      border-color: var(--accent-light);
+      color: var(--accent-light);
+    }
+
+    /* Bento Grid */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+    }
+    .bento-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 36px 32px;
+    }
+    .bento-card:hover {
+      border-color: var(--border-gold);
+    }
+    .bento-col-7 { grid-column: span 7; }
+    .bento-col-5 { grid-column: span 5; }
+    @media (max-width: 900px) {
+      .bento-col-7, .bento-col-5 { grid-column: span 12; }
+    }
+    .bento-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid var(--border-gold);
       display: flex;
       align-items: center;
-      padding: 0 16px;
-      gap: 10px;
-      font-size: 0.72rem;
+      justify-content: center;
+      font-size: 1.45rem;
+      margin-bottom: 20px;
+    }
+    .bento-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    .bento-desc {
       color: var(--text-muted);
-      font-family: var(--font-mono);
+      font-size: 0.96rem;
+      line-height: 1.65;
     }
 
-    .reader-track {
-      flex: 1;
-      height: 5px;
-      background: rgba(255, 255, 255, 0.14);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .reader-fill {
-      height: 100%;
-      width: 0%;
-      background: var(--gold-gradient);
-    }
-
-    /* ==========================================================================
-       08. НАСТОЯЩАЯ ИНТЕРАКТИВНАЯ 3D-КНИГА (ВРАЩЕНИЕ 360° + ОТКРЫТИЕ ЗА КРАЙ)
-       ========================================================================== */
-    .interactive-lab-grid {
+    /* Блок «Реакция в 01:24 ночи» + Сравнение */
+    .comparison-grid {
       display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
+      grid-template-columns: 1fr 1fr;
       gap: 32px;
       align-items: stretch;
     }
-
-    @media (max-width: 960px) {
-      .interactive-lab-grid { grid-template-columns: 1fr; }
+    @media (max-width: 900px) {
+      .comparison-grid { grid-template-columns: 1fr; }
     }
-
-    .book-sandbox-card {
-      background: radial-gradient(circle at 50% 35%, var(--accent-soft), transparent 68%), var(--surface-gradient);
-      border: 1px solid var(--border-gold);
-      border-radius: 30px;
-      padding: 32px 26px;
+    .chat-mockup {
+      background: linear-gradient(160deg, #131622 0%, #0b0d14 100%);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 30px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      box-shadow: var(--shadow-luxury);
-      position: relative;
-      overflow: hidden;
     }
-
-    .book-3d-viewport {
-      perspective: 1400px;
-      height: 360px;
+    .chat-header {
       display: flex;
       align-items: center;
-      justify-content: center;
-      position: relative;
-      cursor: grab;
-      user-select: none;
-      touch-action: none; /* Позволяет свободно крутить книгу пальцем на телефоне */
-    }
-
-    .book-3d-viewport:active {
-      cursor: grabbing;
-    }
-
-    .book-3d-rig {
-      width: 220px;
-      height: 300px;
-      position: relative;
-      transform-style: preserve-3d;
-      transform: rotateX(10deg) rotateY(-24deg);
-      transition: transform 0.08s linear;
-    }
-
-    /* Задняя крышка и блок страниц (основа книги) */
-    .book-base-body {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(145deg, #161927 0%, #0a0c14 100%);
-      border: 2px solid var(--border-gold);
-      border-radius: 4px 16px 16px 4px;
-      transform: translateZ(-14px);
-      box-shadow: 0 28px 55px rgba(0, 0, 0, 0.85);
-    }
-
-    /* Внутренний правый разворот с кадрами манхвы (виден, когда книга открыта) */
-    .book-inner-right-page {
-      position: absolute;
-      inset: 5px 6px 5px 4px;
-      background: linear-gradient(165deg, #fdfbf7 0%, #f3ead8 100%);
-      color: #111827;
-      border-radius: 2px 12px 12px 2px;
-      transform: translateZ(-2px);
-      padding: 16px 14px;
-      display: flex;
-      flex-direction: column;
       justify-content: space-between;
-      box-shadow: inset 12px 0 24px rgba(0, 0, 0, 0.22);
-      overflow: hidden;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 22px;
     }
-
-    /* 3D-корешок книги слева */
-    .book-spine-3d {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: -14px;
-      width: 28px;
-      background: linear-gradient(90deg, #92400e, #f59e0b, #78350f);
-      transform: rotateY(-90deg);
-      transform-origin: center;
-      border-radius: 3px;
-    }
-
-    /* 3D-обрез страниц справа */
-    .book-pages-block-3d {
-      position: absolute;
-      top: 6px;
-      bottom: 6px;
-      right: -11px;
-      width: 22px;
-      background: repeating-linear-gradient(90deg, #fffbeb 0px, #fffbeb 2px, #d6d3d1 2px, #d6d3d1 4px);
-      transform: rotateY(90deg);
-      border-radius: 2px;
-    }
-
-    /* Передняя крышка (открывается за правый край!) */
-    .book-cover-door {
-      position: absolute;
-      inset: 0;
-      transform-style: preserve-3d;
-      transform-origin: left center;
-      transform: rotateY(0deg);
-      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
-      z-index: 10;
-    }
-
-    .book-cover-outer {
-      position: absolute;
-      inset: 0;
-      backface-visibility: hidden;
-      background:
-        radial-gradient(circle at 80% 20%, rgba(251, 191, 36, 0.25), transparent 55%),
-        linear-gradient(155deg, #191c2b 0%, #090b12 100%);
-      border: 2px solid var(--accent-light);
-      border-radius: 4px 16px 16px 4px;
-      padding: 20px 18px;
+    .chat-user {
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: inset 0 0 28px rgba(245, 158, 11, 0.2);
+      align-items: center;
+      gap: 12px;
     }
-
-    /* Внутренняя левая страница на обороте крышки */
-    .book-cover-inner-left {
-      position: absolute;
-      inset: 5px 6px 5px 4px;
-      backface-visibility: hidden;
-      transform: rotateY(180deg);
-      background: linear-gradient(145deg, #f8f5ee 0%, #ede2cc 100%);
-      color: #1f2937;
-      border-radius: 12px 2px 2px 12px;
-      padding: 16px 14px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: inset -12px 0 22px rgba(0, 0, 0, 0.18);
-    }
-
-    /* Интерактивный золотой язычок на правом краю обложки для открытия */
-    .book-edge-pull {
-      position: absolute;
-      right: -16px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: var(--gold-gradient);
-      color: #090a0f;
-      font-size: 0.68rem;
-      font-weight: 800;
-      padding: 10px 8px;
-      border-radius: 0 12px 12px 0;
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      cursor: pointer;
-      box-shadow: 0 0 20px var(--accent-glow);
-      border: 1px solid #fff;
-      z-index: 20;
-      transition: transform 0.2s ease, padding 0.2s ease;
-    }
-
-    .book-edge-pull:hover {
-      padding-right: 12px;
-    }
-
-    .book-controls-bar {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-
-    .book-ctrl-btn {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--border-strong);
-      color: var(--text-secondary);
-      font-size: 0.78rem;
-      font-weight: 700;
-      padding: 8px 14px;
-      border-radius: var(--radius-full);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .book-ctrl-btn.active, .book-ctrl-btn:hover {
-      background: var(--gold-gradient);
-      color: #090a0f;
-      border-color: transparent;
-    }
-
-    /* ==========================================================================
-       09. СКАНЕР ДО/ПОСЛЕ И КАРТОЧКИ С 3D-БЛИКОМ (TILT GLARE)
-       ========================================================================== */
-    .scanner-stage {
-      position: relative;
-      border-radius: 26px;
-      overflow: hidden;
-      border: 1px solid var(--border-gold);
-      background: #0a0c14;
-      height: 300px;
-      user-select: none;
-      margin-bottom: 16px;
-    }
-
-    .scanner-pane {
-      position: absolute;
-      inset: 0;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .scanner-pane.manhwa-side {
-      background:
-        radial-gradient(circle at 75% 25%, rgba(245, 158, 11, 0.3), transparent 55%),
-        linear-gradient(145deg, #1e172e 0%, #111320 55%, #271724 100%);
-    }
-
-    .scanner-pane.photo-side {
-      background: linear-gradient(145deg, #161a24 0%, #0b0d13 100%);
-      clip-path: inset(0 50% 0 0);
-    }
-
-    .scanner-divider {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      width: 2px;
-      background: var(--gold-gradient);
-      box-shadow: 0 0 18px var(--accent-light);
-      z-index: 8;
-      pointer-events: none;
-    }
-
-    .ba-handle {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    .chat-avatar {
       width: 42px;
       height: 42px;
       border-radius: 50%;
       background: var(--gold-gradient);
-      color: #090a0f;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      box-shadow: 0 0 22px var(--accent-glow);
-      pointer-events: none;
-      z-index: 9;
+      color: #111;
     }
-
-    .ba-range {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+    .replay-chat-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 99px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .replay-chat-btn:hover {
+      color: var(--accent-light);
+      border-color: var(--border-gold);
+    }
+    .chat-messages-area {
+      display: flex;
+      flex-direction: column;
+      min-height: 250px;
+    }
+    .chat-bubble {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px 18px 18px 4px;
+      padding: 15px 18px;
+      max-width: 88%;
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+      position: relative;
       opacity: 0;
-      cursor: ew-resize;
-      z-index: 10;
+      transform: translateY(12px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
     }
-
-    .ba-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 12px;
-      border-radius: var(--radius-full);
+    .chat-bubble.shown {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .chat-bubble.gold {
+      background: rgba(245, 158, 11, 0.14);
+      border-color: var(--border-gold);
+      border-radius: 18px 18px 4px 18px;
+      align-self: flex-end;
+      color: #fff;
+    }
+    .chat-time {
       font-size: 0.72rem;
-      font-weight: 800;
+      color: var(--text-muted);
+      text-align: right;
+      margin-top: 6px;
+    }
+
+    .vs-box {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      justify-content: center;
+    }
+    .vs-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+    }
+    .vs-card.bad { opacity: 0.78; }
+    .vs-card.good {
+      border: 1.5px solid var(--accent);
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.11) 0%, rgba(20, 23, 34, 0.88) 100%);
+      box-shadow: 0 15px 40px rgba(245, 158, 11, 0.12);
+    }
+    .vs-label {
+      font-size: 0.76rem;
       text-transform: uppercase;
-      background: rgba(7, 8, 12, 0.84);
-      border: 1px solid var(--border-strong);
-      width: max-content;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+    .vs-title {
+      font-size: 1.32rem;
+      font-weight: 800;
+      margin-bottom: 10px;
     }
 
-    .ba-badge.gold {
-      background: var(--gold-gradient);
-      color: #090a0f;
-      border-color: transparent;
-      margin-left: auto;
+    /* Как это работает (3 шага) */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
     }
-
-    /* Карточки с 3D-наклоном и живым световым бликом */
-    .tilt-card {
+    .step-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 26px;
-      padding: 28px;
+      padding: 38px 30px;
       position: relative;
-      overflow: hidden;
-      transition: transform 0.2s ease, border-color 0.25s ease;
-      transform-style: preserve-3d;
     }
-
-    .tilt-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(251, 191, 36, 0.13), transparent 60%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-    }
-
-    .tilt-card:hover {
+    .step-card:hover {
       border-color: var(--border-gold);
     }
-
-    .tilt-card:hover::after {
-      opacity: 1;
+    .step-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.8rem;
+      font-style: italic;
+      font-weight: 700;
+      color: rgba(245, 158, 11, 0.18);
+      position: absolute;
+      top: 18px;
+      right: 28px;
+      line-height: 1;
+    }
+    .step-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+    .step-text {
+      color: var(--text-muted);
+      font-size: 0.95rem;
     }
 
-    /* ==========================================================================
-       10. ЕДИНЫЕ ТАРИФЫ (990 ₽ / 1 990 ₽ / 5 990 ₽) И УМНАЯ ФОРМА ЗАКАЗА
-       ========================================================================== */
+    /* --- ТАРИФЫ (С НОВЫМИ ЦЕНАМИ 390 / 1490 / 9990 ₽) --- */
     .pricing-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(305px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 28px;
       align-items: stretch;
     }
-
     .price-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 28px;
-      padding: 34px 28px;
+      padding: 38px 30px;
       position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.25s ease, border-color 0.25s ease;
     }
-
+    .price-card:hover {
+      border-color: var(--border-gold);
+    }
     .price-card.popular {
       border: 2px solid var(--accent);
-      background: linear-gradient(180deg, var(--accent-soft) 0%, rgba(17, 20, 32, 0.95) 100%);
-      box-shadow: 0 22px 55px rgba(245, 158, 11, 0.16);
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.12) 0%, rgba(20, 23, 34, 0.92) 100%);
+      box-shadow: 0 20px 55px rgba(245, 158, 11, 0.16);
     }
-
     .popular-tag {
       position: absolute;
-      top: -13px;
+      top: -14px;
       left: 50%;
       transform: translateX(-50%);
       background: var(--gold-gradient);
-      color: #090a0f;
-      padding: 5px 16px;
-      border-radius: var(--radius-full);
-      font-size: 0.72rem;
+      color: #111;
+      padding: 5px 18px;
+      border-radius: 99px;
+      font-size: 0.75rem;
       font-weight: 800;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
       white-space: nowrap;
+      z-index: 5;
     }
-
-    .price-old {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      text-decoration: line-through;
-    }
-
-    .price-save-badge {
-      background: rgba(16, 185, 129, 0.15);
+    .price-discount-badge {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.35);
       color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.32);
-      font-size: 0.7rem;
+      font-size: 0.74rem;
       font-weight: 800;
-      padding: 2px 8px;
-      border-radius: var(--radius-full);
+      padding: 4px 10px;
+      border-radius: 99px;
+      margin-bottom: 12px;
     }
-
+    .price-name {
+      font-size: 1.48rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .price-sub {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+    .price-cost-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
     .price-cost {
-      font-size: 2.55rem;
+      font-size: 2.65rem;
       font-weight: 800;
       color: #fff;
-      line-height: 1.1;
-      margin: 4px 0;
+      line-height: 1;
     }
-
+    .price-old {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      text-decoration: line-through;
+      font-weight: 600;
+    }
     .price-features {
       list-style: none;
-      margin: 20px 0 24px;
-      font-size: 0.9rem;
-      color: var(--text-secondary);
+      margin-bottom: 30px;
+      color: var(--text-muted);
+      font-size: 0.94rem;
     }
-
     .price-features li {
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       display: flex;
-      gap: 9px;
+      align-items: flex-start;
+      gap: 10px;
     }
-
     .price-features li::before {
       content: "✦";
       color: var(--accent-light);
+      font-weight: bold;
+      flex-shrink: 0;
     }
 
+    .action-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 10px;
+    }
     .btn-select {
-      width: 100%;
+      flex: 1;
       padding: 15px;
-      border-radius: 16px;
-      border: 1px solid var(--border-strong);
+      border-radius: 14px;
+      border: 1px solid var(--border);
       background: rgba(255, 255, 255, 0.06);
       color: #fff;
       font-weight: 800;
       font-size: 0.95rem;
       cursor: pointer;
-      transition: all 0.22s ease;
+      transition: all 0.22s;
     }
-
     .btn-select:hover, .price-card.popular .btn-select {
       background: var(--gold-gradient);
-      color: #090a0f;
+      color: #111;
       border-color: transparent;
-      box-shadow: 0 10px 25px var(--accent-glow);
+      box-shadow: 0 8px 25px var(--accent-glow);
     }
 
-    .addons-strip {
-      margin-top: 24px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-    }
-
-    .addon-pill {
-      background: rgba(10, 12, 19, 0.8);
+    /* Иконки анимации тарифов */
+    .anim-box {
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 12px 15px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-size: 0.84rem;
+      justify-content: center;
+      flex-shrink: 0;
     }
-
-    .addon-pill.active {
-      border-color: var(--accent-light);
-      background: var(--accent-soft);
-    }
-
-    .order-grid-compact {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 28px;
-      align-items: start;
-    }
-
-    @media (max-width: 920px) {
-      .order-grid-compact { grid-template-columns: 1fr; }
-    }
-
-    .order-box {
-      background: var(--surface-gradient);
-      border: 1px solid var(--border-gold);
-      border-radius: 30px;
-      padding: 36px 32px;
-      box-shadow: var(--shadow-luxury);
-    }
-
-    @media (max-width: 600px) {
-      .order-box { padding: 24px 18px; }
-    }
-
-    .form-group { margin-bottom: 16px; }
-    .form-group label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.88rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .form-group input, .form-group select, .form-group textarea {
-      width: 100%;
-      background: rgba(7, 8, 12, 0.88);
-      border: 1px solid var(--border-strong);
-      border-radius: 14px;
-      padding: 13px 15px;
-      color: #fff;
-      font-size: 0.95rem;
-      outline: none;
-    }
-
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-      border-color: var(--accent-light);
-    }
-
-    .prompt-chip {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      font-size: 0.74rem;
-      font-weight: 600;
-      padding: 6px 11px;
-      border-radius: var(--radius-full);
-      cursor: pointer;
-      display: inline-block;
-      margin: 0 5px 6px 0;
-    }
-
-    .prompt-chip:hover {
+    .price-card.popular .anim-box {
       border-color: var(--border-gold);
-      color: var(--accent-light);
+      background: rgba(245, 158, 11, 0.08);
+    }
+    .anim-phone {
+      width: 18px;
+      height: 32px;
+      border: 2px solid var(--text-muted);
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+    .price-card.popular .anim-phone { border-color: var(--accent-light); }
+    .anim-phone::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 400%;
+      background: repeating-linear-gradient(to bottom, 
+        rgba(255,255,255,0.3) 0, rgba(255,255,255,0.3) 6px, 
+        transparent 6px, transparent 12px);
+      animation: scrollPhone linear infinite;
+    }
+    .price-card.popular .anim-phone::after {
+      background: repeating-linear-gradient(to bottom, 
+        var(--accent-light) 0, var(--accent-light) 6px, 
+        transparent 6px, transparent 12px);
+    }
+    .anim-phone.slow::after { animation-duration: 4s; }
+    .anim-phone.fast::after { animation-duration: 0.9s; }
+    @keyframes scrollPhone {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+    .anim-book {
+      width: 28px;
+      height: 22px;
+      border: 2px solid var(--accent-light);
+      border-radius: 3px;
+      position: relative;
+      perspective: 120px;
+    }
+    .anim-book::before {
+      content: '';
+      position: absolute;
+      left: 50%; top: -2px; bottom: -2px; width: 2px;
+      background: var(--accent-light);
+      transform: translateX(-50%);
+    }
+    .anim-book::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 0;
+      width: 50%; height: 100%;
+      background: rgba(245, 158, 11, 0.35);
+      border-left: 1px solid var(--accent-light);
+      transform-origin: left center;
+      animation: flipPage 1.6s ease-in-out infinite;
+    }
+    @keyframes flipPage {
+      0%, 15% { transform: rotateY(0deg); }
+      85%, 100% { transform: rotateY(-180deg); }
     }
 
+    /* --- ИНТЕРАКТИВНЫЙ КОНСТРУКТОР АТМОСФЕРЫ МАНХВЫ --- */
+    .builder-box {
+      margin-top: 42px;
+      background: linear-gradient(145deg, rgba(20, 24, 36, 0.85), rgba(11, 13, 20, 0.95));
+      border: 1px solid var(--border-gold);
+      border-radius: 28px;
+      padding: 34px;
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 28px;
+      align-items: center;
+    }
+    @media (max-width: 860px) {
+      .builder-box { grid-template-columns: 1fr; padding: 24px 20px; }
+    }
+    .builder-options-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+    .style-pill {
+      padding: 9px 15px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .style-pill.active {
+      background: rgba(245, 158, 11, 0.16);
+      border-color: var(--accent-light);
+      color: #fff;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+    }
+    .builder-summary {
+      background: rgba(7, 8, 12, 0.75);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    /* Отзывы */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 24px;
+    }
+    .review-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .stars {
+      color: var(--accent-light);
+      font-size: 1.1rem;
+      margin-bottom: 14px;
+      letter-spacing: 2px;
+    }
+    .review-text {
+      font-size: 0.96rem;
+      color: #f3f4f6;
+      margin-bottom: 22px;
+      line-height: 1.65;
+    }
+    .review-author {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--accent-light);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .review-author span {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* FAQ */
+    .faq-container {
+      max-width: 820px;
+      margin: 0 auto;
+    }
     details {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      margin-bottom: 10px;
+      border-radius: 18px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      transition: border-color 0.25s;
+    }
+    details[open] {
+      border-color: var(--border-gold);
     }
     summary {
-      padding: 16px 20px;
+      padding: 22px 26px;
+      font-size: 1.04rem;
       font-weight: 700;
-      font-size: 0.94rem;
       cursor: pointer;
       list-style: none;
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      color: #fff;
     }
     summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: '+';
+      color: var(--accent-light);
+      font-size: 1.5rem;
+      font-weight: 400;
+      transition: transform 0.3s;
+    }
+    details[open] summary::after {
+      transform: rotate(45deg);
+    }
     .faq-content {
-      padding: 0 20px 16px;
-      font-size: 0.86rem;
+      padding: 0 26px 22px;
       color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.65;
     }
 
-    .floating-tg-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 98;
-      display: inline-flex;
+    /* Форма заказа */
+    .order-box {
+      max-width: 680px;
+      margin: 0 auto;
+      background: linear-gradient(180deg, rgba(24, 28, 42, 0.88) 0%, rgba(12, 14, 22, 0.96) 100%);
+      border: 1px solid var(--border-gold);
+      border-radius: 32px;
+      padding: 44px 36px;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.65), 0 0 40px rgba(245, 158, 11, 0.12);
+    }
+    @media (max-width: 600px) {
+      .order-box { padding: 28px 18px; }
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 8px;
-      background: var(--gold-gradient);
-      color: #090a0f;
-      font-weight: 800;
-      font-size: 0.86rem;
-      padding: 13px 20px;
-      border-radius: var(--radius-full);
-      box-shadow: 0 12px 30px var(--accent-glow);
+      font-size: 0.94rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #f3f4f6;
+    }
+    .autosave-badge {
+      font-size: 0.74rem;
+      color: #34d399;
+      font-weight: 600;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .autosave-badge.show { opacity: 1; }
+
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      background: rgba(7, 8, 12, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 15px 16px;
+      color: #fff;
+      outline: none;
+      font-size: 0.98rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--accent-light);
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
     }
 
+    .story-prompts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .prompt-chip {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 99px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .prompt-chip:hover {
+      border-color: var(--border-gold);
+      color: var(--accent-light);
+      background: rgba(245, 158, 11, 0.1);
+    }
+
+    .photo-notice {
+      background: rgba(245, 158, 11, 0.08);
+      border-left: 4px solid var(--accent-light);
+      padding: 15px 16px;
+      border-radius: 10px;
+      font-size: 0.86rem;
+      color: #d1d5db;
+      margin-bottom: 22px;
+      line-height: 1.55;
+    }
+
+    .order-actions-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn-copy-fallback {
+      background: transparent;
+      border: 1px dashed rgba(255,255,255,0.18);
+      color: var(--text-muted);
+      padding: 11px;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-copy-fallback:hover {
+      color: #fff;
+      border-color: var(--accent-light);
+    }
+
+    /* Плавающая мобильная панель быстрого заказа */
+    .floating-cta {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      z-index: 95;
+      background: rgba(12, 14, 22, 0.92);
+      border: 1px solid var(--border-gold);
+      backdrop-filter: blur(16px);
+      padding: 10px 14px 10px 20px;
+      border-radius: 99px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.75), 0 0 25px rgba(245, 158, 11, 0.2);
+      transition: transform 0.45s var(--ease-out-expo);
+      white-space: nowrap;
+    }
+    .floating-cta.visible {
+      transform: translateX(-50%) translateY(0);
+    }
+    .floating-cta-text {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .floating-cta-text span {
+      color: var(--accent-light);
+    }
+    .floating-cta-btn {
+      background: var(--gold-gradient);
+      color: #111;
+      font-weight: 800;
+      font-size: 0.82rem;
+      padding: 9px 18px;
+      border-radius: 99px;
+      text-decoration: none;
+    }
+
+    /* Футер */
     footer {
       border-top: 1px solid var(--border);
-      padding: 36px 0;
+      padding: 48px 0 90px;
       text-align: center;
       color: var(--text-muted);
-      font-size: 0.84rem;
+      font-size: 0.9rem;
       position: relative;
-      z-index: 3;
+      z-index: 2;
     }
   </style>
 </head>
 <body>
 
-  <!-- Верхний прогресс-бар чтения -->
-  <div class="top-scroll-progress" id="topScrollProgress"></div>
+  <!-- Верхний индикатор прогресса чтения сайта -->
+  <div class="page-progress" id="pageProgress"></div>
 
-  <!-- Кастомный курсор -->
-  <div class="cursor-dot" id="cursorDot"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
-
-  <!-- Живой фон и меняющиеся от скролла световые ауры -->
+  <!-- Золотые частицы на фоне -->
   <canvas id="particles-canvas"></canvas>
-  <div class="dynamic-aura aura-1"></div>
-  <div class="dynamic-aura aura-2"></div>
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
 
-  <!-- Парящие 3D-предметы, которые вращаются в такт скроллу страницы -->
-  <div class="scroll-totems-layer" aria-hidden="true">
-    <div class="scroll-totem totem-1" id="totem1">✦</div>
-    <div class="scroll-totem totem-2" id="totem2">📖</div>
-    <div class="scroll-totem totem-3" id="totem3">💖</div>
-  </div>
-
-  <!-- Верхняя панель -->
-  <div class="top-bar">
-    <div class="container top-bar-inner">
-      <div class="slots-indicator">
-        <span class="live-dot"></span>
-        <span>Свободно <strong>3 места</strong> на экспресс-отрисовку за 24 часа</span>
-      </div>
-      <div class="vibe-switcher">
-        <button type="button" class="vibe-btn active" onclick="setTheme('gold', this)">✦ Золотой Сеул</button>
-        <button type="button" class="vibe-btn" onclick="setTheme('seoul', this)">⚡ Кибер-Неон</button>
-        <button type="button" class="vibe-btn" onclick="setTheme('sakura', this)">🌸 Сакура</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Шапка с едиными ценами от 990 ₽ -->
+  <!-- Навигация -->
   <header>
     <div class="container nav-inner">
       <a href="#" class="brand">
         <img src="logo.jpg" alt="OURTUNE" class="brand-logo-img" onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='flex';">
         <div id="fallbackLogo" class="brand-fallback-icon" style="display:none;">✦</div>
-        <div>
-          <span class="logo-text">OURTUNE</span>
-          <span class="logo-sub">Manhwa Love Studio</span>
-        </div>
+        <span class="logo-text">OURTUNE</span>
       </a>
       <div class="nav-links">
-        <a href="#showcase-wrapper" class="link">Живой пример</a>
-        <a href="#interactive-lab" class="link">Покрутить 3D-книгу</a>
-        <a href="#pricing" class="link">Тарифы от 990 ₽</a>
-        <a href="#order" class="nav-btn">Заказать манхву ✦</a>
+        <a href="#transform" class="link">До / После</a>
+        <a href="#showcase-wrapper" class="link">Живой ридер</a>
+        <a href="#why" class="link">Преимущества</a>
+        <a href="#pricing" class="link">Тарифы от 390 ₽</a>
+      </div>
+      <div class="nav-right">
+        <div class="live-slots-pill" title="Свободные слоты художников и сценаристов на сегодня">
+          <span class="live-slots-dot"></span>
+          <span>Свободно 3 места на завтра</span>
+        </div>
+        <a href="#order" class="nav-btn">Заказать манхву</a>
       </div>
     </div>
   </header>
 
-  <!-- ЭКРАН 1: HERO (КОМПАКТНЫЙ, С ЕДИНОЙ ЦЕНОЙ ОТ 990 ₽) -->
+  <!-- Первый экран -->
   <section class="hero">
     <div class="container">
       <div class="badge">
-        <span>✨ Персональный корейский вебтун и печатная книга по вашим фото</span>
-        <span class="badge-price-pill">ОТ 990 ₽</span>
+        <span class="badge-dot"></span>
+        <span>Ваш личный романтический вебтун по фото</span>
+        <span class="badge-price-tag">от 390 ₽</span>
       </div>
-
       <h1><span>В одном непрерывном вебтуне вас ждёт</span> ваша история любви</h1>
-
-      <p class="hero-sub">
-        Подарок, который доводит до мурашек. <strong>100% узнаваемость ваших лиц по 3 селфи</strong>, любимые места, питомец и ночные переписки — <strong>всего от 990 ₽ и за 24 часа</strong>.
-      </p>
-
+      <p class="hero-sub">Подарок, который попадает прямо в сердце. 100% узнаваемость ваших лиц, любимые локации, переписки и шутки на уровне топовой корейской студии за 24 часа.</p>
+      
       <div class="hero-actions">
-        <a href="#order" class="btn-main">Создать манхву от 990 ₽ ✦</a>
-        <a href="#interactive-lab" class="btn-secondary">Открыть 3D-книгу пальцем ↓</a>
+        <a href="#order" class="btn-main magnetic-btn">Создать комикс от 390 ₽ ✦</a>
+        <a href="#showcase-wrapper" class="btn-secondary">Смотреть живой пример ↓</a>
       </div>
 
       <div class="hero-stats">
         <div class="stat-item">
+          <div class="stat-val">от 390 ₽</div>
+          <div class="stat-lbl">Доступная цена за персональную историю</div>
+        </div>
+        <div class="stat-item">
           <div class="stat-val">100% сходство</div>
-          <div class="stat-lbl">Переносим черты лица, прически и одежду по обычным фото</div>
+          <div class="stat-lbl">Переносим черты лица и стиль по 2–3 фото</div>
         </div>
         <div class="stat-item">
-          <div class="stat-val">от 990 ₽</div>
-          <div class="stat-lbl">Дешевле букета цветов — но останется в памяти навсегда</div>
+          <div class="stat-val">от 24 часов</div>
+          <div class="stat-lbl">Готовность цифрового скролл-вебтуна</div>
         </div>
         <div class="stat-item">
-          <div class="stat-val">за 24 часа</div>
-          <div class="stat-lbl">Быстрая готовность цифрового вертикального вебтуна 9:16</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-val">3D VIP-Книга</div>
-          <div class="stat-lbl">Твердый переплет Soft-Touch с бесплатной доставкой СДЭК</div>
+          <div class="stat-val">Бесшовный 9:16</div>
+          <div class="stat-lbl">Идеально под экран любого смартфона</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ЭКРАН 2: СМАРТФОН-РИДЕР (ЛИПКИЙ СКРОЛЛ + СВАЙП ПАЛЬЦЕМ) -->
+  <!-- Интерактивное сравнение ДО / ПОСЛЕ (Фото пары -> Кадр манхвы) -->
+  <section id="transform" style="padding-top: 25px; padding-bottom: 50px;">
+    <div class="container reveal">
+      <div class="section-title" style="margin-bottom: 32px;">
+        <span class="section-tag">Технология бережной отрисовки</span>
+        <h2>Из обычного селфи — в кадр корейской манхвы</h2>
+        <p>Потяните ползунок влево-вправо, чтобы увидеть, как мы сохраняем ваши эмоции, одежду и детали локации</p>
+      </div>
+
+      <div class="transform-showcase spotlight-card">
+        <div class="transform-tabs">
+          <button class="transform-tab active" onclick="switchScene(0, this)">🍂 Вокзал и долгожданная встреча</button>
+          <button class="transform-tab" onclick="switchScene(1, this)">🐾 Уютный вечер с котом</button>
+          <button class="transform-tab" onclick="switchScene(2, this)">☕ Первое свидание в кофейне</button>
+        </div>
+
+        <div class="ba-slider-wrap" id="baSlider">
+          <span class="ba-badge left">Обычное фото из галереи</span>
+          <span class="ba-badge right">Рисовка OURTUNE ✦</span>
+
+          <!-- Слой ДО (Исходник фото) -->
+          <div class="ba-layer ba-before" id="baBeforeLayer"></div>
+
+          <!-- Слой ПОСЛЕ (Манхва) -->
+          <div class="ba-layer ba-after" id="baAfterLayer"></div>
+
+          <!-- Ползунок -->
+          <div class="ba-handle" id="baHandle">
+            <div class="ba-handle-circle">↔</div>
+          </div>
+        </div>
+
+        <div class="ba-caption-bar">
+          <span id="baSceneDesc">✦ Сохранены: бежевое пальто, букет белых роз, очки, табло поезда и мягкий свет фонарей</span>
+          <a href="#pricing" style="color: var(--accent-light); font-weight: 700; text-decoration: none;">Выбрать формат от 390 ₽ →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Интерактивный липкий скролл-ридер -->
   <section class="showcase-wrapper" id="showcase-wrapper">
     <div class="showcase-sticky">
       <div class="container">
-        <div class="section-title" style="margin-bottom: 12px;">
-          <span class="section-tag">Живой кейс OURTUNE</span>
-          <h2>Листайте страницу — <em>история оживает</em></h2>
-        </div>
-
-        <div class="showcase-top-bar">
-          <button type="button" class="chapter-jump-btn active" onclick="jumpToEpisode(0)">01 · Дом и кот</button>
-          <button type="button" class="chapter-jump-btn" onclick="jumpToEpisode(1)">02 · Магия перехода</button>
-          <button type="button" class="chapter-jump-btn" onclick="jumpToEpisode(2)">03 · Кружочки в ТГ</button>
-          <button type="button" class="chapter-jump-btn" onclick="jumpToEpisode(3)">04 · Встреча на перроне</button>
-          <button type="button" class="chapter-jump-btn" onclick="jumpToEpisode(4)">05 · Финал в парке</button>
+        <div class="section-title" style="margin-bottom: 16px;">
+          <span class="section-tag">Реальный кейс OURTUNE</span>
+          <h2>Как это выглядит вживую</h2>
+          <p>Крутите страницу вниз или нажимайте на эпизоды — история внутри смартфона листается бесшовно</p>
         </div>
 
         <div class="showcase-layout">
+          <!-- Левая колонка подсказок -->
           <div class="showcase-side">
             <div class="scene-pill active" id="pill-0" onclick="jumpToEpisode(0)">
-              <div class="scene-pill-head"><span>Эпизод 01</span> <span>🐾</span></div>
-              <div class="scene-pill-text">Уютная ночь перед поездкой и ваш любимый питомец в кадре.</div>
+              <div class="scene-pill-head"><span>Эпизод 1 · Уютные детали</span><span>01</span></div>
+              <div class="scene-pill-text">Ночь перед отъездом, домашняя атмосфера и даже ваш любимый питомец в кадре.</div>
             </div>
             <div class="scene-pill" id="pill-1" onclick="jumpToEpisode(1)">
-              <div class="scene-pill-head"><span>Эпизод 02</span> <span>🍂</span></div>
-              <div class="scene-pill-text">Бесшовный переход со светящейся нитью и осенними листьями.</div>
+              <div class="scene-pill-head"><span>Эпизод 2 · Магия переходов</span><span>02</span></div>
+              <div class="scene-pill-text">Светящаяся золотая нить с осенними листьями плавно связывает вокзал и поезд без единого шва.</div>
             </div>
             <div class="scene-pill" id="pill-2" onclick="jumpToEpisode(2)">
-              <div class="scene-pill-head"><span>Эпизод 03</span> <span>💬</span></div>
-              <div class="scene-pill-text">Ваши реальные сообщения и кружочки в Telegram прямо в сюжете.</div>
+              <div class="scene-pill-head"><span>Эпизод 3 · Ваши переписки</span><span>03</span></div>
+              <div class="scene-pill-text">Кружочки в Telegram, фотографии из поездки и ночные сообщения любимому человеку.</div>
             </div>
           </div>
 
+          <!-- Смартфон -->
           <div class="phone-container">
-            <div class="phone-mockup" id="phoneMockup">
+            <div class="phone-mockup">
               <div class="phone-statusbar">
                 <span>01:24</span>
-                <span>OURTUNE 5G</span>
+                <span>5G 100%</span>
               </div>
               <div class="phone-notch"></div>
 
-              <div class="webtoon-scroll" id="scrollArea">
+              <div class="phone-Controls-top">
+                <button class="phone-mini-btn" id="autoScrollBtn" onclick="togglePhoneAutoScroll()" title="Автоскролл ридера">▶</button>
+                <button class="phone-mini-btn" onclick="triggerPhoneHeart(event)" title="Поставить сердечко">❤️</button>
+              </div>
+              
+              <div class="webtoon-scroll" id="scrollArea" ondblclick="triggerPhoneHeart(event)">
                 <div class="webtoon-tape" id="scrollTape">
-                  <img src="frame1.jpg" alt="Непрерывная манхва OURTUNE">
+                  <img src="frame1.jpg" id="userWebtoonImg" alt="Вебтун OURTUNE" onerror="enableFallbackWebtoon()">
+                  <div id="fallbackWebtoonContainer" style="display:none; width:100%;"></div>
                 </div>
               </div>
 
               <div class="reader-progress-bar">
-                <span>Webtoon 9:16</span>
+                <span>OURTUNE Reader</span>
                 <div class="reader-track">
                   <div class="reader-fill" id="readerFill"></div>
                 </div>
                 <span id="readerPercent">0%</span>
               </div>
             </div>
+
+            <div class="mobile-ep-bar">
+              <span class="mobile-ep-dot active" id="m-pill-0" onclick="jumpToEpisode(0)">Эп. 1</span>
+              <span class="mobile-ep-dot" id="m-pill-1" onclick="jumpToEpisode(1)">Эп. 2</span>
+              <span class="mobile-ep-dot" id="m-pill-2" onclick="jumpToEpisode(2)">Эп. 3</span>
+              <span class="mobile-ep-dot" id="m-pill-3" onclick="jumpToEpisode(3)">Эп. 4</span>
+              <span class="mobile-ep-dot" id="m-pill-4" onclick="jumpToEpisode(4)">Эп. 5</span>
+            </div>
           </div>
 
+          <!-- Правая колонка подсказок -->
           <div class="showcase-side">
             <div class="scene-pill" id="pill-3" onclick="jumpToEpisode(3)">
-              <div class="scene-pill-head"><span>Эпизод 04</span> <span>💐</span></div>
-              <div class="scene-pill-text">Волнение на вокзале с букетом и первые объятия после разлуки.</div>
+              <div class="scene-pill-head"><span>Эпизод 4 · Долгожданная встреча</span><span>04</span></div>
+              <div class="scene-pill-text">Волнение на перроне с букетом цветов и искренние эмоции при встрече поезда.</div>
             </div>
             <div class="scene-pill" id="pill-4" onclick="jumpToEpisode(4)">
-              <div class="scene-pill-head"><span>Эпизод 05</span> <span>✨</span></div>
-              <div class="scene-pill-text">Кинематографичный финал прогулки, который останется навсегда.</div>
+              <div class="scene-pill-head"><span>Эпизод 5 · Кинематографичный финал</span><span>05</span></div>
+              <div class="scene-pill-text">Романтичная прогулка по осеннему парку, которая останется в памяти навсегда.</div>
             </div>
-            <a href="#order" class="nav-btn" style="justify-content:center; padding: 13px;">Хочу такую же за 990 ₽ →</a>
+            <div style="padding: 8px 4px; text-align: center;">
+              <a href="#order" class="nav-btn" style="display:inline-block; width:100%; padding: 13px 20px;">Хочу такую же историю от 390 ₽ →</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
-  <!-- ========================================================================
-       ЭКРАН 3: ИНТЕРАКТИВНАЯ 3D-ЛАБОРАТОРИЯ (3D-КНИГА + СКАНЕР СХОДСТВА ЛИЦ)
-       ======================================================================== -->
-  <section id="interactive-lab">
-    <div class="container">
+
+  <!-- Почему это попадает прямо в сердце (Bento Grid) -->
+  <section id="why">
+    <div class="container reveal">
       <div class="section-title">
-        <span class="section-tag">Тактильный 3D-опыт · Попробуйте прямо сейчас</span>
-        <h2>Покрутите <em>3D-книгу</em> и проверьте 100% сходство</h2>
-        <p>Зажмите книгу пальцем или мышкой, чтобы вращать её в пространстве, и потяните за правый золотой край, чтобы заглянуть внутрь</p>
+        <span class="section-tag">Эстетика и персонализация</span>
+        <h2>Подари то, чего нет ни у кого</h2>
+        <p>Цветы завянут, а банальную открытку забудут на полке. Собственная манхва о вашей паре становится семейной реликвией.</p>
       </div>
 
-      <div class="interactive-lab-grid">
-        <!-- ЛЕВАЯ КОЛОНКА: НАСТОЯЩАЯ 3D-КНИГА (ВРАЩЕНИЕ + ОТКРЫТИЕ ЗА КРАЙ) -->
-        <div class="book-sandbox-card">
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-            <span class="ba-badge gold">✦ VIP-издание · 5 990 ₽</span>
-            <span style="font-size: 0.76rem; color: var(--text-muted);" id="bookStatusHint">
-              👆 Зажмите и крутите 3D · Потяните за край справа
-            </span>
-          </div>
+      <div class="bento-grid">
+        <div class="bento-card bento-col-7 spotlight-card">
+          <div class="bento-icon">🎭</div>
+          <div class="bento-title">100% узнаваемость ваших лиц</div>
+          <div class="bento-desc">Мы не используем случайных шаблонных персонажей. По 2–3 обычным селфи мы бережно переносим ваши черты лица, прически, родинки и любимую одежду в рисовку топовой романтической манхвы.</div>
+        </div>
+        <div class="bento-card bento-col-5 spotlight-card">
+          <div class="bento-icon">🐾</div>
+          <div class="bento-title">Локальные мемы и питомцы</div>
+          <div class="bento-desc">Та самая лавочка, кружочки в Telegram, смешная куртка с первого свидания или ваш шотландский кот — мы вплетаем в сюжет детали, понятные только вам двоим.</div>
+        </div>
+        <div class="bento-card bento-col-5 spotlight-card">
+          <div class="bento-icon">⚡</div>
+          <div class="bento-title">Готовность от 24 часов</div>
+          <div class="bento-desc">Забыли про годовщину или до важной даты осталась пара дней? Мы создадим полноценный цифровой шедевр всего за сутки без потери качества и всего от 390 ₽.</div>
+        </div>
+        <div class="bento-card bento-col-7 spotlight-card">
+          <div class="bento-icon">📖</div>
+          <div class="bento-title">Два формата: Цифровой скролл или VIP-книга</div>
+          <div class="bento-desc">Выбирайте современный бесшовный вебтун под экран телефона или закажите эксклюзивное печатное глянцевое издание в твердой обложке с доставкой до ближайшего СДЭК.</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-          <!-- 3D Сцена книги -->
-          <div class="book-3d-viewport" id="bookViewport">
-            <div class="book-3d-rig" id="bookRig">
-              <!-- Основа книги (задняя крышка) -->
-              <div class="book-base-body"></div>
-
-              <!-- 3D Корешок и 3D страницы -->
-              <div class="book-spine-3d"></div>
-              <div class="book-pages-block-3d"></div>
-
-              <!-- Правая внутренняя страница (видна, когда открыта крышка) -->
-              <div class="book-inner-right-page">
-                <div style="display: flex; justify-content: space-between; font-size: 0.62rem; font-weight: 800; color: #92400e; text-transform: uppercase;">
-                  <span id="spreadChapter">ГЛАВА 01 · ВСТРЕЧА</span>
-                  <span id="spreadPageNum">СТР. 02</span>
-                </div>
-
-                <!-- Иллюстрация внутри книги -->
-                <div id="spreadVisualBox" style="margin: 8px 0; flex: 1; border-radius: 10px; background: linear-gradient(150deg, #1e1b2e 0%, #3b1d38 100%); color: #fff; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: inset 0 0 20px rgba(245, 158, 11, 0.35);">
-                  <div style="font-size: 1.5rem; text-align: center;" id="spreadEmoji">👩‍❤️‍👨✨</div>
-                  <div style="background: rgba(255,255,255,0.95); color: #111; border-radius: 10px 10px 10px 2px; padding: 7px 9px; font-size: 0.66rem; font-weight: 700; line-height: 1.3;" id="spreadQuote">
-                    «Ты даже мою любимую толстовку и кота сюда добавил?! Это лучший подарок...»
-                  </div>
-                  <div style="font-size: 0.58rem; color: #fde68a; text-align: right;">100% сходство лиц по вашим фото</div>
-                </div>
-
-                <!-- Кнопка перелистывания внутри открытой книги -->
-                <button type="button" onclick="nextBookSpread(event)" style="width: 100%; padding: 6px; border-radius: 8px; border: 1px solid #d97706; background: #fef3c7; color: #92400e; font-size: 0.66rem; font-weight: 800; cursor: pointer;">
-                  Листать страницу дальше →
-                </button>
-              </div>
-
-              <!-- Передняя крышка книги, которая открывается за край -->
-              <div class="book-cover-door" id="bookCoverDoor">
-                <!-- Лицевая обложка -->
-                <div class="book-cover-outer">
-                  <div style="display: flex; justify-content: space-between; font-size: 0.6rem; color: var(--accent-light); letter-spacing: 1.4px; font-weight: 800;">
-                    <span>OURTUNE VIP</span>
-                    <span>HARDCOVER</span>
-                  </div>
-
-                  <div style="text-align: center; padding: 14px 6px; border-top: 1px solid rgba(251, 191, 36, 0.28); border-bottom: 1px solid rgba(251, 191, 36, 0.28);">
-                    <div style="font-size: 2.2rem; margin-bottom: 6px;">💑</div>
-                    <div style="font-family: var(--font-serif); font-style: italic; font-size: 1.25rem; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700;">
-                      Наша История Любви
-                    </div>
-                    <div style="font-size: 0.66rem; color: var(--text-muted); margin-top: 4px;">
-                      Персональная манхва в твердом переплете
-                    </div>
-                  </div>
-
-                  <div style="text-align: center; font-size: 0.62rem; color: var(--text-secondary);">
-                    Глянец 170 г/м² · Доставка СДЭК включена
-                  </div>
-                </div>
-
-                <!-- Внутренняя левая страница (оборот обложки) -->
-                <div class="book-cover-inner-left">
-                  <div style="font-size: 0.6rem; font-weight: 800; color: #92400e; text-transform: uppercase;">
-                    Эксклюзивный экземпляр
-                  </div>
-                  <div style="text-align: center; padding: 12px 4px;">
-                    <div style="font-family: var(--font-serif); font-style: italic; font-size: 0.95rem; color: #111827; font-weight: 700; margin-bottom: 6px;" id="spreadLeftTitle">
-                      Посвящается нам двоим ❤️
-                    </div>
-                    <p style="font-size: 0.65rem; color: #4b5563; line-height: 1.4;" id="spreadLeftText">
-                      Каждая сцена создана по вашим реальным фотографиям, ночным перепискам и моментам, которые знаете только вы.
-                    </p>
-                  </div>
-                  <div style="font-size: 0.58rem; color: #6b7280; border-top: 1px dashed #d1d5db; padding-top: 6px; text-align: center;">
-                    🎵 Наведите камеру на QR для вашей песни
-                  </div>
-                </div>
-
-                <!-- ЗОЛОТОЙ ЯЗЫЧОК НА ПРАВОМ КРАЮ: ТЯНИ ИЛИ ЖМИ, ЧТОБЫ ОТКРЫТЬ -->
-                <div class="book-edge-pull" id="bookEdgePull" title="Потяните влево или нажмите, чтобы открыть книгу">
-                  ✦ ОТКРЫТЬ КРАЙ
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Панель управления 3D-книгой + ползунок раскрытия обложки -->
+  <!-- Реакция в 01:24 ночи и Сравнение с художниками -->
+  <section style="padding-top: 10px;">
+    <div class="container reveal">
+      <div class="comparison-grid">
+        <div class="chat-mockup spotlight-card" id="chatTriggerBox">
           <div>
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 0.76rem; color: var(--text-muted);">
-              <span>Раскрытие обложки:</span>
-              <input type="range" id="bookOpenSlider" min="0" max="155" value="0" style="flex: 1; accent-color: var(--accent-light); cursor: pointer;" oninput="setBookOpenAngle(this.value)">
-              <span id="bookOpenPct" style="font-family: var(--font-mono); color: var(--accent-light); width: 38px;">0%</span>
+            <div class="chat-header">
+              <div class="chat-user">
+                <div class="chat-avatar">❤️</div>
+                <div>
+                  <div style="font-weight: 700; color: #fff;">Любимая</div>
+                  <div style="font-size: 0.78rem; color: #fbbf24;" id="chatStatusText">в сети в 01:24 ночи</div>
+                </div>
+              </div>
+              <button class="replay-chat-btn" onclick="playChatAnimation()">↻ Повторить эмоцию</button>
             </div>
 
-            <div class="book-controls-bar">
-              <button type="button" class="book-ctrl-btn" id="btnToggleCover" onclick="toggleBookCover()">📖 Распахнуть книгу</button>
-              <button type="button" class="book-ctrl-btn" onclick="resetBookView()">🔄 Сбросить ракурс</button>
-              <button type="button" class="book-ctrl-btn active" onclick="selectPlan('Печатный глянец (VIP книга) — 5 990 ₽')">Заказать книгу за 5 990 ₽ →</button>
+            <div class="chat-messages-area">
+              <div class="chat-bubble shown" id="msg1">
+                Подожди... это что, МЫ?! На нашем вокзале и с нашим котом?! 😭
+                <div class="chat-time">01:23</div>
+              </div>
+              <div class="chat-bubble shown" id="msg2">
+                Ты чего???.. Я перечитываю уже третий раз, это буквально лучший подарок в моей жизни 💔✨
+                <div class="chat-time">01:24</div>
+              </div>
+              <div class="chat-bubble gold shown" id="msg3">
+                С нашей годовщиной, родная ❤️
+                <div class="chat-time" style="color: rgba(255,255,255,0.7);">01:25 ✓✓</div>
+              </div>
             </div>
+          </div>
+          <div style="margin-top: 16px; font-size: 0.84rem; color: var(--text-muted); text-align: center;">
+            Тот самый момент, когда подарок попадает прямо в сердце
           </div>
         </div>
 
-        <!-- ПРАВАЯ КОЛОНКА: СКАНЕР 100% СХОДСТВА ДО/ПОСЛЕ + БЫСТРЫЙ ВЫБОР СТИЛЯ -->
-        <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 18px;">
-          <!-- Интерактивный слайдер До / После -->
-          <div class="tilt-card" style="padding: 22px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-              <span style="font-size: 0.78rem; font-weight: 800; color: var(--accent-light); text-transform: uppercase;">
-                🎭 100% Сходство по 2–3 обычным селфи
-              </span>
-              <span style="font-size: 0.74rem; color: var(--text-muted);">Двигайте ползунок ↔</span>
-            </div>
-
-            <div class="scanner-stage" id="scannerStage">
-              <!-- ПОСЛЕ: Манхва -->
-              <div class="scanner-pane manhwa-side">
-                <span class="ba-badge gold">✦ После: Рисовка OURTUNE</span>
-                <div style="margin: auto; text-align: center; max-width: 260px;">
-                  <div style="font-size: 2.2rem; margin-bottom: 4px;">💑✨</div>
-                  <div style="font-family: var(--font-serif); font-style: italic; font-size: 1.08rem; color: var(--accent-ultra);">
-                    «Это буквально мы! Даже родинка и твоя куртка 1 в 1...»
-                  </div>
-                  <p style="font-size: 0.76rem; color: var(--text-secondary); margin-top: 4px;">
-                    Сохраняем разрез глаз, прическу, мимику и любимую одежду на всех кадрах
-                  </p>
-                </div>
-                <div style="font-size: 0.68rem; color: var(--accent-light); font-family: var(--font-mono); display: flex; justify-content: space-between;">
-                  <span>IDENTITY LOCK: 99.8%</span>
-                  <span>БЕСПЛАТНЫЕ ПРАВКИ</span>
-                </div>
-              </div>
-
-              <!-- ДО: Обычное селфи -->
-              <div class="scanner-pane photo-side" id="scannerBeforePane">
-                <span class="ba-badge">📸 До: Селфи с телефона</span>
-                <div style="margin: auto; text-align: center; max-width: 240px;">
-                  <div style="font-size: 2.2rem; margin-bottom: 4px;">📱🤳</div>
-                  <div style="font-weight: 800; font-size: 1rem; color: #fff;">
-                    Любые 2–3 фото из жизни
-                  </div>
-                  <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 4px;">
-                    Не нужна студийная съемка — подойдут даже раздельные селфи из лифта или кафе
-                  </p>
-                </div>
-                <div style="font-size: 0.68rem; color: var(--text-muted); font-family: var(--font-mono);">
-                  RAW INPUT: 2–3 PHOTOS
-                </div>
-              </div>
-
-              <div class="scanner-divider" id="scannerDivider"></div>
-              <div class="ba-handle" id="scannerHandle">↔</div>
-              <input type="range" min="8" max="92" value="48" class="ba-range" id="scannerRange" aria-label="Сравнение До и После" oninput="updateScanner(this.value)">
-            </div>
-
-            <!-- 3 главные фишки в одну строку -->
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center; font-size: 0.76rem;">
-              <div style="background: rgba(255,255,255,0.03); padding: 8px; border-radius: 12px; border: 1px solid var(--border);">
-                <strong style="color: var(--accent-light); display: block;">🐾 Питомец</strong>
-                В кадре за 0 ₽
-              </div>
-              <div style="background: rgba(255,255,255,0.03); padding: 8px; border-radius: 12px; border: 1px solid var(--border);">
-                <strong style="color: var(--accent-light); display: block;">✍️ Сценарий</strong>
-                Пишем сами
-              </div>
-              <div style="background: rgba(255,255,255,0.03); padding: 8px; border-radius: 12px; border: 1px solid var(--border);">
-                <strong style="color: var(--accent-light); display: block;">⚡ 24 часа</strong>
-                Экспресс-сдача
-              </div>
-            </div>
+        <div class="vs-box">
+          <div class="vs-card bad spotlight-card">
+            <span class="vs-label" style="color: #ef4444;">Обычный художник с биржи</span>
+            <div class="vs-title">30 дней ожидания и от 15 000 ₽</div>
+            <p style="color: var(--text-muted); font-size: 0.92rem;">Долгие согласования, срыв дедлайнов перед праздником, чужой стиль рисовки и высокая цена за каждый отдельный кадр.</p>
           </div>
-
-          <!-- Реакция в 01:24 ночи (Компактный эмоциональный триггер) -->
-          <div class="tilt-card" style="padding: 20px 24px; border-color: var(--border-gold);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <div style="width: 34px; height: 34px; border-radius: 50%; background: var(--gold-gradient); color: #111; display: flex; align-items: center; justify-content: center; font-weight: 800;">❤️</div>
-                <div>
-                  <div style="font-weight: 800; font-size: 0.88rem;">Любимая · 01:24 ночи</div>
-                  <div style="font-size: 0.72rem; color: var(--accent-light);">Реальная реакция после получения ссылки</div>
-                </div>
-              </div>
-              <span class="price-save-badge">Мурашки 100%</span>
-            </div>
-            <div style="background: rgba(255,255,255,0.05); border-radius: 14px; padding: 12px 15px; font-size: 0.86rem; color: #f3f4f6;">
-              «Подожди... это что, МЫ?! На нашем вокзале и с нашим котом?! 😭 Я перечитываю уже третий раз, это буквально лучший подарок в моей жизни 💔✨»
-            </div>
+          <div class="vs-card good spotlight-card">
+            <span class="vs-label" style="color: var(--accent-light);">Сервис OURTUNE</span>
+            <div class="vs-title">От 24 часов и от 390 ₽ · Уровень студии</div>
+            <p style="color: #e5e7eb; font-size: 0.92rem;">Три простых шага и ноль нервов. Вы рассказываете историю своими словами и скидываете фото — мы сами пишем сценарий, диалоги и рисуем бесшовную манхву.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========================================================================
-       ЭКРАН 4: ЕДИНЫЕ ТАРИФЫ (990 ₽ / 1 990 ₽ / 5 990 ₽) + БОНУСЫ В 1 КЛИК
-       ======================================================================== -->
-  <section id="pricing">
-    <div class="container">
+  <!-- Как это работает -->
+  <section style="padding-top: 10px;">
+    <div class="container reveal">
       <div class="section-title">
-        <span class="section-tag">Прозрачные и доступные цены</span>
-        <h2>Выберите формат <em>вашей истории</em></h2>
-        <p>В 6 раз выгоднее заказа у фрилансеров — сценарий, диалоги и бесплатные правки уже включены</p>
+        <span class="section-tag">Простой процесс</span>
+        <h2>Магия в 3 шага</h2>
+        <p>Никаких сложных технических заданий — расскажите историю так, как рассказали бы другу</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card spotlight-card">
+          <div class="step-number">1</div>
+          <div class="step-title">Заявка и ваша история</div>
+          <div class="step-text">Выбираете подходящий тариф на сайте и пишете ключевые моменты вашей истории: как познакомились, смешные случаи или важные фразы.</div>
+        </div>
+        <div class="step-card spotlight-card">
+          <div class="step-number">2</div>
+          <div class="step-title">Переход в Telegram и фото</div>
+          <div class="step-text">После нажатия кнопки вы попадаете в наш личный диалог в Telegram, где прикрепляете 3–5 обычных фотографий вашей пары.</div>
+        </div>
+        <div class="step-card spotlight-card">
+          <div class="step-number">3</div>
+          <div class="step-title">Готовый шедевр</div>
+          <div class="step-text">Мы создаем сценарий и отрисовываем единый непрерывный вебтун (или печатаем твердую книгу и отправляем в ближайший к вам СДЭК).</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Тарифы (390 ₽ / 1 490 ₽ / 9 990 ₽) -->
+  <section class="pricing" id="pricing">
+    <div class="container reveal">
+      <div class="section-title">
+        <span class="section-tag">Специальные цены</span>
+        <h2>Тарифные планы</h2>
+        <p>Выберите формат и объем истории, подходящий к вашему событию</p>
       </div>
 
       <div class="pricing-grid">
-        <!-- Тариф 1: 990 ₽ -->
-        <div class="price-card tilt-card">
+        <!-- Тариф 1: 390 ₽ -->
+        <div class="price-card spotlight-card">
           <div>
-            <div style="font-size: 1.35rem; font-weight: 800; color: #fff;">Мини-история</div>
-            <div style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 14px;">Яркий сюрприз об одном важном моменте</div>
-
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span class="price-old">1 990 ₽</span>
-              <span class="price-save-badge">−50% СКИДКА</span>
+            <span class="price-discount-badge">Выгода 80% · Быстрый старт</span>
+            <div class="price-name">Мини-история</div>
+            <div class="price-sub">Идеально для милого сюрприза без повода</div>
+            <div class="price-cost-wrap">
+              <div class="price-cost">390 ₽</div>
+              <div class="price-old">1 990 ₽</div>
             </div>
-            <div class="price-cost">990 ₽</div>
-            <div style="font-size: 0.76rem; color: var(--accent-light); font-weight: 600;">Всего 66 ₽ за индивидуальный кадр</div>
-
             <ul class="price-features">
-              <li><strong>15 ключевых кадров</strong> с вашими лицами</li>
-              <li>Бесшовный вертикальный вебтун 9:16 для телефона</li>
-              <li>Ваш питомец и любимая одежда — <strong>бесплатно</strong></li>
-              <li>Готовность заказа: <strong>за 24 часа</strong></li>
+              <li>15 ключевых кадров с вашим сходством</li>
+              <li>Трогательная мини-история на 1 сюжет</li>
+              <li>Формат: Цифровой файл (бесшовный скролл)</li>
+              <li>Срок изготовления: 24 часа</li>
             </ul>
           </div>
-          <button type="button" class="btn-select" onclick="selectPlan('Мини-история (15 кадров) — 990 ₽')">
-            Выбрать за 990 ₽
-          </button>
+          <div class="action-row">
+            <button class="btn-select" onclick="selectPlan('Мини-история (15 кадров) — 390 ₽')">Выбрать за 390 ₽</button>
+            <div class="anim-box" title="Медленный скролл">
+              <div class="anim-phone slow"></div>
+            </div>
+          </div>
         </div>
 
-        <!-- Тариф 2: 1 990 ₽ (Хит продаж) -->
-        <div class="price-card popular tilt-card">
-          <div class="popular-tag">🔥 Хит продаж · Выбор 82% пар</div>
+        <!-- Тариф 2: 1 490 ₽ -->
+        <div class="price-card popular spotlight-card">
+          <div class="popular-tag">Хит продаж · Выбор 78% пар</div>
           <div>
-            <div style="font-size: 1.35rem; font-weight: 800; color: #fff;">Полный метр</div>
-            <div style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 14px;">Большая история от знакомства до сегодня</div>
-
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span class="price-old">3 490 ₽</span>
-              <span class="price-save-badge">ВЫГОДА 1 500 ₽</span>
+            <span class="price-discount-badge">Лучшее соотношение цены и эмоций</span>
+            <div class="price-name">Полный метр</div>
+            <div class="price-sub">Глубокое погружение в ваши чувства</div>
+            <div class="price-cost-wrap">
+              <div class="price-cost">1 490 ₽</div>
+              <div class="price-old">3 490 ₽</div>
             </div>
-            <div class="price-cost">1 990 ₽</div>
-            <div style="font-size: 0.76rem; color: var(--accent-light); font-weight: 600;">Всего 44 ₽ за кадр · В 3 раза больше сцен!</div>
-
             <ul class="price-features">
-              <li><strong>45 детальных кадров</strong> (4–5 глав и локаций)</li>
-              <li>Ваши реальные переписки, шутки и кружочки ТГ</li>
-              <li>Магические бесшовные переходы между сценами</li>
-              <li>Именной подарочный сертификат — <strong>в подарок</strong></li>
-              <li>Готовность заказа: <strong>1–2 дня</strong></li>
+              <li>45 детальных кинематографичных кадров</li>
+              <li>Большая развернутая история отношений</li>
+              <li>Проработанные диалоги, переписки и мемы</li>
+              <li>Срок изготовления: 1–2 дня</li>
             </ul>
           </div>
-          <button type="button" class="btn-select" onclick="selectPlan('Полный метр (45 кадров) — 1 990 ₽')">
-            Выбрать хит за 1 990 ₽
-          </button>
+          <div class="action-row">
+            <button class="btn-select" onclick="selectPlan('Полный метр (45 кадров) — 1 490 ₽')">Выбрать за 1 490 ₽</button>
+            <div class="anim-box" title="Быстрый скролл">
+              <div class="anim-phone fast"></div>
+            </div>
+          </div>
         </div>
 
-        <!-- Тариф 3: 5 990 ₽ (VIP Книга) -->
-        <div class="price-card tilt-card">
+        <!-- Тариф 3: 9 990 ₽ -->
+        <div class="price-card spotlight-card">
           <div>
-            <div style="font-size: 1.35rem; font-weight: 800; color: #fff;">Печатный глянец VIP</div>
-            <div style="font-size: 0.84rem; color: var(--text-muted); margin-bottom: 14px;">Твердая книга Soft-Touch + Digital вебтун</div>
-
-            <div style="display: flex; align-items: center; gap: 8px;">
-              <span class="price-old">11 990 ₽</span>
-              <span class="price-save-badge">VIP ИЗДАНИЕ</span>
+            <span class="price-discount-badge">Эксклюзив · Физическая книга</span>
+            <div class="price-name">Печатный глянец</div>
+            <div class="price-sub">Премиальное физическое издание в подарок</div>
+            <div class="price-cost-wrap">
+              <div class="price-cost">9 990 ₽</div>
+              <div class="price-old">14 990 ₽</div>
             </div>
-            <div class="price-cost">5 990 ₽</div>
-            <div style="font-size: 0.76rem; color: var(--accent-light); font-weight: 600;">Книга в твердой обложке + скролл-версия сразу</div>
-
             <ul class="price-features">
-              <li><strong>Полная коллекционная книга</strong> в твердом переплете</li>
-              <li>Плотные глянцевые журнальные страницы 170 г/м²</li>
-              <li>Цифровую версию пришлем уже через 24–48 часов</li>
-              <li>Бесплатная доставка до вашего пункта <strong>СДЭК</strong></li>
+              <li>Эксклюзивная полноформатная история + цифровая копия</li>
+              <li>VIP физический комикс в твердой обложке</li>
+              <li>Срок выполнения: 1 неделя</li>
+              <li>Бесплатная доставка до ближайшего СДЭК</li>
             </ul>
           </div>
-          <button type="button" class="btn-select" onclick="selectPlan('Печатный глянец (VIP книга) — 5 990 ₽')">
-            Выбрать VIP за 5 990 ₽
-          </button>
+          <div class="action-row">
+            <button class="btn-select" onclick="selectPlan('Печатный глянец (VIP формат) — 9 990 ₽')">Выбрать за 9 990 ₽</button>
+            <div class="anim-box" title="Печатный формат">
+              <div class="anim-book"></div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Быстрые бонусы к заказу в одну компактную полосу -->
-      <div class="addons-strip">
-        <div class="addon-pill active" onclick="toggleAddon(this, 'Добавить питомца в кадр', 0)">
-          <span>🐾 Добавить питомца</span>
-          <strong style="color: #34d399;">0 ₽</strong>
-        </div>
-        <div class="addon-pill active" onclick="toggleAddon(this, 'QR-код с вашей песней', 0)">
-          <span>🎵 QR-код с любимой песней</span>
-          <strong style="color: #34d399;">0 ₽</strong>
-        </div>
-        <div class="addon-pill" onclick="toggleAddon(this, 'Именной сертификат на сегодня', 0)">
-          <span>🎁 Сертификат (вручить сегодня)</span>
-          <strong style="color: #34d399;">0 ₽</strong>
-        </div>
-        <div class="addon-pill" onclick="toggleAddon(this, 'Супер-экспресс за 12 часов', 390)">
-          <span>⚡ Срочно за 12 часов</span>
-          <strong style="color: var(--accent-light);">+390 ₽</strong>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ========================================================================
-       ЭКРАН 5: КОМПАКТНЫЙ ФИНАЛ (УМНАЯ ЗАЯВКА В @VAV_ls + ОТЗЫВЫ И FAQ)
-       ======================================================================== -->
-  <section id="order">
-    <div class="container">
-      <div class="order-grid-compact">
-        <!-- Левая часть: Форма заказа -->
-        <div class="order-box">
-          <span class="section-tag">Оформление за 1 минуту</span>
-          <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 6px;">Создать свою манхву</h2>
-          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 20px;">
-            Опишите историю своими словами — после нажатия кнопки откроется чат в Telegram (<strong>@VAV_ls</strong>), куда вы прикрепите 2–5 фото вашей пары.
-          </p>
-
-          <form id="orderForm" onsubmit="sendOrder(event)">
-            <div class="form-group">
-              <label for="clientName"><span>Ваше имя</span></label>
-              <input type="text" id="clientName" placeholder="Например: Владислав или Алина" required>
-            </div>
-
-            <div class="form-group">
-              <label for="tariffSelect">
-                <span>Тариф</span>
-                <span id="totalPriceBadge" style="color: var(--accent-light);">Итого: 1 990 ₽</span>
-              </label>
-              <select id="tariffSelect" onchange="updateOrderSummary()">
-                <option value="Мини-история (15 кадров) — 990 ₽">Мини-история (15 кадров) — 990 ₽</option>
-                <option value="Полный метр (45 кадров) — 1 990 ₽" selected>🔥 Полный метр (45 кадров) — 1 990 ₽ (Хит)</option>
-                <option value="Печатный глянец (VIP книга) — 5 990 ₽">📖 Печатный глянец (VIP книга + Digital) — 5 990 ₽</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="storyText">
-                <span>О чем будет ваша история?</span>
-                <span style="font-size: 0.74rem; color: var(--accent-light); cursor: pointer;" onclick="fillSampleTemplate()">+ Вставить готовый шаблон</span>
-              </label>
-              <div style="margin-bottom: 6px;">
-                <span class="prompt-chip" onclick="insertPrompt('Как мы познакомились: ')">+ Знакомство</span>
-                <span class="prompt-chip" onclick="insertPrompt('Любимый момент/поездка: ')">+ Памятный момент</span>
-                <span class="prompt-chip" onclick="insertPrompt('Локальная шутка/фраза: ')">+ Наша шутка</span>
-                <span class="prompt-chip" onclick="insertPrompt('Питомец / одежда: ')">+ Детали</span>
-              </div>
-              <textarea id="storyText" rows="4" placeholder="Расскажите своими словами: где встретились, смешной случай, какие фразы или места добавить..." required></textarea>
-            </div>
-
-            <button type="submit" class="btn-main" style="width: 100%; font-size: 1.02rem;">
-              Перейти в Telegram @VAV_ls и скинуть фото →
-            </button>
-          </form>
-        </div>
-
-        <!-- Правая часть: Топ-отзывы + Главные ответы FAQ без скролл-усталости -->
+      <!-- Интерактивный кастомизатор стиля и бесплатных бонусов -->
+      <div class="builder-box spotlight-card">
         <div>
-          <div class="tilt-card" style="margin-bottom: 16px; padding: 22px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-              <span style="color: var(--accent-light); font-weight: 800; font-size: 0.9rem;">★★★★★ 4.98 / 5 · 1 480+ историй</span>
-              <span class="price-save-badge">Живые отзывы</span>
-            </div>
-            <p style="font-size: 0.86rem; color: var(--text-secondary); margin-bottom: 10px;">
-              <strong>Максим (Полный метр · 1 990 ₽):</strong> «Когда девушка увидела на кадрах нашу реальную переписку и нашего спящего кота — расплакалась от счастья. Сходство лиц 10 из 10!»
-            </p>
-            <p style="font-size: 0.86rem; color: var(--text-secondary);">
-              <strong>Александр и Катя (VIP книга · 5 990 ₽):</strong> «Книга приехала в СДЭК за 6 дней, твердая бархатистая обложка, плотный глянец. Теперь главная реликвия в доме!»
-            </p>
+          <span class="section-tag" style="margin-bottom: 6px;">Персонализация бесплатно</span>
+          <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 6px;">Настройте атмосферу вашей манхвы</h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 14px;">Выберите желаемый тон рисовки и детали — они автоматически добавятся к вашему заказу без доплат:</p>
+          
+          <div style="font-size: 0.82rem; font-weight: 700; color: #d1d5db;">1. Визуальный стиль рисовки:</div>
+          <div class="builder-options-row" id="vibeSelector">
+            <button type="button" class="style-pill active" onclick="setVibe(this, 'Романтика Сеула (мягкий свет)')">🌸 Романтика Сеула</button>
+            <button type="button" class="style-pill" onclick="setVibe(this, 'Уютный Slice-of-Life')">☕ Уютный Slice-of-Life</button>
+            <button type="button" class="style-pill" onclick="setVibe(this, 'Кинематографичный неон')">🌃 Вечерний неон</button>
+            <button type="button" class="style-pill" onclick="setVibe(this, 'Комедия и локальные мемы')">😂 Больше юмора</button>
           </div>
 
-          <!-- Компактный FAQ -->
-          <details open>
-            <summary>Какие фото нужны и будем ли мы похожи?</summary>
-            <div class="faq-content">
-              Достаточно 2–5 обычных селфи из жизни (даже по отдельности). Мы фиксируем черты лица, прическу, цвет глаз и любимую одежду на всех кадрах со 100% узнаваемостью.
-            </div>
-          </details>
+          <div style="font-size: 0.82rem; font-weight: 700; color: #d1d5db;">2. Бесплатные акценты в кадре (можно несколько):</div>
+          <div class="builder-options-row" style="margin-bottom: 0;" id="extrasSelector">
+            <button type="button" class="style-pill active" onclick="toggleExtra(this, 'Добавить питомца')">🐾 Питомец в кадре (0 ₽)</button>
+            <button type="button" class="style-pill active" onclick="toggleExtra(this, 'Реальные сообщения TG')">💬 Вставки переписок (0 ₽)</button>
+            <button type="button" class="style-pill" onclick="toggleExtra(this, 'QR-код с вашей песней')">🎵 QR-код с вашим треком (0 ₽)</button>
+          </div>
+        </div>
 
-          <details>
-            <summary>Что если я не умею красиво писать тексты?</summary>
-            <div class="faq-content">
-              Просто накидайте факты тезисами или голосовым в Telegram — наш сценарист сам превратит их в трогательные диалоги и кинематографичный сюжет.
-            </div>
-          </details>
-
-          <details>
-            <summary>Можно ли внести правки или забрать сертификат сегодня?</summary>
-            <div class="faq-content">
-              Да! Правки текста и деталей бесплатны. А если праздник уже через час — мы за 15 минут пришлем именной VIP-сертификат.
-            </div>
-          </details>
+        <div class="builder-summary">
+          <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Ваша конфигурация</div>
+          <div id="builderPlanTitle" style="font-size: 1.15rem; font-weight: 800; color: #fff; margin: 6px 0;">Полный метр (45 кадров)</div>
+          <div id="builderPriceDisplay" style="font-size: 2.2rem; font-weight: 800; color: var(--accent-light); margin-bottom: 12px;">1 490 ₽</div>
+          <a href="#order" class="btn-main" style="width: 100%; padding: 13px 20px; font-size: 0.92rem;">Перейти к оформлению →</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Плавающая кнопка быстрой связи -->
-  <a href="https://t.me/VAV_ls" target="_blank" rel="noopener" class="floating-tg-btn">
-    <span>✈️</span>
-    <span>Написать @VAV_ls</span>
-  </a>
+  <!-- Отзывы -->
+  <section style="padding-top: 15px;">
+    <div class="container reveal">
+      <div class="section-title">
+        <span class="section-tag">Живые эмоции</span>
+        <h2>Что говорят наши клиенты</h2>
+        <p>Истории пар, которые уже превратили свои воспоминания в манхву</p>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card spotlight-card">
+          <div>
+            <div class="stars">★★★★★</div>
+            <div class="review-text">«Заказал Полный метр за 1 490 ₽ на годовщину. Когда девушка увидела на кадрах нашу реальную переписку и нашего спящего кота — эмоции были просто невероятные. Сходство лиц 10 из 10!»</div>
+          </div>
+          <div class="review-author">Максим <span>· Тариф «Полный метр» (1 490 ₽)</span></div>
+        </div>
+        <div class="review-card spotlight-card">
+          <div>
+            <div class="stars">★★★★★</div>
+            <div class="review-text">«Мы сейчас на расстоянии в разных городах, взяла Мини-историю за 390 ₽, чтобы напомнить парню про день нашей встречи на вокзале. Сделали меньше чем за сутки! Переходы с осенними листьями выглядят как в топовом аниме.»</div>
+          </div>
+          <div class="review-author">Алина <span>· Тариф «Мини-история» (390 ₽)</span></div>
+        </div>
+        <div class="review-card spotlight-card">
+          <div>
+            <div class="stars">★★★★★</div>
+            <div class="review-text">«Брали Печатный глянец за 9 990 ₽ на годовщину свадьбы. Книга приехала в ближайший СДЭК ровно за неделю, твердая обложка, плотные глянцевые страницы. Теперь лежит на самом видном месте в гостиной!»</div>
+          </div>
+          <div class="review-author">Александр и Екатерина <span>· Тариф «Печатный глянец» (9 990 ₽)</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!-- Компактный футер -->
+  <!-- FAQ -->
+  <section style="padding-top: 15px;">
+    <div class="container reveal">
+      <div class="section-title">
+        <span class="section-tag">Ответы на вопросы</span>
+        <h2>Частые вопросы</h2>
+      </div>
+      <div class="faq-container">
+        <details>
+          <summary>Почему тариф «Мини-история» стоит всего 390 ₽?</summary>
+          <div class="faq-content">
+            Мы сделали стартовый цифровой тариф на 15 кадров максимально доступным (390 ₽ вместо 1 990 ₽), чтобы каждая пара могла протестировать качество нашей рисовки и подарить любимому человеку незабываемые эмоции даже без крупного повода.
+          </div>
+        </details>
+        <details>
+          <summary>Лица действительно будут похожи на нас?</summary>
+          <div class="faq-content">
+            Да! Мы детально анализируем присланные вами фотографии и фиксируем черты лица, прически, цвет глаз и стиль одежды каждого героя, чтобы вы с первого взгляда узнали себя в каждом кадре.
+          </div>
+        </details>
+        <details>
+          <summary>Какие фотографии нужно будет скинуть?</summary>
+          <div class="faq-content">
+            Профессиональная фотосессия не нужна. Достаточно 3–5 обычных селфи или совместных фото при хорошем освещении, где отчетливо видны ваши лица.
+          </div>
+        </details>
+        <details>
+          <summary>Что если я не умею красиво писать истории?</summary>
+          <div class="faq-content">
+            Вам не нужно быть писателем! Просто перечислите факты своими словами (где встретились, во что были одеты, какая музыка играла, ваши локальные шутки), а наш сценарист сам превратит это в трогательный сюжет с живыми диалогами.
+          </div>
+        </details>
+        <details>
+          <summary>Как происходит доставка печатной версии за 9 990 ₽?</summary>
+          <div class="faq-content">
+            В тарифе «Печатный глянец» (9 990 ₽) мы полностью верстаем книгу, печатаем её в твердом переплете на премиальной глянцевой бумаге и бесплатно отправляем в ближайший удобный для вас пункт выдачи СДЭК. Весь процесс занимает 1 неделю, а цифровую скролл-версию вы получаете в подарок!
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Форма заказа -->
+  <section class="order-section" id="order">
+    <div class="container reveal">
+      <div class="order-box spotlight-card">
+        <span class="section-tag" style="text-align: center;">Начните прямо сейчас</span>
+        <h2 style="font-size: 1.9rem; margin-bottom: 8px; text-align: center;">Оформление заказа</h2>
+        <p style="color: var(--text-muted); text-align: center; font-size: 0.92rem; margin-bottom: 26px;">
+          Заполните форму ниже — заявка автоматически сформируется для отправки в наш Telegram
+        </p>
+
+        <form id="orderForm" onsubmit="sendOrder(event)">
+          
+          <div class="form-group">
+            <label for="clientName">Как к вам обращаться?</label>
+            <input type="text" id="clientName" placeholder="Ваше имя" required oninput="saveDraft()">
+          </div>
+
+          <div class="form-group">
+            <label for="tariffSelect">Выбранный тариф</label>
+            <select id="tariffSelect" onchange="updateFormHint(); saveDraft();">
+              <option value="Мини-история (15 кадров) — 390 ₽">Мини-история (15 кадров) — 390 ₽</option>
+              <option value="Полный метр (45 кадров) — 1 490 ₽" selected>Полный метр (45 кадров) — 1 490 ₽ (Хит)</option>
+              <option value="Печатный глянец (VIP формат) — 9 990 ₽">Печатный глянец (VIP книга + СДЭК) — 9 990 ₽</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="storyText">
+              <span id="storyLabel">Подробная история (для 45 кадров)</span>
+              <span class="autosave-badge" id="autosaveBadge">✓ Черновик сохранен</span>
+            </label>
+            <div class="story-prompts">
+              <span class="prompt-chip" onclick="insertPrompt('Как мы познакомились: ')">+ Знакомство</span>
+              <span class="prompt-chip" onclick="insertPrompt('Запомнившийся момент/поездка: ')">+ Памятный момент</span>
+              <span class="prompt-chip" onclick="insertPrompt('Наши коронные фразы/шутки: ')">+ Локальная шутка</span>
+              <span class="prompt-chip" onclick="insertPrompt('Детали (одежда / питомец / место): ')">+ Питомец / Детали</span>
+            </div>
+            <textarea id="storyText" rows="5" required oninput="saveDraft()"></textarea>
+          </div>
+
+          <div class="photo-notice">
+            📸 <strong>Обратите внимание:</strong> Прямо сейчас прикреплять фотографии не нужно. После нажатия кнопки откроется диалог в Telegram с вашим готовым текстом заказа — просто отправьте его и прикрепите несколько фотографий для старта работы!
+          </div>
+
+          <div class="order-actions-stack">
+            <button type="submit" class="btn-main" style="width: 100%;" id="submitOrderBtn">
+              Отправить заявку в Telegram (1 490 ₽) →
+            </button>
+            <button type="button" class="btn-copy-fallback" id="copyOrderBtn" onclick="copyOrderText()">
+              📋 Или скопировать готовый текст заявки в буфер обмена
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Плавающая нижняя панель быстрого выбора -->
+  <div class="floating-cta" id="floatingCta">
+    <div class="floating-cta-text">Тарифы от <span>390 ₽</span> · Готовность 24ч</div>
+    <a href="#order" class="floating-cta-btn">Заказать ✦</a>
+  </div>
+
+  <!-- Футер -->
   <footer>
     <div class="container">
-      <div style="font-weight: 800; color: #fff; letter-spacing: 1.5px; font-size: 1.2rem; margin-bottom: 6px;">OURTUNE STUDIO</div>
-      <p>Персональная манхва от 990 ₽ и печатные 3D-книги по вашей истории любви · Telegram: <a href="https://t.me/VAV_ls" target="_blank" rel="noopener" style="color: var(--accent-light); font-weight: 700;">@VAV_ls</a></p>
+      <div style="font-weight: 800; color: #fff; letter-spacing: 1px; font-size: 1.2rem; margin-bottom: 8px;">OURTUNE</div>
+      <p>Персональные романтические вебтуны и печатные манхвы по вашей истории любви.</p>
+      <p style="margin-top: 14px; font-size: 0.8rem; opacity: 0.6;">© 2026 OURTUNE. Все права защищены.</p>
     </div>
   </footer>
 
-  <!-- ========================================================================
-       ПОЛНЫЙ ФИЗИЧЕСКИЙ И ИНТЕРАКТИВНЫЙ ДВИЖОК (JAVASCRIPT)
-       ======================================================================== -->
   <script>
-    const TELEGRAM_USERNAME = "VAV_ls";
-
-    // Активные бонусы
-    let selectedAddons = [
-      { name: "Добавить питомца в кадр", price: 0 },
-      { name: "QR-код с вашей песней", price: 0 }
-    ];
-
-    // --- 1. ЗОЛОТЫЕ ЧАСТИЦЫ НА ФОНЕ (CANVAS) ---
+    // =========================================================================
+    // 1. ОПТИМИЗИРОВАННЫЕ ЗОЛОТЫЕ ЧАСТИЦЫ НА ФОНЕ (С АВТОПАУЗОЙ ВНЕ ЭКРАНА)
+    // =========================================================================
     const canvas = document.getElementById('particles-canvas');
-    const ctx = canvas ? canvas.getContext('2d') : null;
+    const ctx = canvas.getContext('2d');
     let particles = [];
-    let particleRGB = '251, 191, 36';
+    let isTabActive = true;
 
     function resizeCanvas() {
-      if (!canvas) return;
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('resize', resizeCanvas, { passive: true });
     resizeCanvas();
 
-    if (canvas && ctx) {
-      for (let i = 0; i < 40; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          r: Math.random() * 1.8 + 0.5,
-          vy: -(Math.random() * 0.35 + 0.1),
-          vx: (Math.random() - 0.5) * 0.22,
-          a: Math.random() * 0.6 + 0.2
-        });
-      }
-      function drawParticles() {
+    document.addEventListener('visibilitychange', () => {
+      isTabActive = !document.hidden;
+    });
+
+    const particleCount = window.innerWidth < 768 ? 24 : 42;
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.8 + 0.5,
+        speedY: -(Math.random() * 0.35 + 0.1),
+        speedX: (Math.random() - 0.5) * 0.25,
+        alpha: Math.random() * 0.65 + 0.2
+      });
+    }
+
+    function animateParticles() {
+      if (isTabActive) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => {
-          p.y += p.vy;
-          p.x += p.vx;
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.y += p.speedY;
+          p.x += p.speedX;
           if (p.y < 0) p.y = canvas.height;
           if (p.x < 0) p.x = canvas.width;
           if (p.x > canvas.width) p.x = 0;
+
           ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${particleRGB}, ${p.a})`;
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(251, 191, 36, ${p.alpha})`;
           ctx.fill();
-        });
-        requestAnimationFrame(drawParticles);
+        }
       }
-      drawParticles();
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // =========================================================================
+    // 2. SPOTLIGHT ПОДСВЕТКА И ДЕЛИКАТНЫЙ 3D НАКЛОН КАРТОЧЕК (GPU)
+    // =========================================================================
+    if (window.matchMedia('(pointer: fine)').matches) {
+      document.querySelectorAll('.spotlight-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+        }, { passive: true });
+      });
     }
 
-    // --- 2. СМЕНА ТЕМЫ (ЗОЛОТО / НЕОН / САКУРА) ---
-    function setTheme(theme, btn) {
-      document.documentElement.setAttribute('data-theme', theme);
-      document.querySelectorAll('.vibe-btn').forEach(b => b.classList.remove('active'));
-      if (btn) btn.classList.add('active');
-      particleRGB = theme === 'seoul' ? '244, 114, 182' : theme === 'sakura' ? '253, 164, 175' : '251, 191, 36';
+    // =========================================================================
+    // 3. ИНТЕРАКТИВНЫЙ СЛАЙДЕР ДО / ПОСЛЕ (ФОТО ПАРЫ <-> МАНХВА OURTUNE)
+    // =========================================================================
+    const scenesData = [
+      {
+        desc: '✦ Сохранены: бежевое пальто, букет белых роз, очки, табло поезда и мягкий свет фонарей',
+        beforeSVG: `
+          <svg viewBox="0 0 800 430" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="photoBg0" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#1e2430"/>
+                <stop offset="100%" stop-color="#0f131a"/>
+              </linearGradient>
+            </defs>
+            <rect width="800" height="430" fill="url(#photoBg0)"/>
+            <rect x="60" y="40" width="680" height="8" rx="4" fill="#374151" opacity="0.6"/>
+            <circle cx="180" cy="95" r="28" fill="#fef3c7" opacity="0.25"/>
+            <circle cx="620" cy="95" r="28" fill="#fef3c7" opacity="0.25"/>
+            <rect x="520" y="60" width="160" height="44" rx="6" fill="#111827" stroke="#374151"/>
+            <text x="600" y="87" fill="#9ca3af" font-size="14" text-anchor="middle" font-family="monospace">ПОЕЗД 01:24</text>
+            <!-- Силуэты обычной фотографии -->
+            <ellipse cx="345" cy="190" rx="42" ry="48" fill="#d1bfa7"/>
+            <path d="M275 430 C275 290 415 290 415 430 Z" fill="#374151"/>
+            <ellipse cx="455" cy="205" rx="39" ry="44" fill="#decbb4"/>
+            <path d="M390 430 C390 300 525 300 525 430 Z" fill="#9ca3af"/>
+            <circle cx="420" cy="295" r="34" fill="#e5e7eb" opacity="0.8"/>
+            <text x="400" y="395" fill="#9ca3af" font-size="15" text-anchor="middle">Исходное телефонное фото в сумерках на перроне</text>
+          </svg>`,
+        afterSVG: `
+          <svg viewBox="0 0 800 430" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="manhwaBg0" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#1e1b4b"/>
+                <stop offset="55%" stop-color="#31102f"/>
+                <stop offset="100%" stop-color="#451a03"/>
+              </linearGradient>
+              <radialGradient id="goldGlow" cx="50%" cy="45%" r="50%">
+                <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.45"/>
+                <stop offset="100%" stop-color="#fbbf24" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <rect width="800" height="430" fill="url(#manhwaBg0)"/>
+            <circle cx="400" cy="200" r="260" fill="url(#goldGlow)"/>
+            <!-- Светящиеся боке и осенние листья манхвы -->
+            <circle cx="150" cy="90" r="36" fill="#fde68a" opacity="0.35"/>
+            <circle cx="650" cy="85" r="42" fill="#f59e0b" opacity="0.3"/>
+            <circle cx="240" cy="140" r="6" fill="#fef08a" opacity="0.9"/>
+            <circle cx="540" cy="120" r="8" fill="#fef08a" opacity="0.8"/>
+            <circle cx="490" cy="70" r="5" fill="#fde68a" opacity="0.9"/>
+            <rect x="510" y="55" width="175" height="46" rx="8" fill="rgba(15,23,42,0.85)" stroke="#fbbf24" stroke-width="1.5"/>
+            <text x="597" y="83" fill="#fde68a" font-size="14" font-weight="bold" text-anchor="middle">✦ СЕУЛ-ЭКСПРЕСС 01:24</text>
+            <!-- Детализированные силуэты в стиле вебтуна с контровым светом -->
+            <ellipse cx="345" cy="186" rx="43" ry="49" fill="#fde4cf" stroke="#fbbf24" stroke-width="2"/>
+            <path d="M270 430 C270 285 420 285 420 430 Z" fill="#1e293b" stroke="#fbbf24" stroke-width="1.5"/>
+            <ellipse cx="455" cy="202" rx="40" ry="45" fill="#ffe8d6" stroke="#fde68a" stroke-width="2"/>
+            <path d="M388 430 C388 295 528 295 528 430 Z" fill="#d97706" stroke="#fef08a" stroke-width="1.5"/>
+            <!-- Букет с золотым свечением -->
+            <circle cx="420" cy="292" r="38" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+            <!-- Диалоговое облачко манхвы -->
+            <rect x="110" y="185" width="170" height="58" rx="18" fill="#ffffff"/>
+            <text x="195" y="212" fill="#0f172a" font-size="13" font-weight="bold" text-anchor="middle">«Я скучал каждую</text>
+            <text x="195" y="230" fill="#0f172a" font-size="13" font-weight="bold" text-anchor="middle">секунду... ❤️»</text>
+            <text x="400" y="395" fill="#fde68a" font-size="15" font-weight="bold" text-anchor="middle">✦ Кинематографичный вебтун-кадр с вашим 100% сходством</text>
+          </svg>`
+      },
+      {
+        desc: '✦ Сохранены: домашние худи, рыжий шотландский кот, гирлянда на окне и ноутбук с фильмом',
+        beforeSVG: `
+          <svg viewBox="0 0 800 430" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+            <rect width="800" height="430" fill="#18181b"/>
+            <rect x="120" y="60" width="560" height="260" rx="16" fill="#27272a"/>
+            <ellipse cx="330" cy="195" rx="40" ry="44" fill="#d6c2b2"/>
+            <ellipse cx="460" cy="205" rx="38" ry="42" fill="#e2cfc0"/>
+            <circle cx="400" cy="275" r="28" fill="#9a6b4c"/>
+            <text x="400" y="390" fill="#a1a1aa" font-size="15" text-anchor="middle">Домашнее селфи на диване с котом</text>
+          </svg>`,
+        afterSVG: `
+          <svg viewBox="0 0 800 430" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+            <rect width="800" height="430" fill="#271224"/>
+            <rect x="120" y="60" width="560" height="260" rx="16" fill="#3b1d36" stroke="#fbbf24" stroke-width="1.5"/>
+            <circle cx="200" cy="90" r="10" fill="#fde68a"/><circle cx="300" cy="80" r="8" fill="#fde68a"/><circle cx="500" cy="85" r="11" fill="#fde68a"/>
+            <ellipse cx="330" cy="195" rx="40" ry="44" fill="#ffe4d1" stroke="#fbbf24" stroke-width="2"/>
+            <ellipse cx="460" cy="205" rx="38" ry="42" fill="#ffeadb" stroke="#fbbf24" stroke-width="2"/>
+            <circle cx="400" cy="275" r="32" fill="#f59e0b" stroke="#fff" stroke-width="2"/>
+            <rect x="495" y="130" width="150" height="48" rx="16" fill="#fff"/>
+            <text x="570" y="159" fill="#111" font-size="13" font-weight="bold" text-anchor="middle">«Мур-р... 🐾✨»</text>
+            <text x="400" y="390" fill="#fde68a" font-size="15" font-weight="bold" text-anchor="middle">✦ Уютный Slice-of-Life эпизод с вашим любимцем</text>
+          </svg>`
+      },
+      {
+        desc: '✦ Сохранены: столик у окна, два латте, дождь за стеклом и та самая улыбка с первого свидания',
+        beforeSVG: `
+          <svg viewBox="0 0 800 430" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+            <rect width="800" height="430" fill="#1c1917"/>
+            <ellipse cx="290" cy="200" rx="42" ry="46" fill="#d6c5b3"/>
+            <ellipse cx="510" cy="200" rx="40" ry="44" fill="#e5d5c5"/>
+            <rect x="260" y="295" width="280" height="16" rx="6" fill="#44403c"/>
+            <text x="400" y="390" fill="#a8a29e" font-size="15" text-anchor="middle">Фото из кофейни в день знакомства</text>
+          </svg>`,
+        afterSVG: `
+          <svg viewBox="0 0 800 430" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+            <rect width="800" height="430" fill="#2e1912"/>
+            <circle cx="400" cy="190" r="210" fill="rgba(251,191,36,0.18)"/>
+            <ellipse cx="290" cy="200" rx="42" ry="46" fill="#ffe6d4" stroke="#fbbf24" stroke-width="2"/>
+            <ellipse cx="510" cy="200" rx="40" ry="44" fill="#ffece0" stroke="#fbbf24" stroke-width="2"/>
+            <rect x="260" y="295" width="280" height="16" rx="6" fill="#d97706"/>
+            <rect x="315" y="105" width="170" height="46" rx="16" fill="#fff"/>
+            <text x="400" y="133" fill="#111" font-size="13" font-weight="bold" text-anchor="middle">«С этого кофе всё началось»</text>
+            <text x="400" y="390" fill="#fde68a" font-size="15" font-weight="bold" text-anchor="middle">✦ Романтическая сцена в стиле корейских вебтунов</text>
+          </svg>`
+      }
+    ];
+
+    function switchScene(idx, btnEl) {
+      document.querySelectorAll('.transform-tab').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      document.getElementById('baBeforeLayer').innerHTML = scenesData[idx].beforeSVG;
+      document.getElementById('baAfterLayer').innerHTML = scenesData[idx].afterSVG;
+      document.getElementById('baSceneDesc').innerText = scenesData[idx].desc;
     }
 
-    // --- 3. КАСТОМНЫЙ КУРСОР И 3D-НАКЛОН КАРТОЧЕК С БЛИКОМ ---
-    const cursorDot = document.getElementById('cursorDot');
-    const cursorRing = document.getElementById('cursorRing');
+    // Инициализация первой сцены
+    switchScene(0, document.querySelector('.transform-tab'));
 
-    window.addEventListener('mousemove', (e) => {
-      if (cursorDot && cursorRing) {
-        cursorDot.style.left = `${e.clientX}px`;
-        cursorDot.style.top = `${e.clientY}px`;
-        cursorRing.style.left = `${e.clientX}px`;
-        cursorRing.style.top = `${e.clientY}px`;
+    // Перетаскивание ползунка До/После
+    const baSlider = document.getElementById('baSlider');
+    const baAfter = document.getElementById('baAfterLayer');
+    const baHandle = document.getElementById('baHandle');
+    let isDraggingBA = false;
+
+    function updateBASlider(clientX) {
+      const rect = baSlider.getBoundingClientRect();
+      let pos = ((clientX - rect.left) / rect.width) * 100;
+      pos = Math.max(5, Math.min(95, pos));
+      baAfter.style.clipPath = `inset(0 0 0 ${pos}%)`;
+      baHandle.style.left = `${pos}%`;
+    }
+
+    baSlider.addEventListener('mousedown', (e) => { isDraggingBA = true; updateBASlider(e.clientX); });
+    window.addEventListener('mouseup', () => { isDraggingBA = false; });
+    window.addEventListener('mousemove', (e) => { if (isDraggingBA) updateBASlider(e.clientX); }, { passive: true });
+
+    baSlider.addEventListener('touchstart', (e) => { isDraggingBA = true; updateBASlider(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('touchend', () => { isDraggingBA = false; }, { passive: true });
+    window.addEventListener('touchmove', (e) => { if (isDraggingBA) updateBASlider(e.touches[0].clientX); }, { passive: true });
+
+    // =========================================================================
+    // 4. ВСТРОЕННЫЙ FALLBACK-ВЕБТУН ДЛЯ РИДЕРА (ЕСЛИ НЕТ ЛОКАЛЬНОГО FRAME1.JPG)
+    // =========================================================================
+    function enableFallbackWebtoon() {
+      const img = document.getElementById('userWebtoonImg');
+      const fallback = document.getElementById('fallbackWebtoonContainer');
+      if (img) img.style.display = 'none';
+      if (!fallback) return;
+      fallback.style.display = 'block';
+
+      const epData = [
+        { ep: 'ЭПИЗОД 01', title: 'Ночь перед поездом', sub: '«Ты точно взяла теплый шарф?..»', bg: 'linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%)', icon: '🐱🌙' },
+        { ep: 'ЭПИЗОД 02', title: 'Светящаяся нить судеб', sub: 'Осенние листья кружатся за окном вагона...', bg: 'linear-gradient(180deg, #1e1b4b 0%, #3b0764 100%)', icon: '🍂✨' },
+        { ep: 'ЭПИЗОД 03', title: 'Кружочки в Telegram', sub: '01:24 — «Считаю минуты до нашей встречи ❤️»', bg: 'linear-gradient(180deg, #3b0764 0%, #451a03 100%)', icon: '📱💬' },
+        { ep: 'ЭПИЗОД 04', title: 'Перрон и белые розы', sub: 'Тот самый взгляд сквозь пар перрона', bg: 'linear-gradient(180deg, #451a03 0%, #1e293b 100%)', icon: '💐🚆' },
+        { ep: 'ЭПИЗОД 05', title: 'Навсегда в нашей главе', sub: 'Продолжение следует... В вашей истории любви.', bg: 'linear-gradient(180deg, #1e293b 0%, #090d16 100%)', icon: '💑🌟' }
+      ];
+
+      fallback.innerHTML = epData.map(item => `
+        <div style="height: 460px; background: ${item.bg}; padding: 36px 22px; display: flex; flex-direction: column; justify-content: space-between; border-bottom: 1px solid rgba(251,191,36,0.2); position: relative;">
+          <div style="font-size: 0.72rem; font-weight: 800; color: #fbbf24; letter-spacing: 1.5px;">${item.ep} · OURTUNE STUDIO</div>
+          <div style="text-align: center; my: auto;">
+            <div style="font-size: 3.4rem; margin-bottom: 14px;">${item.icon}</div>
+            <div style="font-family: 'Playfair Display', serif; font-size: 1.45rem; font-weight: 700; color: #fff; margin-bottom: 10px;">${item.title}</div>
+            <div style="background: #fff; color: #0f172a; padding: 12px 16px; border-radius: 18px 18px 18px 4px; font-weight: 700; font-size: 0.86rem; display: inline-block; box-shadow: 0 10px 25px rgba(0,0,0,0.4);">${item.sub}</div>
+          </div>
+          <div style="font-size: 0.72rem; color: rgba(255,255,255,0.5); text-align: center;">Бесшовный вертикальный вебтун 9:16</div>
+        </div>
+      `).join('');
+    }
+
+    // =========================================================================
+    // 5. СКРОЛЛ РИДЕРА, ПРЫЖКИ ПО ЭПИЗОДАМ, АВТОСКРОЛЛ И ЛАЙКИ В ТЕЛЕФОНЕ
+    // =========================================================================
+    let phoneAutoScrollInterval = null;
+
+    function updateScrollEffects() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pagePct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      const pageProgress = document.getElementById('pageProgress');
+      if (pageProgress) pageProgress.style.width = `${pagePct}%`;
+
+      // Плавающая нижняя плашка
+      const floatingCta = document.getElementById('floatingCta');
+      if (floatingCta) {
+        floatingCta.classList.toggle('visible', scrollTop > 600 && scrollTop < docHeight - 450);
       }
-    });
 
-    document.querySelectorAll('.tilt-card').forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--mx', `${x}px`);
-        card.style.setProperty('--my', `${y}px`);
-        const rotY = ((x / rect.width) - 0.5) * 6;
-        const rotX = ((y / rect.height) - 0.5) * -6;
-        card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-      });
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
-      });
-    });
-
-    // --- 4. КИНЕТИЧЕСКИЙ СКРОЛЛ: ВРАЩЕНИЕ 3D-ПРЕДМЕТОВ, СМЕНА ЦВЕТА И СМАРТФОН ---
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      const docHeight = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      const totalProgress = Math.min(1, Math.max(0, scrollY / docHeight));
-
-      // Прогресс-бар вверху
-      const topBar = document.getElementById('topScrollProgress');
-      if (topBar) topBar.style.width = `${totalProgress * 100}%`;
-
-      // Динамическое изменение оттенка ауры фона при скролле
-      const dynamicHue = Math.round(35 + Math.sin(totalProgress * Math.PI * 2) * 28);
-      document.documentElement.style.setProperty('--scroll-hue', dynamicHue);
-
-      // 3D-вращение парящих тотемов вдоль страницы
-      const t1 = document.getElementById('totem1');
-      const t2 = document.getElementById('totem2');
-      const t3 = document.getElementById('totem3');
-      if (t1) t1.style.transform = `translate3d(0, ${Math.sin(scrollY * 0.004) * 25}px, 0) rotateX(${scrollY * 0.18}deg) rotateY(${scrollY * 0.24}deg)`;
-      if (t2) t2.style.transform = `translate3d(0, ${Math.cos(scrollY * 0.004) * -30}px, 0) rotateY(${-scrollY * 0.22}deg) rotateZ(${scrollY * 0.12}deg)`;
-      if (t3) t3.style.transform = `translate3d(0, ${Math.sin(scrollY * 0.005) * 20}px, 0) rotateX(${-scrollY * 0.15}deg) rotateZ(${-scrollY * 0.2}deg)`;
-
-      // Прокрутка ленты вебтуна внутри смартфона
+      // Липкий ридер
       const wrapper = document.getElementById('showcase-wrapper');
       const tape = document.getElementById('scrollTape');
       const scrollArea = document.getElementById('scrollArea');
       const fill = document.getElementById('readerFill');
-      const pctTxt = document.getElementById('readerPercent');
+      const percentTxt = document.getElementById('readerPercent');
 
-      if (wrapper && tape && scrollArea) {
-        const wTop = wrapper.offsetTop;
-        const wScroll = Math.max(1, wrapper.offsetHeight - window.innerHeight);
-        const progress = Math.max(0, Math.min(1, (scrollY - wTop) / wScroll));
+      if (!wrapper || !tape || !scrollArea) return;
 
-        const maxScroll = tape.offsetHeight - scrollArea.offsetHeight;
-        if (maxScroll > 0) {
-          tape.style.transform = `translateY(-${progress * maxScroll}px)`;
-        }
+      const wrapperTop = wrapper.offsetTop;
+      const wrapperScrollableHeight = wrapper.offsetHeight - window.innerHeight;
 
-        const pct = Math.round(progress * 100);
-        if (fill) fill.style.width = `${pct}%`;
-        if (pctTxt) pctTxt.innerText = `${pct}%`;
+      let progress = (scrollTop - wrapperTop) / wrapperScrollableHeight;
+      progress = Math.max(0, Math.min(1, progress));
 
-        const activeEp = Math.min(4, Math.floor(progress * 5));
-        for (let i = 0; i < 5; i++) {
-          const pill = document.getElementById(`pill-${i}`);
-          if (pill) pill.classList.toggle('active', i === activeEp);
-        }
-        document.querySelectorAll('.chapter-jump-btn').forEach((btn, idx) => {
-          btn.classList.toggle('active', idx === activeEp);
-        });
+      const maxScroll = tape.offsetHeight - scrollArea.offsetHeight;
+      if (maxScroll > 0) {
+        tape.style.transform = `translate3d(0, -${progress * maxScroll}px, 0)`;
       }
-    });
 
-    function jumpToEpisode(idx) {
+      const pct = Math.round(progress * 100);
+      if (fill && percentTxt) {
+        fill.style.width = `${pct}%`;
+        percentTxt.innerText = `${pct}%`;
+      }
+
+      const activeIdx = Math.min(4, Math.floor(progress * 5));
+      for (let i = 0; i < 5; i++) {
+        const pill = document.getElementById(`pill-${i}`);
+        const mpill = document.getElementById(`m-pill-${i}`);
+        if (pill) pill.classList.toggle('active', i === activeIdx);
+        if (mpill) mpill.classList.toggle('active', i === activeIdx);
+      }
+    }
+
+    window.addEventListener('scroll', updateScrollEffects, { passive: true });
+
+    function jumpToEpisode(epIndex) {
       const wrapper = document.getElementById('showcase-wrapper');
-      if (!wrapper) return;
-      const wScroll = wrapper.offsetHeight - window.innerHeight;
-      window.scrollTo({
-        top: wrapper.offsetTop + wScroll * ((idx + 0.08) / 5),
-        behavior: 'smooth'
-      });
+      const wrapperScrollableHeight = wrapper.offsetHeight - window.innerHeight;
+      const targetScroll = wrapper.offsetTop + (epIndex / 4.2) * wrapperScrollableHeight;
+      window.scrollTo({ top: targetScroll, behavior: 'smooth' });
     }
 
-    // --- 5. ДВИЖОК 3D-КНИГИ: СВОБОДНОЕ ВРАЩЕНИЕ МЫШКОЙ/ПАЛЬЦЕМ + ОТКРЫТИЕ ЗА КРАЙ ---
-    const bookViewport = document.getElementById('bookViewport');
-    const bookRig = document.getElementById('bookRig');
-    const bookCoverDoor = document.getElementById('bookCoverDoor');
-    const bookEdgePull = document.getElementById('bookEdgePull');
-    const bookOpenSlider = document.getElementById('bookOpenSlider');
-    const bookOpenPct = document.getElementById('bookOpenPct');
-    const btnToggleCover = document.getElementById('btnToggleCover');
-
-    let bookRotX = 10;
-    let bookRotY = -24;
-    let bookOpenDeg = 0; // от 0 (закрыта) до 155 (распахнута)
-    let isDraggingBook = false;
-    let isPullingEdge = false;
-    let startX = 0;
-    let startY = 0;
-    let edgeMoved = false;
-
-    function renderBookTransform() {
-      if (bookRig) {
-        bookRig.style.transform = `rotateX(${bookRotX}deg) rotateY(${bookRotY}deg)`;
-      }
-      if (bookCoverDoor) {
-        bookCoverDoor.style.transform = `rotateY(-${bookOpenDeg}deg)`;
-      }
-      if (bookOpenSlider) bookOpenSlider.value = Math.round(bookOpenDeg);
-      if (bookOpenPct) bookOpenPct.innerText = `${Math.round((bookOpenDeg / 155) * 100)}%`;
-      if (btnToggleCover) {
-        btnToggleCover.innerText = bookOpenDeg > 60 ? '📕 Закрыть книгу' : '📖 Распахнуть книгу';
-      }
-      if (bookEdgePull) {
-        bookEdgePull.innerText = bookOpenDeg > 60 ? '✦ ЗАКРЫТЬ КРАЙ' : '✦ ОТКРЫТЬ КРАЙ';
+    function togglePhoneAutoScroll() {
+      const btn = document.getElementById('autoScrollBtn');
+      if (phoneAutoScrollInterval) {
+        clearInterval(phoneAutoScrollInterval);
+        phoneAutoScrollInterval = null;
+        btn.classList.remove('active');
+        btn.innerText = '▶';
+      } else {
+        btn.classList.add('active');
+        btn.innerText = '⏸';
+        phoneAutoScrollInterval = setInterval(() => {
+          window.scrollBy({ top: 3, behavior: 'instant' });
+          const wrapper = document.getElementById('showcase-wrapper');
+          if (window.scrollY > wrapper.offsetTop + wrapper.offsetHeight - window.innerHeight) {
+            togglePhoneAutoScroll();
+          }
+        }, 16);
       }
     }
 
-    function setBookOpenAngle(degVal) {
-      bookOpenDeg = Math.max(0, Math.min(155, Number(degVal)));
-      renderBookTransform();
+    function triggerPhoneHeart(e) {
+      const scrollArea = document.getElementById('scrollArea');
+      const heart = document.createElement('div');
+      heart.className = 'tap-heart';
+      heart.innerText = '❤️';
+      heart.style.left = '50%';
+      heart.style.top = '50%';
+      scrollArea.appendChild(heart);
+      setTimeout(() => heart.remove(), 800);
     }
 
-    function toggleBookCover() {
-      bookOpenDeg = bookOpenDeg > 60 ? 0 : 148;
-      if (bookOpenDeg > 60 && bookRotY < -10) {
-        bookRotY = -6; // Выравниваем ракурс, чтобы удобно читать разворот
-      }
-      renderBookTransform();
+    // =========================================================================
+    // 6. ЖИВАЯ АНИМАЦИЯ ЧАТА «РЕАКЦИЯ В 01:24 НОЧИ»
+    // =========================================================================
+    function playChatAnimation() {
+      const m1 = document.getElementById('msg1');
+      const m2 = document.getElementById('msg2');
+      const m3 = document.getElementById('msg3');
+      const status = document.getElementById('chatStatusText');
+
+      [m1, m2, m3].forEach(m => m.classList.remove('shown'));
+      status.innerText = 'печатает сообщение...';
+
+      setTimeout(() => { m1.classList.add('shown'); }, 450);
+      setTimeout(() => { m2.classList.add('shown'); status.innerText = 'в сети в 01:24 ночи'; }, 1250);
+      setTimeout(() => { m3.classList.add('shown'); }, 2050);
     }
 
-    function resetBookView() {
-      bookRotX = 10;
-      bookRotY = -24;
-      bookOpenDeg = 0;
-      renderBookTransform();
-    }
-
-    // Потянуть или кликнуть за правый золотой край обложки
-    if (bookEdgePull) {
-      bookEdgePull.addEventListener('pointerdown', (e) => {
-        e.stopPropagation();
-        isPullingEdge = true;
-        edgeMoved = false;
-        startX = e.clientX;
-        bookCoverDoor.style.transition = 'none';
-        bookEdgePull.setPointerCapture(e.pointerId);
-      });
-
-      bookEdgePull.addEventListener('pointermove', (e) => {
-        if (!isPullingEdge) return;
-        const dx = e.clientX - startX;
-        if (Math.abs(dx) > 4) edgeMoved = true;
-        startX = e.clientX;
-        // Движение влево открывает обложку, вправо — закрывает
-        setBookOpenAngle(bookOpenDeg - dx * 0.85);
-      });
-
-      bookEdgePull.addEventListener('pointerup', () => {
-        if (!isPullingEdge) return;
-        isPullingEdge = false;
-        bookCoverDoor.style.transition = 'transform 0.65s cubic-bezier(0.22, 1, 0.36, 1)';
-        if (!edgeMoved) {
-          toggleBookCover();
+    // Плавное появление секций при скролле
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
         }
       });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // =========================================================================
+    // 7. КОНСТРУКТОР СТИЛЯ, ТАРИФЫ (390 / 1490 / 9990 ₽) И ОТПРАВКА В TELEGRAM
+    // =========================================================================
+    let selectedVibe = 'Романтика Сеула (мягкий свет)';
+    let selectedExtras = ['Добавить питомца', 'Реальные сообщения TG'];
+
+    function setVibe(btn, vibeName) {
+      document.querySelectorAll('#vibeSelector .style-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedVibe = vibeName;
     }
 
-    // Вращение всей книги в 3D-пространстве (мышкой или пальцем)
-    if (bookViewport) {
-      bookViewport.addEventListener('pointerdown', (e) => {
-        if (e.target.closest('button') || e.target.closest('#bookEdgePull')) return;
-        isDraggingBook = true;
-        startX = e.clientX;
-        startY = e.clientY;
-        bookViewport.setPointerCapture(e.pointerId);
-      });
-
-      bookViewport.addEventListener('pointermove', (e) => {
-        if (!isDraggingBook) return;
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
-        startX = e.clientX;
-        startY = e.clientY;
-        bookRotY += dx * 0.55;
-        bookRotX = Math.max(-45, Math.min(45, bookRotX - dy * 0.45));
-        renderBookTransform();
-      });
-
-      bookViewport.addEventListener('pointerup', () => {
-        isDraggingBook = false;
-      });
-    }
-
-    // Перелистывание страниц внутри открытой 3D-книги
-    const BOOK_SPREADS = [
-      {
-        chapter: 'ГЛАВА 01 · ВСТРЕЧА',
-        page: 'СТР. 02',
-        emoji: '👩‍❤️‍👨✨',
-        quote: '«Ты даже мою любимую толстовку и кота сюда добавил?! Это лучший подарок...»',
-        leftTitle: 'Посвящается нам двоим ❤️',
-        leftText: 'Каждая сцена создана по вашим реальным фотографиям, ночным перепискам и моментам, которые знаете только вы.'
-      },
-      {
-        chapter: 'ГЛАВА 02 · НОЧНОЙ ЧАТ',
-        page: 'СТР. 14',
-        emoji: '📱🌙',
-        quote: '«02:15 ночи: кружочки в Telegram, глупые шутки и ощущение, что мы знакомы целую вечность...»',
-        leftTitle: 'Ваши реальные диалоги 💬',
-        leftText: 'Мы бережно переносим ваши коронные фразы, голосовые и локальные мемы прямо в облачка манхвы.'
-      },
-      {
-        chapter: 'ГЛАВА 03 · ПЕРРОН И ЦВЕТЫ',
-        page: 'СТР. 38',
-        emoji: '💐🚆',
-        quote: '«Секунда до того, как ты выйдешь из вагона, и расстояние между нами исчезнет навсегда.»',
-        leftTitle: 'Финал, от которого мурашки ✨',
-        leftText: 'Плотный журнальный глянец 170 г/м² и бархатистая твердая обложка Soft-Touch сохранят этот день навсегда.'
+    function toggleExtra(btn, extraName) {
+      btn.classList.toggle('active');
+      if (selectedExtras.includes(extraName)) {
+        selectedExtras = selectedExtras.filter(item => item !== extraName);
+      } else {
+        selectedExtras.push(extraName);
       }
-    ];
-    let currentSpreadIdx = 0;
-
-    function nextBookSpread(e) {
-      if (e) e.stopPropagation();
-      currentSpreadIdx = (currentSpreadIdx + 1) % BOOK_SPREADS.length;
-      const s = BOOK_SPREADS[currentSpreadIdx];
-      document.getElementById('spreadChapter').innerText = s.chapter;
-      document.getElementById('spreadPageNum').innerText = s.page;
-      document.getElementById('spreadEmoji').innerText = s.emoji;
-      document.getElementById('spreadQuote').innerText = s.quote;
-      document.getElementById('spreadLeftTitle').innerText = s.leftTitle;
-      document.getElementById('spreadLeftText').innerText = s.leftText;
     }
 
-    // --- 6. СКАНЕР ДО / ПОСЛЕ ---
-    function updateScanner(val) {
-      const pct = Math.max(8, Math.min(92, Number(val)));
-      const before = document.getElementById('scannerBeforePane');
-      const div = document.getElementById('scannerDivider');
-      const handle = document.getElementById('scannerHandle');
-      if (before) before.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
-      if (div) div.style.left = `${pct}%`;
-      if (handle) handle.style.left = `${pct}%`;
+    function selectPlan(planValue) {
+      const select = document.getElementById('tariffSelect');
+      for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].value === planValue || select.options[i].text.includes(planValue.split(' ')[0])) {
+          select.selectedIndex = i;
+          break;
+        }
+      }
+      updateFormHint();
+      saveDraft();
+      document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
     }
 
-    // --- 7. ТАРИФЫ (990 / 1 990 / 5 990 ₽), БОНУСЫ И ОТПРАВКА В TELEGRAM @VAV_ls ---
-    function selectPlan(planVal) {
-      const sel = document.getElementById('tariffSelect');
-      if (sel) {
-        for (let i = 0; i < sel.options.length; i++) {
-          if (sel.options[i].value.includes(planVal.split(' ')[0])) {
-            sel.selectedIndex = i;
-            break;
+    function updateFormHint() {
+      const tariff = document.getElementById('tariffSelect').value;
+      const label = document.getElementById('storyLabel');
+      const textarea = document.getElementById('storyText');
+      const submitBtn = document.getElementById('submitOrderBtn');
+      const builderTitle = document.getElementById('builderPlanTitle');
+      const builderPrice = document.getElementById('builderPriceDisplay');
+
+      if (tariff.includes('Мини')) {
+        label.innerText = 'Небольшая история (для 15 кадров — 390 ₽)';
+        textarea.placeholder = 'Напишите небольшую историю (как познакомились или опишите один романтичный/смешной момент). Для 15 кадров этого объема будет вполне достаточно...';
+        submitBtn.innerText = 'Отправить заявку в Telegram (390 ₽) →';
+        if (builderTitle) builderTitle.innerText = 'Мини-история (15 кадров)';
+        if (builderPrice) builderPrice.innerText = '390 ₽';
+      } else if (tariff.includes('Полный')) {
+        label.innerText = 'Подробная история (для 45 кадров — 1 490 ₽)';
+        textarea.placeholder = 'Расскажите вашу историю максимально подробно! Чем больше деталей, фраз, шуток и ситуаций вы напишете, тем насыщеннее получится комикс на 45 кадров...';
+        submitBtn.innerText = 'Отправить заявку в Telegram (1 490 ₽) →';
+        if (builderTitle) builderTitle.innerText = 'Полный метр (45 кадров)';
+        if (builderPrice) builderPrice.innerText = '1 490 ₽';
+      } else {
+        label.innerText = 'Детальная история для VIP-книги (9 990 ₽)';
+        textarea.placeholder = 'Расскажите вашу историю максимально подробно! Опишите ключевые события, диалоги, любимые места и важные мелочи для вашей печатной манхвы в твердой обложке...';
+        submitBtn.innerText = 'Отправить заявку в Telegram (9 990 ₽) →';
+        if (builderTitle) builderTitle.innerText = 'Печатный глянец (VIP книга)';
+        if (builderPrice) builderPrice.innerText = '9 990 ₽';
+      }
+    }
+
+    function insertPrompt(promptText) {
+      const textarea = document.getElementById('storyText');
+      const prefix = textarea.value.length > 0 && !textarea.value.endsWith('\n') ? '\n' : '';
+      textarea.value += prefix + promptText;
+      textarea.focus();
+      saveDraft();
+    }
+
+    // Автосохранение черновика в браузере, чтобы клиент не потерял длинный текст
+    function saveDraft() {
+      try {
+        localStorage.setItem('ourtune_name', document.getElementById('clientName').value);
+        localStorage.setItem('ourtune_tariff', document.getElementById('tariffSelect').value);
+        localStorage.setItem('ourtune_story', document.getElementById('storyText').value);
+        const badge = document.getElementById('autosaveBadge');
+        if (badge) {
+          badge.classList.add('show');
+          clearTimeout(window._saveTimer);
+          window._saveTimer = setTimeout(() => badge.classList.remove('show'), 2000);
+        }
+      } catch (e) {}
+    }
+
+    function loadDraft() {
+      try {
+        const savedName = localStorage.getItem('ourtune_name');
+        const savedTariff = localStorage.getItem('ourtune_tariff');
+        const savedStory = localStorage.getItem('ourtune_story');
+        if (savedName) document.getElementById('clientName').value = savedName;
+        if (savedTariff) {
+          const select = document.getElementById('tariffSelect');
+          for (let i = 0; i < select.options.length; i++) {
+            if (select.options[i].value === savedTariff) select.selectedIndex = i;
           }
         }
-      }
-      updateOrderSummary();
-      document.getElementById('order')?.scrollIntoView({ behavior: 'smooth' });
+        if (savedStory) document.getElementById('storyText').value = savedStory;
+      } catch (e) {}
+      updateFormHint();
     }
 
-    function toggleAddon(el, name, price) {
-      el.classList.toggle('active');
-      const idx = selectedAddons.findIndex(a => a.name === name);
-      if (el.classList.contains('active')) {
-        if (idx === -1) selectedAddons.push({ name, price });
-      } else if (idx !== -1) {
-        selectedAddons.splice(idx, 1);
-      }
-      updateOrderSummary();
-    }
+    window.addEventListener('DOMContentLoaded', loadDraft);
 
-    function updateOrderSummary() {
-      const sel = document.getElementById('tariffSelect');
-      const badge = document.getElementById('totalPriceBadge');
-      if (!sel || !badge) return;
-      const val = sel.value;
-      const base = val.includes('Мини') ? 990 : val.includes('Печатный') ? 5990 : 1990;
-      const extra = selectedAddons.reduce((s, a) => s + a.price, 0);
-      badge.innerText = `Итого: ${(base + extra).toLocaleString('ru-RU')} ₽`;
-    }
+    function buildOrderMessage() {
+      const name = document.getElementById('clientName').value.trim() || 'Не указано';
+      const tariff = document.getElementById('tariffSelect').value;
+      const story = document.getElementById('storyText').value.trim() || 'Расскажу в диалоге';
+      const extrasStr = selectedExtras.length > 0 ? selectedExtras.join(', ') : 'Стандарт';
 
-    function insertPrompt(txt) {
-      const area = document.getElementById('storyText');
-      if (!area) return;
-      area.value += (area.value.length > 0 && !area.value.endsWith('\n') ? '\n' : '') + txt;
-      area.focus();
-    }
-
-    function fillSampleTemplate() {
-      const area = document.getElementById('storyText');
-      if (!area) return;
-      area.value =
-        `1. Как мы познакомились: \n` +
-        `2. Самый теплый или смешной совместный момент: \n` +
-        `3. Детали (наш питомец, любимая одежда, коронные фразы): \n` +
-        `4. Надпись в финальном кадре: «Люблю тебя ❤️»`;
-      area.focus();
+      return (
+        `Здравствуйте! Хочу заказать манхву OURTUNE ✨\n\n` +
+        `👤 Имя: ${name}\n` +
+        `💎 Тариф: ${tariff}\n` +
+        `🎨 Стиль рисовки: ${selectedVibe}\n` +
+        `🎁 Детали: ${extrasStr}\n\n` +
+        `📖 Наша история:\n${story}`
+      );
     }
 
     function sendOrder(e) {
       e.preventDefault();
-      const name = document.getElementById('clientName').value.trim();
-      const tariff = document.getElementById('tariffSelect').value;
-      const story = document.getElementById('storyText').value.trim();
-      const total = document.getElementById('totalPriceBadge').innerText;
-      const addons = selectedAddons.length
-        ? selectedAddons.map(a => `• ${a.name}`).join('\n')
-        : '• Стандартная комплектация';
-
-      const msg = encodeURIComponent(
-        `Здравствуйте! Хочу заказать манхву OURTUNE ✦\n\n` +
-        `👤 Имя: ${name}\n` +
-        `💎 Тариф: ${tariff}\n` +
-        `🎁 Бонусы:\n${addons}\n` +
-        `💰 ${total}\n\n` +
-        `📖 Наша история:\n${story}\n\n` +
-        `📸 Фотографии сейчас прикреплю ниже 👇`
-      );
-      window.open(`https://t.me/${TELEGRAM_USERNAME}?text=${msg}`, '_blank');
+      const myTelegramUsername = "VAV_ls";
+      const message = encodeURIComponent(buildOrderMessage());
+      window.open(`https://t.me/${myTelegramUsername}?text=${message}`, '_blank');
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      updateScanner(48);
-      updateOrderSummary();
-      renderBookTransform();
-    });
+    function copyOrderText() {
+      const text = buildOrderMessage();
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copyOrderBtn');
+        const oldText = btn.innerText;
+        btn.innerText = '✅ Текст заявки скопирован! Теперь отправьте его в Telegram @VAV_ls';
+        btn.style.color = '#34d399';
+        btn.style.borderColor = '#10b981';
+        setTimeout(() => {
+          btn.innerText = oldText;
+          btn.style.color = '';
+          btn.style.borderColor = '';
+        }, 3500);
+      });
+    }
   </script>
 </body>
 </html>
