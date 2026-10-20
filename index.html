@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-  <title>OURTUNE — Your Love Story as a Romantic Manhwa from 390 ₽</title>
-  <meta name="description" content="We turn your photos and memories into a romantic webtoon in 24 hours. 100% facial likeness, favorite locations, and VIP hardcover editions.">
+  <title>OURTUNE — Ваша история любви в стиле манхвы от 390 ₽</title>
+  <meta name="description" content="Превращаем ваши фото и воспоминания в романтический вебтун за 24 часа. 100% узнаваемость лиц, любимые локации и печатные VIP-издания.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
@@ -256,7 +256,7 @@
       gap: 10px;
     }
 
-    /* Переключатель языка EN | RU */
+    /* Переключатель языка RU | EN */
     .lang-switch {
       display: inline-flex;
       align-items: center;
@@ -570,7 +570,7 @@
       margin: 0 auto;
     }
 
-    /* --- ИСПРАВЛЕННЫЙ ДЛЯ IPHONE ЛИПКИЙ СКРОЛЛ РИДЕРА (120 FPS) --- */
+    /* --- ЛИПКИЙ СКРОЛЛ РИДЕРА С ЖЕСТКО ФИКСИРОВАННЫМ РАЗМЕРОМ ТЕЛЕФОНА --- */
     .showcase-wrapper {
       height: 320vh;
       position: relative;
@@ -578,47 +578,46 @@
     }
     .showcase-sticky {
       position: sticky;
-      /* Начинается строго ПОД шапкой, чтобы текст никогда не перекрывался на iPhone */
       top: var(--header-h);
+      /* Используем svh (Small Viewport Height), чтобы скрытие панели Safari НЕ меняло высоту блока и размер телефона */
       height: calc(100vh - var(--header-h));
-      height: calc(100dvh - var(--header-h));
+      height: calc(100svh - var(--header-h));
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       overflow: hidden;
-      padding: 14px 0 16px;
+      padding: 10px 0 14px;
     }
     .showcase-inner {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       height: 100%;
       width: 100%;
+      gap: 12px;
     }
     .showcase-header {
       text-align: center;
-      margin-bottom: 10px;
       flex-shrink: 0;
-      padding-top: 2px;
     }
     .showcase-header .section-tag {
-      margin-bottom: 4px;
+      margin-bottom: 3px;
       font-size: 0.74rem;
     }
     .showcase-header h2 {
-      font-size: clamp(1.35rem, 2.8vw, 2.15rem);
+      font-size: clamp(1.35rem, 2.6vw, 2.1rem);
       font-weight: 800;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
       line-height: 1.15;
     }
     .showcase-header p {
       color: var(--text-muted);
-      font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+      font-size: clamp(0.78rem, 1.4vw, 0.94rem);
       max-width: 560px;
       margin: 0 auto;
-      line-height: 1.35;
+      line-height: 1.3;
     }
 
     .showcase-layout {
@@ -627,9 +626,7 @@
       justify-content: center;
       gap: 44px;
       width: 100%;
-      flex: 1;
-      min-height: 0; /* Позволяет смартфону идеально вписываться в любой экран iPhone */
-      max-height: 760px;
+      flex-shrink: 0;
       position: relative;
     }
 
@@ -638,6 +635,7 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
+      flex-shrink: 0;
     }
     @media (max-width: 992px) {
       .showcase-side { display: none; }
@@ -677,17 +675,15 @@
       line-height: 1.4;
     }
 
-    /* Смартфон */
+    /* Смартфон со СТРОГО ФИКСИРОВАННЫМИ РАЗМЕРАМИ (никогда не прыгает и не меняет размер) */
     .phone-container {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       position: relative;
-      height: 100%;
-      width: 100%;
-      max-width: 360px;
-      min-height: 0;
+      width: 320px;
+      flex-shrink: 0;
     }
     .phone-Verify-halo {
       position: absolute;
@@ -697,8 +693,13 @@
       z-index: 0;
     }
     .phone-mockup {
-      width: 100%;
-      height: 100%;
+      width: 320px;
+      height: 580px;
+      min-width: 320px;
+      max-width: 320px;
+      min-height: 580px;
+      max-height: 580px;
+      flex-shrink: 0;
       background: #050507;
       border: 8px solid #222631;
       border-radius: 44px;
@@ -713,10 +714,32 @@
       transform: translateZ(0);
       backface-visibility: hidden;
     }
-    @media (max-width: 600px) {
-      .phone-container { max-width: 310px; }
-      .phone-mockup { border-width: 7px; border-radius: 38px; }
+    /* Фиксированные размеры для ноутбуков с низким экраном */
+    @media (max-height: 760px) and (min-width: 601px) {
+      .phone-container { width: 280px; }
+      .phone-mockup {
+        width: 280px; min-width: 280px; max-width: 280px;
+        height: 490px; min-height: 490px; max-height: 490px;
+      }
     }
+    /* Фиксированные размеры для iPhone / смартфонов (не зависят от dvh или картинки) */
+    @media (max-width: 600px) {
+      .phone-container { width: 268px; }
+      .phone-mockup {
+        width: 268px; min-width: 268px; max-width: 268px;
+        height: 460px; min-height: 460px; max-height: 460px;
+        border-width: 7px;
+        border-radius: 38px;
+      }
+    }
+    @media (max-width: 600px) and (max-height: 680px) {
+      .phone-container { width: 244px; }
+      .phone-mockup {
+        width: 244px; min-width: 244px; max-width: 244px;
+        height: 410px; min-height: 410px; max-height: 410px;
+      }
+    }
+
     .phone-screen-glare {
       position: absolute;
       inset: 0;
@@ -849,17 +872,18 @@
     }
 
     .webtoon-scroll {
-      height: 100%;
       width: 100%;
+      height: 100%;
       overflow: hidden;
       position: relative;
       cursor: pointer;
-      contain: paint;
+      contain: strict;
     }
     .webtoon-tape {
       display: flex;
       flex-direction: column;
       width: 100%;
+      min-height: 100%;
       will-change: transform;
       transform: translate3d(0, 0, 0);
       backface-visibility: hidden;
@@ -890,7 +914,7 @@
     .mobile-ep-bar {
       display: none;
       gap: 6px;
-      margin-top: 8px;
+      margin-top: 10px;
       justify-content: center;
       z-index: 5;
       flex-shrink: 0;
@@ -1128,7 +1152,7 @@
       font-size: 0.95rem;
     }
 
-    /* --- ТАРИФЫ (390 / 1 490 / 9 990 ₽) --- */
+    /* --- ТАРИФЫ (RU: 390 / 1 490 / 9 990 ₽ | EN: $5 / $19 / $119) --- */
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
@@ -1339,53 +1363,6 @@
       85%, 100% { transform: rotateY(-180deg); }
     }
 
-    /* --- ИНТЕРАКТИВНЫЙ КОНСТРУКТОР АТМОСФЕРЫ МАНХВЫ --- */
-    .builder-box {
-      margin-top: 42px;
-      background: linear-gradient(145deg, rgba(20, 24, 36, 0.85), rgba(11, 13, 20, 0.95));
-      border: 1px solid var(--border-gold);
-      border-radius: 28px;
-      padding: 34px;
-      display: grid;
-      grid-template-columns: 1.3fr 0.7fr;
-      gap: 28px;
-      align-items: center;
-    }
-    @media (max-width: 860px) {
-      .builder-box { grid-template-columns: 1fr; padding: 24px 20px; }
-    }
-    .builder-options-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 10px;
-      margin-bottom: 20px;
-    }
-    .style-pill {
-      padding: 9px 15px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.04);
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .style-pill.active {
-      background: rgba(245, 158, 11, 0.16);
-      border-color: var(--accent-light);
-      color: #fff;
-      box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
-    }
-    .builder-summary {
-      background: rgba(7, 8, 12, 0.75);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      padding: 24px;
-      text-align: center;
-    }
-
     /* Отзывы */
     .reviews-grid {
       display: grid;
@@ -1477,9 +1454,9 @@
       line-height: 1.65;
     }
 
-    /* Форма заказа */
+    /* Форма заказа + Встроенный блок бесплатной персонализации и своего стиля */
     .order-box {
-      max-width: 680px;
+      max-width: 720px;
       margin: 0 auto;
       background: linear-gradient(180deg, rgba(24, 28, 42, 0.88) 0%, rgba(12, 14, 22, 0.96) 100%);
       border: 1px solid var(--border-gold);
@@ -1491,7 +1468,7 @@
       .order-box { padding: 28px 18px; }
     }
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
     .form-group label {
       display: flex;
@@ -1525,6 +1502,83 @@
     .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
       border-color: var(--accent-light);
       box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+    }
+
+    /* Блок выбора стиля и бесплатных бонусов внутри заявки */
+    .order-customizer {
+      background: rgba(7, 8, 12, 0.65);
+      border: 1px solid rgba(245, 158, 11, 0.28);
+      border-radius: 22px;
+      padding: 22px 20px;
+      margin-bottom: 22px;
+    }
+    .order-customizer-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .order-customizer-title {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: #fff;
+    }
+    .free-tag-pill {
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 99px;
+      text-transform: uppercase;
+    }
+    .builder-options-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+      margin-bottom: 14px;
+    }
+    .style-pill {
+      padding: 8px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-muted);
+      font-size: 0.83rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .style-pill:hover {
+      border-color: rgba(251, 191, 36, 0.4);
+      color: #fff;
+    }
+    .style-pill.active {
+      background: rgba(245, 158, 11, 0.18);
+      border-color: var(--accent-light);
+      color: #fff;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.18);
+    }
+    .custom-style-wrap {
+      margin-top: 8px;
+      margin-bottom: 16px;
+    }
+    .custom-style-input {
+      width: 100%;
+      background: rgba(17, 20, 31, 0.9) !important;
+      border: 1px dashed rgba(245, 158, 11, 0.4) !important;
+      border-radius: 12px !important;
+      padding: 12px 14px !important;
+      font-size: 0.88rem !important;
+      color: #fff !important;
+    }
+    .custom-style-input:focus {
+      border-style: solid !important;
+      border-color: var(--accent-light) !important;
     }
 
     .story-prompts {
@@ -1645,7 +1699,7 @@
   <div class="ambient-glow glow-1"></div>
   <div class="ambient-glow glow-2"></div>
 
-  <!-- Навигация -->
+  <!-- Навигация (Изначально на русском) -->
   <header>
     <div class="container nav-inner">
       <a href="#" class="brand">
@@ -1654,22 +1708,22 @@
         <span class="logo-text">OURTUNE</span>
       </a>
       <div class="nav-links">
-        <a href="#showcase-wrapper" class="link" data-i18n="nav_case">Live Example</a>
-        <a href="#why" class="link" data-i18n="nav_why">Why Us</a>
-        <a href="#pricing" class="link" data-i18n="nav_pricing">Plans from 390 ₽</a>
-        <a href="#faq" class="link" data-i18n="nav_faq">FAQ</a>
+        <a href="#showcase-wrapper" class="link" data-i18n="nav_case">Пример работы</a>
+        <a href="#why" class="link" data-i18n="nav_why">Преимущества</a>
+        <a href="#pricing" class="link" data-i18n="nav_pricing">Тарифы от 390 ₽</a>
+        <a href="#faq" class="link" data-i18n="nav_faq">Вопросы</a>
       </div>
       <div class="nav-right">
         <div class="live-slots-pill">
           <span class="live-slots-dot"></span>
-          <span data-i18n="nav_slots">3 spots left for tomorrow</span>
+          <span data-i18n="nav_slots">Свободно 3 места на завтра</span>
         </div>
-        <!-- Переключатель языка (по умолчанию EN, запоминает RU) -->
+        <!-- Переключатель языка (по умолчанию RU, при выборе EN — цены в $) -->
         <div class="lang-switch" aria-label="Language Switcher">
-          <button type="button" class="lang-btn active" id="langEnBtn" onclick="setLanguage('en')">EN</button>
-          <button type="button" class="lang-btn" id="langRuBtn" onclick="setLanguage('ru')">RU</button>
+          <button type="button" class="lang-btn active" id="langRuBtn" onclick="setLanguage('ru')">RU</button>
+          <button type="button" class="lang-btn" id="langEnBtn" onclick="setLanguage('en')">EN</button>
         </div>
-        <a href="#order" class="nav-btn" data-i18n="nav_cta">Order Manhwa</a>
+        <a href="#order" class="nav-btn" data-i18n="nav_cta">Заказать манхву</a>
       </div>
     </div>
   </header>
@@ -1677,75 +1731,75 @@
   <!-- Первый экран -->
   <section class="hero">
     <div class="hero-floating-tag hero-tag-left">
-      <span style="color: #fbbf24;">✦</span> <span data-i18n="float_left">Chapter 1 · "That Special Night"</span>
+      <span style="color: #fbbf24;">✦</span> <span data-i18n="float_left">Глава 1 · «Тот самый вечер»</span>
     </div>
     <div class="hero-floating-tag hero-tag-right">
-      <span>💬</span> <span data-i18n="float_right">"Literally the best gift of my life 😭❤️"</span>
+      <span>💬</span> <span data-i18n="float_right">«Это лучший подарок в моей жизни 😭❤️»</span>
     </div>
 
     <div class="container">
       <div class="badge">
         <span class="badge-dot"></span>
-        <span data-i18n="hero_badge">Your custom romantic webtoon from photos</span>
-        <span class="badge-price-tag" data-i18n="hero_badge_price">from 390 ₽</span>
+        <span data-i18n="hero_badge">Ваш личный романтический вебтун по фото</span>
+        <span class="badge-price-tag" data-i18n="hero_badge_price">от 390 ₽</span>
       </div>
-      <h1><span data-i18n="hero_h1_gold">In one seamless webtoon awaits</span> <b data-i18n="hero_h1_main" style="font-weight:800;">your love story</b></h1>
-      <p class="hero-sub" data-i18n="hero_sub">A gift that hits straight to the heart. 100% facial likeness, your favorite spots, chats, and inside jokes crafted at top Korean studio quality in 24 hours.</p>
+      <h1><span data-i18n="hero_h1_gold">В одном непрерывном вебтуне вас ждёт</span> <b data-i18n="hero_h1_main" style="font-weight:800;">ваша история любви</b></h1>
+      <p class="hero-sub" data-i18n="hero_sub">Подарок, который попадает прямо в сердце. 100% узнаваемость ваших лиц, любимые локации, переписки и шутки на уровне топовой корейской студии за 24 часа.</p>
       
       <div class="hero-actions">
-        <a href="#order" class="btn-main" data-i18n="hero_btn_main">Create Couple's Webtoon from 390 ₽ ✦</a>
-        <a href="#showcase-wrapper" class="btn-secondary" data-i18n="hero_btn_sec">Watch Live Example ↓</a>
+        <a href="#order" class="btn-main" data-i18n="hero_btn_main">Создать комикс от 390 ₽ ✦</a>
+        <a href="#showcase-wrapper" class="btn-secondary" data-i18n="hero_btn_sec">Смотреть живой пример ↓</a>
       </div>
 
       <div class="hero-stats">
         <div class="stat-item">
-          <div class="stat-val" data-i18n="stat1_val">from 390 ₽</div>
-          <div class="stat-lbl" data-i18n="stat1_lbl">Accessible price for a personalized story</div>
+          <div class="stat-val" data-i18n="stat1_val">от 390 ₽</div>
+          <div class="stat-lbl" data-i18n="stat1_lbl">Доступная цена за персональную историю</div>
         </div>
         <div class="stat-item">
-          <div class="stat-val" data-i18n="stat2_val">100% Likeness</div>
-          <div class="stat-lbl" data-i18n="stat2_lbl">We capture your facial features & style from 2–3 photos</div>
+          <div class="stat-val" data-i18n="stat2_val">100% сходство</div>
+          <div class="stat-lbl" data-i18n="stat2_lbl">Переносим черты лица и стиль по 2–3 фото</div>
         </div>
         <div class="stat-item">
-          <div class="stat-val" data-i18n="stat3_val">from 24 Hours</div>
-          <div class="stat-lbl" data-i18n="stat3_lbl">Fast turnaround for digital scroll webtoons</div>
+          <div class="stat-val" data-i18n="stat3_val">от 24 часов</div>
+          <div class="stat-lbl" data-i18n="stat3_lbl">Готовность цифрового скролл-вебтуна</div>
         </div>
         <div class="stat-item">
-          <div class="stat-val" data-i18n="stat4_val">Seamless 9:16</div>
-          <div class="stat-lbl" data-i18n="stat4_lbl">Designed for smooth reading on any smartphone</div>
+          <div class="stat-val" data-i18n="stat4_val">Бесшовный 9:16</div>
+          <div class="stat-lbl" data-i18n="stat4_lbl">Идеально под экран любого смартфона</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Интерактивный липкий скролл-ридер (Исправлен для всех экранов iPhone) -->
+  <!-- Интерактивный липкий скролл-ридер (Строго фиксированный размер телефона без скачков) -->
   <section class="showcase-wrapper" id="showcase-wrapper">
     <div class="showcase-sticky">
       <div class="container showcase-inner">
         <div class="showcase-header">
-          <span class="section-tag" data-i18n="case_tag">Real OURTUNE Case</span>
-          <h2 data-i18n="case_h2">How It Looks Live</h2>
-          <p data-i18n="case_sub">Simply scroll down — the story inside the phone glides smoothly on its own</p>
+          <span class="section-tag" data-i18n="case_tag">Реальный кейс OURTUNE</span>
+          <h2 data-i18n="case_h2">Как это выглядит вживую</h2>
+          <p data-i18n="case_sub">Просто крутите страницу вниз — история внутри телефона плавно листается сама</p>
         </div>
 
         <div class="showcase-layout">
           <!-- Левая колонка подсказок -->
           <div class="showcase-side">
             <div class="scene-pill active" id="pill-0" onclick="jumpToEpisode(0)">
-              <div class="scene-pill-head"><span data-i18n="ep1_head">Episode 1 · Cozy Details</span><span>01</span></div>
-              <div class="scene-pill-text" data-i18n="ep1_txt">The night before departure, warm home atmosphere, and even your beloved pet in the frame.</div>
+              <div class="scene-pill-head"><span data-i18n="ep1_head">Эпизод 1 · Уютные детали</span><span>01</span></div>
+              <div class="scene-pill-text" data-i18n="ep1_txt">Ночь перед отъездом, домашняя атмосфера и даже ваш любимый питомец в кадре.</div>
             </div>
             <div class="scene-pill" id="pill-1" onclick="jumpToEpisode(1)">
-              <div class="scene-pill-head"><span data-i18n="ep2_head">Episode 2 · Magic Transitions</span><span>02</span></div>
-              <div class="scene-pill-text" data-i18n="ep2_txt">A glowing golden thread with autumn leaves seamlessly connects the station and the train.</div>
+              <div class="scene-pill-head"><span data-i18n="ep2_head">Эпизод 2 · Магия переходов</span><span>02</span></div>
+              <div class="scene-pill-text" data-i18n="ep2_txt">Светящаяся золотая нить с осенними листьями плавно связывает вокзал и поезд без единого шва.</div>
             </div>
             <div class="scene-pill" id="pill-2" onclick="jumpToEpisode(2)">
-              <div class="scene-pill-head"><span data-i18n="ep3_head">Episode 3 · Your Real Chats</span><span>03</span></div>
-              <div class="scene-pill-text" data-i18n="ep3_txt">Telegram video circles, trip snapshots, and late-night texts to the one you love.</div>
+              <div class="scene-pill-head"><span data-i18n="ep3_head">Эпизод 3 · Ваши переписки</span><span>03</span></div>
+              <div class="scene-pill-text" data-i18n="ep3_txt">Кружочки в Telegram, фотографии из поездки и ночные сообщения любимому человеку.</div>
             </div>
           </div>
 
-          <!-- Смартфон -->
+          <!-- Смартфон с фиксированными габаритами -->
           <div class="phone-container">
             <div class="phone-Verify-halo"></div>
             <div class="phone-mockup">
@@ -1758,17 +1812,17 @@
               <!-- Живой Dynamic Island -->
               <div class="phone-notch" id="dynamicIsland">
                 <div class="island-wave"><span></span><span></span><span></span></div>
-                <span id="islandText">Episode 1 · Cozy</span>
+                <span id="islandText">Эпизод 1 · Уют</span>
               </div>
 
               <div class="phone-Controls-top">
-                <button class="phone-mini-btn" id="autoScrollBtn" onclick="togglePhoneAutoScroll()" title="Smooth Auto-Scroll">▶</button>
-                <button class="phone-mini-btn" onclick="triggerPhoneHeart()" title="Send Heart">❤️</button>
+                <button class="phone-mini-btn" id="autoScrollBtn" onclick="togglePhoneAutoScroll()" title="Плавный автоскролл">▶</button>
+                <button class="phone-mini-btn" onclick="triggerPhoneHeart()" title="Поставить сердечко">❤️</button>
               </div>
               
               <div class="webtoon-scroll" id="scrollArea" ondblclick="triggerPhoneHeart()">
                 <div class="webtoon-tape" id="scrollTape">
-                  <img src="frame1.jpg" id="userWebtoonImg" alt="OURTUNE Webtoon" decoding="async" onerror="enableFallbackWebtoon()">
+                  <img src="frame1.jpg" id="userWebtoonImg" alt="OURTUNE Webtoon" decoding="async" onload="cachePhoneMetrics()" onerror="enableFallbackWebtoon()">
                   <div id="fallbackWebtoonContainer" style="display:none; width:100%;"></div>
                 </div>
               </div>
@@ -1783,26 +1837,26 @@
             </div>
 
             <div class="mobile-ep-bar">
-              <span class="mobile-ep-dot active" id="m-pill-0" onclick="jumpToEpisode(0)" data-i18n="m_ep1">Ep. 1</span>
-              <span class="mobile-ep-dot" id="m-pill-1" onclick="jumpToEpisode(1)" data-i18n="m_ep2">Ep. 2</span>
-              <span class="mobile-ep-dot" id="m-pill-2" onclick="jumpToEpisode(2)" data-i18n="m_ep3">Ep. 3</span>
-              <span class="mobile-ep-dot" id="m-pill-3" onclick="jumpToEpisode(3)" data-i18n="m_ep4">Ep. 4</span>
-              <span class="mobile-ep-dot" id="m-pill-4" onclick="jumpToEpisode(4)" data-i18n="m_ep5">Ep. 5</span>
+              <span class="mobile-ep-dot active" id="m-pill-0" onclick="jumpToEpisode(0)" data-i18n="m_ep1">Эп. 1</span>
+              <span class="mobile-ep-dot" id="m-pill-1" onclick="jumpToEpisode(1)" data-i18n="m_ep2">Эп. 2</span>
+              <span class="mobile-ep-dot" id="m-pill-2" onclick="jumpToEpisode(2)" data-i18n="m_ep3">Эп. 3</span>
+              <span class="mobile-ep-dot" id="m-pill-3" onclick="jumpToEpisode(3)" data-i18n="m_ep4">Эп. 4</span>
+              <span class="mobile-ep-dot" id="m-pill-4" onclick="jumpToEpisode(4)" data-i18n="m_ep5">Эп. 5</span>
             </div>
           </div>
 
           <!-- Правая колонка подсказок -->
           <div class="showcase-side">
             <div class="scene-pill" id="pill-3" onclick="jumpToEpisode(3)">
-              <div class="scene-pill-head"><span data-i18n="ep4_head">Episode 4 · Long-Awaited Reunion</span><span>04</span></div>
-              <div class="scene-pill-text" data-i18n="ep4_txt">Butterflies on the platform with a bouquet of flowers and pure emotion as the train arrives.</div>
+              <div class="scene-pill-head"><span data-i18n="ep4_head">Эпизод 4 · Долгожданная встреча</span><span>04</span></div>
+              <div class="scene-pill-text" data-i18n="ep4_txt">Волнение на перроне с букетом цветов и искренние эмоции при встрече поезда.</div>
             </div>
             <div class="scene-pill" id="pill-4" onclick="jumpToEpisode(4)">
-              <div class="scene-pill-head"><span data-i18n="ep5_head">Episode 5 · Cinematic Finale</span><span>05</span></div>
-              <div class="scene-pill-text" data-i18n="ep5_txt">A romantic walk through an autumn park that stays in your memory forever.</div>
+              <div class="scene-pill-head"><span data-i18n="ep5_head">Эпизод 5 · Кинематографичный финал</span><span>05</span></div>
+              <div class="scene-pill-text" data-i18n="ep5_txt">Романтичная прогулка по осеннему парку, которая останется в памяти навсегда.</div>
             </div>
             <div style="padding: 8px 4px; text-align: center;">
-              <a href="#order" class="nav-btn" style="display:inline-block; width:100%; padding: 13px 20px;" data-i18n="case_cta">I Want a Story Like This →</a>
+              <a href="#order" class="nav-btn" style="display:inline-block; width:100%; padding: 13px 20px;" data-i18n="case_cta">Хочу такую же историю →</a>
             </div>
           </div>
         </div>
@@ -1814,31 +1868,31 @@
   <section id="why">
     <div class="container reveal">
       <div class="section-title">
-        <span class="section-tag" data-i18n="why_tag">Aesthetics & Personalization</span>
-        <h2 data-i18n="why_h2">Give Something Truly One-of-a-Kind</h2>
-        <p data-i18n="why_sub">Flowers fade and greeting cards get forgotten on a shelf. A custom manhwa about the two of you becomes a family heirloom.</p>
+        <span class="section-tag" data-i18n="why_tag">Эстетика и персонализация</span>
+        <h2 data-i18n="why_h2">Подари то, чего нет ни у кого</h2>
+        <p data-i18n="why_sub">Цветы завянут, а банальную открытку забудут на полке. Собственная манхва о вашей паре становится семейной реликвией.</p>
       </div>
 
       <div class="bento-grid">
         <div class="bento-card bento-col-7 spotlight-card">
           <div class="bento-icon">🎭</div>
-          <div class="bento-title" data-i18n="bento1_title">100% Recognizable Faces</div>
-          <div class="bento-desc" data-i18n="bento1_desc">We never use generic template characters. From just 2–3 casual selfies, we carefully transfer your facial features, hairstyles, moles, and favorite outfits into top-tier Korean romance manhwa art.</div>
+          <div class="bento-title" data-i18n="bento1_title">100% узнаваемость ваших лиц</div>
+          <div class="bento-desc" data-i18n="bento1_desc">Мы не используем случайных шаблонных персонажей. По 2–3 обычным селфи мы бережно переносим ваши черты лица, прически, родинки и любимую одежду в рисовку топовой романтической манхвы.</div>
         </div>
         <div class="bento-card bento-col-5 spotlight-card">
           <div class="bento-icon">🐾</div>
-          <div class="bento-title" data-i18n="bento2_title">Inside Jokes & Beloved Pets</div>
-          <div class="bento-desc" data-i18n="bento2_desc">That special park bench, Telegram video messages, a funny jacket from your first date, or your Scottish Fold cat — we weave details into the plot that only the two of you understand.</div>
+          <div class="bento-title" data-i18n="bento2_title">Локальные мемы и питомцы</div>
+          <div class="bento-desc" data-i18n="bento2_desc">Та самая лавочка, кружочки в Telegram, смешная куртка с первого свидания или ваш шотландский кот — мы вплетаем в сюжет детали, понятные только вам двоим.</div>
         </div>
         <div class="bento-card bento-col-5 spotlight-card">
           <div class="bento-icon">⚡</div>
-          <div class="bento-title" data-i18n="bento3_title">Ready in 24 Hours</div>
-          <div class="bento-desc" data-i18n="bento3_desc">Forgot about an anniversary or only have a couple of days left before a big date? We craft a complete digital masterpiece in just 24 hours without compromising quality — starting at 390 ₽.</div>
+          <div class="bento-title" data-i18n="bento3_title">Готовность от 24 часов</div>
+          <div class="bento-desc" data-i18n="bento3_desc">Забыли про годовщину или до важной даты осталась пара дней? Мы создадим полноценный цифровой шедевр всего за сутки без потери качества и всего от 390 ₽.</div>
         </div>
         <div class="bento-card bento-col-7 spotlight-card">
           <div class="bento-icon">📖</div>
-          <div class="bento-title" data-i18n="bento4_title">Two Formats: Digital Scroll or VIP Hardcover Book</div>
-          <div class="bento-desc" data-i18n="bento4_desc">Choose a modern seamless webtoon made for smartphone screens worldwide, or order an exclusive glossy hardcover edition (Note: physical book shipping is available within Russia only via CDEK).</div>
+          <div class="bento-title" data-i18n="bento4_title">Два формата: Цифровой скролл или VIP-книга</div>
+          <div class="bento-desc" data-i18n="bento4_desc">Выбирайте современный бесшовный вебтун под экран телефона или закажите эксклюзивное печатное глянцевое издание в твердой обложке с доставкой по России до ближайшего СДЭК.</div>
         </div>
       </div>
     </div>
@@ -1854,43 +1908,43 @@
               <div class="chat-user">
                 <div class="chat-avatar">❤️</div>
                 <div>
-                  <div style="font-weight: 700; color: #fff;" data-i18n="chat_name">My Love</div>
-                  <div style="font-size: 0.78rem; color: #fbbf24;" id="chatStatusText" data-i18n="chat_status">online at 01:24 AM</div>
+                  <div style="font-weight: 700; color: #fff;" data-i18n="chat_name">Любимая</div>
+                  <div style="font-size: 0.78rem; color: #fbbf24;" id="chatStatusText" data-i18n="chat_status">в сети в 01:24 ночи</div>
                 </div>
               </div>
-              <button class="replay-chat-btn" onclick="playChatAnimation()" data-i18n="chat_replay">↻ Replay Emotion</button>
+              <button class="replay-chat-btn" onclick="playChatAnimation()" data-i18n="chat_replay">↻ Повторить эмоцию</button>
             </div>
 
             <div class="chat-messages-area">
               <div class="chat-bubble shown" id="msg1">
-                <span data-i18n="chat_msg1">Wait... is that US?! At our train station and with our cat?! 😭</span>
+                <span data-i18n="chat_msg1">Подожди... это что, МЫ?! На нашем вокзале и с нашим котом?! 😭</span>
                 <div class="chat-time">01:23</div>
               </div>
               <div class="chat-bubble shown" id="msg2">
-                <span data-i18n="chat_msg2">Are you serious??? I'm reading it for the third time, this is literally the best gift of my life 💔✨</span>
+                <span data-i18n="chat_msg2">Ты чего???.. Я перечитываю уже третий раз, это буквально лучший подарок в моей жизни 💔✨</span>
                 <div class="chat-time">01:24</div>
               </div>
               <div class="chat-bubble gold shown" id="msg3">
-                <span data-i18n="chat_msg3">Happy anniversary, my love ❤️</span>
+                <span data-i18n="chat_msg3">С нашей годовщиной, родная ❤️</span>
                 <div class="chat-time" style="color: rgba(255,255,255,0.7);">01:25 ✓✓</div>
               </div>
             </div>
           </div>
           <div style="margin-top: 16px; font-size: 0.84rem; color: var(--text-muted); text-align: center;" data-i18n="chat_footer">
-            That exact moment when a gift hits straight to the heart
+            Тот самый момент, когда подарок попадает прямо в сердце
           </div>
         </div>
 
         <div class="vs-box">
           <div class="vs-card bad spotlight-card">
-            <span class="vs-label" style="color: #ef4444;" data-i18n="vs_bad_lbl">Freelance Artist</span>
-            <div class="vs-title" data-i18n="vs_bad_title">30 Days Wait & from 15,000 ₽</div>
-            <p style="color: var(--text-muted); font-size: 0.92rem;" data-i18n="vs_bad_desc">Endless revisions, missed deadlines right before your holiday, inconsistent art style, and a high price for every single panel.</p>
+            <span class="vs-label" style="color: #ef4444;" data-i18n="vs_bad_lbl">Обычный художник с биржи</span>
+            <div class="vs-title" data-i18n="vs_bad_title">30 дней ожидания и от 15 000 ₽</div>
+            <p style="color: var(--text-muted); font-size: 0.92rem;" data-i18n="vs_bad_desc">Долгие согласования, срыв дедлайнов перед праздником, чужой стиль рисовки и высокая цена за каждый отдельный кадр.</p>
           </div>
           <div class="vs-card good spotlight-card">
-            <span class="vs-label" style="color: var(--accent-light);" data-i18n="vs_good_lbl">OURTUNE Studio</span>
-            <div class="vs-title" data-i18n="vs_good_title">From 24 Hours & 390 ₽ · Korean Studio Level</div>
-            <p style="color: #e5e7eb; font-size: 0.92rem;" data-i18n="vs_good_desc">Three simple steps and zero stress. Tell us your story in your own words and send your photos — we write the script, dialogues, and illustrate a seamless webtoon.</p>
+            <span class="vs-label" style="color: var(--accent-light);" data-i18n="vs_good_lbl">Сервис OURTUNE</span>
+            <div class="vs-title" data-i18n="vs_good_title">От 24 часов и от 390 ₽ · Уровень студии</div>
+            <p style="color: #e5e7eb; font-size: 0.92rem;" data-i18n="vs_good_desc">Три простых шага и ноль нервов. Вы рассказываете историю своими словами и скидываете фото — мы сами пишем сценарий, диалоги и рисуем бесшовную манхву.</p>
           </div>
         </div>
       </div>
@@ -1901,148 +1955,117 @@
   <section style="padding-top: 10px;">
     <div class="container reveal">
       <div class="section-title">
-        <span class="section-tag" data-i18n="steps_tag">Simple Process</span>
-        <h2 data-i18n="steps_h2">Magic in 3 Steps</h2>
-        <p data-i18n="steps_sub">No complicated briefs — just tell your story the way you'd tell a close friend</p>
+        <span class="section-tag" data-i18n="steps_tag">Простой процесс</span>
+        <h2 data-i18n="steps_h2">Магия в 3 шага</h2>
+        <p data-i18n="steps_sub">Никаких сложных технических заданий — расскажите историю так, как рассказали бы другу</p>
       </div>
       <div class="steps-grid">
         <div class="step-card spotlight-card">
           <div class="step-number">1</div>
-          <div class="step-title" data-i18n="step1_title">Pick a Plan & Share Your Story</div>
-          <div class="step-text" data-i18n="step1_desc">Choose a plan on the website and jot down key moments of your relationship: how you met, funny memories, or special phrases.</div>
+          <div class="step-title" data-i18n="step1_title">Заявка и ваша история</div>
+          <div class="step-text" data-i18n="step1_desc">Выбираете подходящий тариф на сайте и пишете ключевые моменты вашей истории: как познакомились, смешные случаи или важные фразы.</div>
         </div>
         <div class="step-card spotlight-card">
           <div class="step-number">2</div>
-          <div class="step-title" data-i18n="step2_title">Continue in Telegram & Send Photos</div>
-          <div class="step-text" data-i18n="step2_desc">After clicking the button, you'll open a direct Telegram chat with us where you can attach 3–5 casual photos of your couple.</div>
+          <div class="step-title" data-i18n="step2_title">Переход в Telegram и фото</div>
+          <div class="step-text" data-i18n="step2_desc">После нажатия кнопки вы попадаете в наш личный диалог в Telegram, где прикрепляете 3–5 обычных фотографий вашей пары.</div>
         </div>
         <div class="step-card spotlight-card">
           <div class="step-number">3</div>
-          <div class="step-title" data-i18n="step3_title">Receive Your Masterpiece</div>
-          <div class="step-text" data-i18n="step3_desc">We write the script and illustrate a single continuous webtoon (or print a hardcover book and ship it to your nearest CDEK point in Russia).</div>
+          <div class="step-title" data-i18n="step3_title">Готовый шедевр</div>
+          <div class="step-text" data-i18n="step3_desc">Мы создаем сценарий и отрисовываем единый непрерывный вебтун (или печатаем твердую книгу и отправляем по России в ближайший к вам СДЭК).</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Тарифы (390 ₽ / 1 490 ₽ / 9 990 ₽) -->
+  <!-- Тарифы (RU: 390 ₽ / 1 490 ₽ / 9 990 ₽ | EN: $5 / $19 / $119) -->
   <section class="pricing" id="pricing">
     <div class="container reveal">
       <div class="section-title">
-        <span class="section-tag" data-i18n="price_tag">Special Pricing</span>
-        <h2 data-i18n="price_h2">Pricing Plans</h2>
-        <p data-i18n="price_sub">Choose the story format and length that fits your special occasion</p>
+        <span class="section-tag" data-i18n="price_tag">Специальные цены</span>
+        <h2 data-i18n="price_h2">Тарифные планы</h2>
+        <p data-i18n="price_sub">Выберите формат и объем истории, подходящий к вашему событию</p>
       </div>
 
       <div class="pricing-grid">
-        <!-- Тариф 1: 390 ₽ -->
+        <!-- Тариф 1 -->
         <div class="price-card spotlight-card">
           <div>
-            <span class="price-discount-badge" data-i18n="p1_badge">Save 80% · Fast Start</span>
-            <div class="price-name" data-i18n="p1_name">Mini Story</div>
-            <div class="price-sub" data-i18n="p1_sub">Perfect for a sweet surprise any day</div>
+            <span class="price-discount-badge" data-i18n="p1_badge">Выгода 80% · Быстрый старт</span>
+            <div class="price-name" data-i18n="p1_name">Мини-история</div>
+            <div class="price-sub" data-i18n="p1_sub">Идеально для милого сюрприза без повода</div>
             <div class="price-cost-wrap">
-              <div class="price-cost">390 ₽</div>
-              <div class="price-old">1 990 ₽</div>
+              <div class="price-cost" data-i18n="p1_cost">390 ₽</div>
+              <div class="price-old" data-i18n="p1_old">1 990 ₽</div>
             </div>
             <ul class="price-features">
-              <li data-i18n="p1_f1">15 key panels with 100% likeness</li>
-              <li data-i18n="p1_f2">Heartwarming mini-story (1 scene)</li>
-              <li data-i18n="p1_f3">Format: Digital file (seamless vertical scroll)</li>
-              <li data-i18n="p1_f4">Turnaround time: 24 hours</li>
+              <li data-i18n="p1_f1">15 ключевых кадров с вашим сходством</li>
+              <li data-i18n="p1_f2">Трогательная мини-история на 1 сюжет</li>
+              <li data-i18n="p1_f3">Формат: Цифровой файл (бесшовный скролл)</li>
+              <li data-i18n="p1_f4">Срок изготовления: 24 часа</li>
             </ul>
           </div>
           <div class="action-row">
-            <button class="btn-select" onclick="selectPlan(0)" data-i18n="p1_btn">Select for 390 ₽</button>
+            <button class="btn-select" onclick="selectPlan(0)" data-i18n="p1_btn">Выбрать за 390 ₽</button>
             <div class="anim-box" title="Slow Scroll">
               <div class="anim-phone slow"></div>
             </div>
           </div>
         </div>
 
-        <!-- Тариф 2: 1 490 ₽ -->
+        <!-- Тариф 2 -->
         <div class="price-card popular spotlight-card">
-          <div class="popular-tag" data-i18n="p2_pop">Best Seller · Chosen by 78% of Couples</div>
+          <div class="popular-tag" data-i18n="p2_pop">Хит продаж · Выбор 78% пар</div>
           <div>
-            <span class="price-discount-badge" data-i18n="p2_badge">Best Value & Emotion</span>
-            <div class="price-name" data-i18n="p2_name">Full Feature</div>
-            <div class="price-sub" data-i18n="p2_sub">Deep dive into your relationship & feelings</div>
+            <span class="price-discount-badge" data-i18n="p2_badge">Лучшее соотношение цены и эмоций</span>
+            <div class="price-name" data-i18n="p2_name">Полный метр</div>
+            <div class="price-sub" data-i18n="p2_sub">Глубокое погружение в ваши чувства</div>
             <div class="price-cost-wrap">
-              <div class="price-cost">1 490 ₽</div>
-              <div class="price-old">3 490 ₽</div>
+              <div class="price-cost" data-i18n="p2_cost">1 490 ₽</div>
+              <div class="price-old" data-i18n="p2_old">3 490 ₽</div>
             </div>
             <ul class="price-features">
-              <li data-i18n="p2_f1">45 detailed cinematic panels</li>
-              <li data-i18n="p2_f2">Full-length rich relationship story</li>
-              <li data-i18n="p2_f3">Custom dialogues, chats & inside jokes</li>
-              <li data-i18n="p2_f4">Turnaround time: 1–2 days</li>
+              <li data-i18n="p2_f1">45 детальных кинематографичных кадров</li>
+              <li data-i18n="p2_f2">Большая развернутая история отношений</li>
+              <li data-i18n="p2_f3">Проработанные диалоги, переписки и мемы</li>
+              <li data-i18n="p2_f4">Срок изготовления: 1–2 дня</li>
             </ul>
           </div>
           <div class="action-row">
-            <button class="btn-select" onclick="selectPlan(1)" data-i18n="p2_btn">Select for 1 490 ₽</button>
+            <button class="btn-select" onclick="selectPlan(1)" data-i18n="p2_btn">Выбрать за 1 490 ₽</button>
             <div class="anim-box" title="Fast Scroll">
               <div class="anim-phone fast"></div>
             </div>
           </div>
         </div>
 
-        <!-- Тариф 3: 9 990 ₽ -->
+        <!-- Тариф 3 -->
         <div class="price-card spotlight-card">
           <div>
-            <span class="price-discount-badge" data-i18n="p3_badge">Exclusive · Physical Book</span>
-            <div class="price-name" data-i18n="p3_name">Glossy Hardcover</div>
-            <div class="price-sub" data-i18n="p3_sub">Premium physical edition to hold in your hands</div>
+            <span class="price-discount-badge" data-i18n="p3_badge">Эксклюзив · Физическая книга</span>
+            <div class="price-name" data-i18n="p3_name">Печатный глянец</div>
+            <div class="price-sub" data-i18n="p3_sub">Премиальное физическое издание в подарок</div>
             <div class="price-cost-wrap">
-              <div class="price-cost">9 990 ₽</div>
-              <div class="price-old">14 990 ₽</div>
+              <div class="price-cost" data-i18n="p3_cost">9 990 ₽</div>
+              <div class="price-old" data-i18n="p3_old">14 990 ₽</div>
             </div>
             <ul class="price-features">
-              <li data-i18n="p3_f1">Full-length exclusive story + digital version included</li>
-              <li data-i18n="p3_f2">VIP hardcover printed comic book</li>
-              <li data-i18n="p3_f3">Turnaround time: 1 week</li>
-              <li data-i18n="p3_f4">Free delivery to nearest CDEK point</li>
+              <li data-i18n="p3_f1">Эксклюзивная полноформатная история + цифровая копия</li>
+              <li data-i18n="p3_f2">VIP физический комикс в твердой обложке</li>
+              <li data-i18n="p3_f3">Срок выполнения: 1 неделя</li>
+              <li data-i18n="p3_f4">Бесплатная доставка до ближайшего СДЭК</li>
             </ul>
             <div class="russia-shipping-note" data-i18n="p3_rus_note">
-              📦 Note: Physical book shipping is available within Russia only (via CDEK).
+              📦 Доставка физической книги осуществляется по всей России (через СДЭК).
             </div>
           </div>
           <div class="action-row">
-            <button class="btn-select" onclick="selectPlan(2)" data-i18n="p3_btn">Select for 9 990 ₽</button>
+            <button class="btn-select" onclick="selectPlan(2)" data-i18n="p3_btn">Выбрать за 9 990 ₽</button>
             <div class="anim-box" title="Hardcover Book">
               <div class="anim-book"></div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- Интерактивный кастомизатор стиля и бесплатных бонусов -->
-      <div class="builder-box spotlight-card">
-        <div>
-          <span class="section-tag" style="margin-bottom: 6px;" data-i18n="bld_tag">Free Customization</span>
-          <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 6px;" data-i18n="bld_h3">Customize Your Manhwa Atmosphere</h3>
-          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 14px;" data-i18n="bld_sub">Pick your preferred art mood and extra details — they will be automatically added to your order for free:</p>
-          
-          <div style="font-size: 0.82rem; font-weight: 700; color: #d1d5db;" data-i18n="bld_lbl1">1. Visual Art Mood:</div>
-          <div class="builder-options-row" id="vibeSelector">
-            <button type="button" class="style-pill active" onclick="setVibe(this, 0)" data-i18n="vibe_0">🌸 Seoul Romance</button>
-            <button type="button" class="style-pill" onclick="setVibe(this, 1)" data-i18n="vibe_1">☕ Cozy Slice-of-Life</button>
-            <button type="button" class="style-pill" onclick="setVibe(this, 2)" data-i18n="vibe_2">🌃 Evening Neon</button>
-            <button type="button" class="style-pill" onclick="setVibe(this, 3)" data-i18n="vibe_3">😂 Comedy & Memes</button>
-          </div>
-
-          <div style="font-size: 0.82rem; font-weight: 700; color: #d1d5db;" data-i18n="bld_lbl2">2. Free Story Accents (select multiple):</div>
-          <div class="builder-options-row" style="margin-bottom: 0;" id="extrasSelector">
-            <button type="button" class="style-pill active" onclick="toggleExtra(this, 0)" data-i18n="extra_0">🐾 Pet in Frame (0 ₽)</button>
-            <button type="button" class="style-pill active" onclick="toggleExtra(this, 1)" data-i18n="extra_1">💬 Real Chat Bubbles (0 ₽)</button>
-            <button type="button" class="style-pill" onclick="toggleExtra(this, 2)" data-i18n="extra_2">🎵 Song QR Code (0 ₽)</button>
-          </div>
-        </div>
-
-        <div class="builder-summary">
-          <div style="font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;" data-i18n="bld_cfg">Your Configuration</div>
-          <div id="builderPlanTitle" style="font-size: 1.15rem; font-weight: 800; color: #fff; margin: 6px 0;">Full Feature (45 panels)</div>
-          <div id="builderPriceDisplay" style="font-size: 2.2rem; font-weight: 800; color: var(--accent-light); margin-bottom: 12px;">1 490 ₽</div>
-          <a href="#order" class="btn-main" style="width: 100%; padding: 13px 20px; font-size: 0.92rem;" data-i18n="bld_btn">Proceed to Checkout →</a>
         </div>
       </div>
     </div>
@@ -2052,31 +2075,31 @@
   <section style="padding-top: 15px;">
     <div class="container reveal">
       <div class="section-title">
-        <span class="section-tag" data-i18n="rev_tag">Real Emotions</span>
-        <h2 data-i18n="rev_h2">What Our Clients Say</h2>
-        <p data-i18n="rev_sub">Stories from couples who turned their memories into a romantic webtoon</p>
+        <span class="section-tag" data-i18n="rev_tag">Живые эмоции</span>
+        <h2 data-i18n="rev_h2">Что говорят наши клиенты</h2>
+        <p data-i18n="rev_sub">Истории пар, которые уже превратили свои воспоминания в манхву</p>
       </div>
       <div class="reviews-grid">
         <div class="review-card spotlight-card">
           <div>
             <div class="stars">★★★★★</div>
-            <div class="review-text" data-i18n="rev1_txt">"Ordered the Full Feature for 1,490 ₽ for our anniversary. When my girlfriend saw our real chat messages and our sleeping cat in the panels — her reaction was priceless. Facial likeness is 10/10!"</div>
+            <div class="review-text" data-i18n="rev1_txt">«Заказал Полный метр за 1 490 ₽ на годовщину. Когда девушка увидела на кадрах нашу реальную переписку и нашего спящего кота — эмоции были просто невероятные. Сходство лиц 10 из 10!»</div>
           </div>
-          <div class="review-author" data-i18n="rev1_auth">Maxim <span>· Full Feature (1 490 ₽)</span></div>
+          <div class="review-author" data-i18n="rev1_auth">Максим <span>· Тариф «Полный метр» (1 490 ₽)</span></div>
         </div>
         <div class="review-card spotlight-card">
           <div>
             <div class="stars">★★★★★</div>
-            <div class="review-text" data-i18n="rev2_txt">"We're currently long-distance in different cities, so I got the Mini Story for 390 ₽ to remind my boyfriend of the day we met at the train station. Done in less than 24 hours! The autumn leaf transitions look like top-tier anime."</div>
+            <div class="review-text" data-i18n="rev2_txt">«Мы сейчас на расстоянии в разных городах, взяла Мини-историю за 390 ₽, чтобы напомнить парню про день нашей встречи на вокзале. Сделали меньше чем за сутки! Переходы с осенними листьями выглядят как в топовом аниме.»</div>
           </div>
-          <div class="review-author" data-i18n="rev2_auth">Alina <span>· Mini Story (390 ₽)</span></div>
+          <div class="review-author" data-i18n="rev2_auth">Алина <span>· Тариф «Мини-история» (390 ₽)</span></div>
         </div>
         <div class="review-card spotlight-card">
           <div>
             <div class="stars">★★★★★</div>
-            <div class="review-text" data-i18n="rev3_txt">"We got the Glossy Hardcover for 9,990 ₽ for our wedding anniversary. The book arrived at our local CDEK in Russia in exactly one week — hard cover, thick glossy pages. Now it sits in the most visible spot in our living room!"</div>
+            <div class="review-text" data-i18n="rev3_txt">«Брали Печатный глянец за 9 990 ₽ на годовщину свадьбы. Книга приехала в ближайший СДЭК ровно за неделю, твердая обложка, плотные глянцевые страницы. Теперь лежит на самом видном месте в гостиной!»</div>
           </div>
-          <div class="review-author" data-i18n="rev3_auth">Alexander & Ekaterina <span>· Glossy Hardcover (9 990 ₽)</span></div>
+          <div class="review-author" data-i18n="rev3_auth">Александр и Екатерина <span>· Тариф «Печатный глянец» (9 990 ₽)</span></div>
         </div>
       </div>
     </div>
@@ -2086,94 +2109,123 @@
   <section style="padding-top: 15px;" id="faq">
     <div class="container reveal">
       <div class="section-title">
-        <span class="section-tag" data-i18n="faq_tag">Got Questions?</span>
-        <h2 data-i18n="faq_h2">Frequently Asked Questions</h2>
+        <span class="section-tag" data-i18n="faq_tag">Ответы на вопросы</span>
+        <h2 data-i18n="faq_h2">Частые вопросы</h2>
       </div>
       <div class="faq-container">
         <details>
-          <summary data-i18n="faq1_q">Why is the "Mini Story" plan only 390 ₽?</summary>
+          <summary data-i18n="faq1_q">Почему тариф «Мини-история» стоит всего 390 ₽?</summary>
           <div class="faq-content" data-i18n="faq1_a">
-            We made our starter 15-panel digital webtoon super accessible (390 ₽ instead of 1,990 ₽) so every couple can experience our studio art quality and surprise their partner with unforgettable emotions even without a major holiday.
+            Мы сделали стартовый цифровой тариф на 15 кадров максимально доступным (390 ₽ вместо 1 990 ₽), чтобы каждая пара могла оценить качество нашей рисовки и подарить любимому человеку незабываемые эмоции даже без крупного повода.
           </div>
         </details>
         <details>
-          <summary data-i18n="faq2_q">Will the characters really look like us?</summary>
+          <summary data-i18n="faq2_q">Лица действительно будут похожи на нас?</summary>
           <div class="faq-content" data-i18n="faq2_a">
-            Yes! We carefully analyze the photos you send and lock in each person's facial features, hairstyle, eye color, and outfit style so you recognize yourselves at first glance in every single frame.
+            Да! Мы детально анализируем присланные вами фотографии и фиксируем черты лица, прически, цвет глаз и стиль одежды каждого героя, чтобы вы с первого взгляда узнали себя в каждом кадре.
           </div>
         </details>
         <details>
-          <summary data-i18n="faq3_q">What kind of photos do I need to send?</summary>
+          <summary data-i18n="faq3_q">Какие фотографии нужно будет скинуть?</summary>
           <div class="faq-content" data-i18n="faq3_a">
-            No professional photoshoot needed. Just 3–5 casual selfies or couple photos in good lighting where your faces are clearly visible.
+            Профессиональная фотосессия не нужна. Достаточно 3–5 обычных селфи или совместных фото при хорошем освещении, где отчетливо видны ваши лица.
           </div>
         </details>
         <details>
-          <summary data-i18n="faq4_q">What if I'm not good at writing stories?</summary>
+          <summary data-i18n="faq4_q">Что если я не умею красиво писать истории?</summary>
           <div class="faq-content" data-i18n="faq4_a">
-            You don't need to be a writer! Just list the facts in your own words (where you met, what you wore, what song was playing, your inside jokes), and our scriptwriter will turn it into a touching storyline with natural dialogues.
+            Вам не нужно быть писателем! Просто перечислите факты своими словами (где встретились, во что были одеты, какая музыка играла, ваши локальные шутки), а наш сценарист сам превратит это в трогательный сюжет с живыми диалогами.
           </div>
         </details>
         <details>
-          <summary data-i18n="faq5_q">How does the 9,990 ₽ hardcover book delivery work?</summary>
+          <summary data-i18n="faq5_q">Как происходит доставка печатной версии за 9 990 ₽?</summary>
           <div class="faq-content" data-i18n="faq5_a">
-            In the "Glossy Hardcover" plan (9,990 ₽), we typeset and print your book in a premium glossy hardcover and ship it for free to your nearest CDEK pickup point. Please note: physical book delivery is available within Russia only (takes 1 week), and you also get the digital scroll version as a free bonus!
+            В тарифе «Печатный глянец» (9 990 ₽) мы полностью верстаем книгу, печатаем её в твердом переплете на премиальной глянцевой бумаге и бесплатно отправляем в ближайший удобный для вас пункт выдачи СДЭК по России. Весь процесс занимает 1 неделю, а цифровую скролл-версию вы получаете в подарок!
           </div>
         </details>
       </div>
     </div>
   </section>
 
-  <!-- Форма заказа -->
+  <!-- Форма заказа (С интегрированными бесплатными функциями и вводом своего стиля) -->
   <section class="order-section" id="order">
     <div class="container reveal">
       <div class="order-box spotlight-card">
-        <span class="section-tag" style="text-align: center;" data-i18n="ord_tag">Start Right Now</span>
-        <h2 style="font-size: 1.9rem; margin-bottom: 8px; text-align: center;" data-i18n="ord_h2">Place Your Order</h2>
+        <span class="section-tag" style="text-align: center;" data-i18n="ord_tag">Начните прямо сейчас</span>
+        <h2 style="font-size: 1.9rem; margin-bottom: 8px; text-align: center;" data-i18n="ord_h2">Оформление заказа</h2>
         <p style="color: var(--text-muted); text-align: center; font-size: 0.92rem; margin-bottom: 26px;" data-i18n="ord_sub">
-          Fill out the form below — your request will be automatically formatted for our Telegram chat
+          Заполните форму ниже — заявка автоматически сформируется для отправки в наш Telegram
         </p>
 
         <form id="orderForm" onsubmit="sendOrder(event)">
           
           <div class="form-group">
-            <label for="clientName" data-i18n="ord_name_lbl">What should we call you?</label>
-            <input type="text" id="clientName" placeholder="Your name" required oninput="saveDraft()">
+            <label for="clientName" data-i18n="ord_name_lbl">Как к вам обращаться?</label>
+            <input type="text" id="clientName" placeholder="Ваше имя" required oninput="saveDraft()">
           </div>
 
           <div class="form-group">
-            <label for="tariffSelect" data-i18n="ord_plan_lbl">Selected Plan</label>
+            <label for="tariffSelect" data-i18n="ord_plan_lbl">Выбранный тариф</label>
             <select id="tariffSelect" onchange="onTariffSelectChange()">
-              <option value="0" id="optPlan0">Mini Story (15 panels) — 390 ₽</option>
-              <option value="1" id="optPlan1" selected>Full Feature (45 panels) — 1 490 ₽ (Best Seller)</option>
-              <option value="2" id="optPlan2">Glossy Hardcover (VIP Book · Russia Delivery Only) — 9 990 ₽</option>
+              <option value="0" id="optPlan0">Мини-история (15 кадров) — 390 ₽</option>
+              <option value="1" id="optPlan1" selected>Полный метр (45 кадров) — 1 490 ₽ (Хит)</option>
+              <option value="2" id="optPlan2">Печатный глянец (VIP книга + СДЭК по РФ) — 9 990 ₽</option>
             </select>
+          </div>
+
+          <!-- Блок бесплатных доп. функций и выбора/ввода своего стиля прямо в форме заказа -->
+          <div class="order-customizer">
+            <div class="order-customizer-head">
+              <div class="order-customizer-title" data-i18n="bld_h3">✨ Настройте стиль и бесплатные детали</div>
+              <span class="free-tag-pill" data-i18n="bld_tag">Бесплатно к заказу</span>
+            </div>
+
+            <div style="font-size: 0.82rem; font-weight: 700; color: #d1d5db;" data-i18n="bld_lbl1">1. Выберите стиль рисовки или напишите свой:</div>
+            <div class="builder-options-row" id="vibeSelector">
+              <button type="button" class="style-pill active" onclick="setVibe(this, 0)" data-i18n="vibe_0">🌸 Романтика Сеула</button>
+              <button type="button" class="style-pill" onclick="setVibe(this, 1)" data-i18n="vibe_1">☕ Уютный Slice-of-Life</button>
+              <button type="button" class="style-pill" onclick="setVibe(this, 2)" data-i18n="vibe_2">🌃 Вечерний неон</button>
+              <button type="button" class="style-pill" onclick="setVibe(this, 3)" data-i18n="vibe_3">😂 Больше юмора</button>
+              <button type="button" class="style-pill" id="customStyleBtn" onclick="setVibe(this, 4)" data-i18n="vibe_4">✍️ Свой стиль</button>
+            </div>
+
+            <!-- Поле для ввода собственного стиля рисовки -->
+            <div class="custom-style-wrap">
+              <input type="text" id="customStyleInput" class="custom-style-input" placeholder="Или впишите сюда свой стиль / любимую манхву или аниме (необязательно)..." oninput="onCustomStyleType()">
+            </div>
+
+            <div style="font-size: 0.82rem; font-weight: 700; color: #d1d5db;" data-i18n="bld_lbl2">2. Бесплатные акценты в кадре (можно несколько):</div>
+            <div class="builder-options-row" style="margin-bottom: 0;" id="extrasSelector">
+              <button type="button" class="style-pill active" onclick="toggleExtra(this, 0)" data-i18n="extra_0">🐾 Питомец в кадре (Бесплатно)</button>
+              <button type="button" class="style-pill active" onclick="toggleExtra(this, 1)" data-i18n="extra_1">💬 Вставки переписок (Бесплатно)</button>
+              <button type="button" class="style-pill" onclick="toggleExtra(this, 2)" data-i18n="extra_2">🎵 QR-код с вашим треком (Бесплатно)</button>
+            </div>
           </div>
 
           <div class="form-group">
             <label for="storyText">
-              <span id="storyLabel">Detailed story (for 45 panels — 1 490 ₽)</span>
-              <span class="autosave-badge" id="autosaveBadge" data-i18n="ord_saved">✓ Draft saved</span>
+              <span id="storyLabel">Подробная история (для 45 кадров — 1 490 ₽)</span>
+              <span class="autosave-badge" id="autosaveBadge" data-i18n="ord_saved">✓ Черновик сохранен</span>
             </label>
             <div class="story-prompts">
-              <span class="prompt-chip" onclick="insertPrompt(0)" data-i18n="chip_0">+ How we met</span>
-              <span class="prompt-chip" onclick="insertPrompt(1)" data-i18n="chip_1">+ Memorable moment</span>
-              <span class="prompt-chip" onclick="insertPrompt(2)" data-i18n="chip_2">+ Inside joke</span>
-              <span class="prompt-chip" onclick="insertPrompt(3)" data-i18n="chip_3">+ Pet / Details</span>
+              <span class="prompt-chip" onclick="insertPrompt(0)" data-i18n="chip_0">+ Знакомство</span>
+              <span class="prompt-chip" onclick="insertPrompt(1)" data-i18n="chip_1">+ Памятный момент</span>
+              <span class="prompt-chip" onclick="insertPrompt(2)" data-i18n="chip_2">+ Локальная шутка</span>
+              <span class="prompt-chip" onclick="insertPrompt(3)" data-i18n="chip_3">+ Питомец / Детали</span>
             </div>
             <textarea id="storyText" rows="5" required oninput="saveDraft()"></textarea>
           </div>
 
           <div class="photo-notice" data-i18n="ord_notice">
-            📸 <strong>Please note:</strong> You don't need to upload photos right now. After clicking the button below, our Telegram chat will open with your pre-filled order text — simply send it and attach 3–5 photos to start! (Physical hardcover books ship within Russia only via CDEK).
+            📸 <strong>Обратите внимание:</strong> Прямо сейчас прикреплять фотографии не нужно. После нажатия кнопки откроется диалог в Telegram с вашим готовым текстом заказа — просто отправьте его и прикрепите несколько фотографий для старта работы!
           </div>
 
           <div class="order-actions-stack">
             <button type="submit" class="btn-main" style="width: 100%;" id="submitOrderBtn">
-              Send Order in Telegram (1 490 ₽) →
+              Отправить заявку в Telegram (1 490 ₽) →
             </button>
             <button type="button" class="btn-copy-fallback" id="copyOrderBtn" onclick="copyOrderText()" data-i18n="ord_copy">
-              📋 Or copy ready order text to clipboard
+              📋 Или скопировать готовый текст заявки в буфер обмена
             </button>
           </div>
         </form>
@@ -2183,210 +2235,29 @@
 
   <!-- Плавающая нижняя панель быстрого выбора -->
   <div class="floating-cta" id="floatingCta">
-    <div class="floating-cta-text" data-i18n="float_cta_txt">Plans from <span>390 ₽</span> · Ready in 24h</div>
-    <a href="#order" class="floating-cta-btn" data-i18n="float_cta_btn">Order ✦</a>
+    <div class="floating-cta-text" data-i18n="float_cta_txt">Тарифы от <span>390 ₽</span> · Готовность 24ч</div>
+    <a href="#order" class="floating-cta-btn" data-i18n="float_cta_btn">Заказать ✦</a>
   </div>
 
   <!-- Футер -->
   <footer>
     <div class="container">
       <div style="font-weight: 800; color: #fff; letter-spacing: 1px; font-size: 1.2rem; margin-bottom: 8px;">OURTUNE</div>
-      <p data-i18n="footer_desc">Personalized romantic webtoons and hardcover manhwa books based on your love story.</p>
-      <p style="margin-top: 14px; font-size: 0.8rem; opacity: 0.6;" data-i18n="footer_copy">© 2026 OURTUNE. All rights reserved.</p>
+      <p data-i18n="footer_desc">Персональные романтические вебтуны и печатные манхвы по вашей истории любви.</p>
+      <p style="margin-top: 14px; font-size: 0.8rem; opacity: 0.6;" data-i18n="footer_copy">© 2026 OURTUNE. Все права защищены.</p>
     </div>
   </footer>
 
   <script>
     // =========================================================================
-    // 1. ПОЛНЫЙ СЛОВАРЬ EN (ПО УМОЛЧАНИЮ) И RU + СОХРАНЕНИЕ ВЫБОРА В БРАУЗЕРЕ
+    // 1. СЛОВАРЬ RU (ПО УМОЛЧАНИЮ, В РУБЛЯХ) И EN (В ДОЛЛАРАХ $)
     // =========================================================================
-    let currentLang = 'en';
-    let currentPlanIdx = 1; // 0: 390, 1: 1490, 2: 9990
+    let currentLang = 'ru';
+    let currentPlanIdx = 1; // 0: Мини, 1: Полный метр, 2: Печатный глянец
     let currentVibeIdx = 0;
     let selectedExtraIndices = [0, 1];
 
     const i18n = {
-      en: {
-        page_title: "OURTUNE — Your Love Story as a Romantic Manhwa from 390 ₽",
-        nav_case: "Live Example",
-        nav_why: "Why Us",
-        nav_pricing: "Plans from 390 ₽",
-        nav_faq: "FAQ",
-        nav_slots: "3 spots left for tomorrow",
-        nav_cta: "Order Manhwa",
-        float_left: 'Chapter 1 · "That Special Night"',
-        float_right: '"Literally the best gift of my life 😭❤️"',
-        hero_badge: "Your custom romantic webtoon from photos",
-        hero_badge_price: "from 390 ₽",
-        hero_h1_gold: "In one seamless webtoon awaits",
-        hero_h1_main: "your love story",
-        hero_sub: "A gift that hits straight to the heart. 100% facial likeness, your favorite spots, chats, and inside jokes crafted at top Korean studio quality in 24 hours.",
-        hero_btn_main: "Create Couple's Webtoon from 390 ₽ ✦",
-        hero_btn_sec: "Watch Live Example ↓",
-        stat1_val: "from 390 ₽",
-        stat1_lbl: "Accessible price for a personalized story",
-        stat2_val: "100% Likeness",
-        stat2_lbl: "We capture your facial features & style from 2–3 photos",
-        stat3_val: "from 24 Hours",
-        stat3_lbl: "Fast turnaround for digital scroll webtoons",
-        stat4_val: "Seamless 9:16",
-        stat4_lbl: "Designed for smooth reading on any smartphone",
-        case_tag: "Real OURTUNE Case",
-        case_h2: "How It Looks Live",
-        case_sub: "Simply scroll down — the story inside the phone glides smoothly on its own",
-        ep1_head: "Episode 1 · Cozy Details",
-        ep1_txt: "The night before departure, warm home atmosphere, and even your beloved pet in the frame.",
-        ep2_head: "Episode 2 · Magic Transitions",
-        ep2_txt: "A glowing golden thread with autumn leaves seamlessly connects the station and the train.",
-        ep3_head: "Episode 3 · Your Real Chats",
-        ep3_txt: "Telegram video circles, trip snapshots, and late-night texts to the one you love.",
-        ep4_head: "Episode 4 · Long-Awaited Reunion",
-        ep4_txt: "Butterflies on the platform with a bouquet of flowers and pure emotion as the train arrives.",
-        ep5_head: "Episode 5 · Cinematic Finale",
-        ep5_txt: "A romantic walk through an autumn park that stays in your memory forever.",
-        case_cta: "I Want a Story Like This →",
-        m_ep1: "Ep. 1", m_ep2: "Ep. 2", m_ep3: "Ep. 3", m_ep4: "Ep. 4", m_ep5: "Ep. 5",
-        island_labels: ["Episode 1 · Cozy", "Episode 2 · Transitions", "Episode 3 · Real Chats", "Episode 4 · Reunion", "Episode 5 · Finale ✦"],
-        why_tag: "Aesthetics & Personalization",
-        why_h2: "Give Something Truly One-of-a-Kind",
-        why_sub: "Flowers fade and greeting cards get forgotten on a shelf. A custom manhwa about the two of you becomes a family heirloom.",
-        bento1_title: "100% Recognizable Faces",
-        bento1_desc: "We never use generic template characters. From just 2–3 casual selfies, we carefully transfer your facial features, hairstyles, moles, and favorite outfits into top-tier Korean romance manhwa art.",
-        bento2_title: "Inside Jokes & Beloved Pets",
-        bento2_desc: "That special park bench, Telegram video messages, a funny jacket from your first date, or your Scottish Fold cat — we weave details into the plot that only the two of you understand.",
-        bento3_title: "Ready in 24 Hours",
-        bento3_desc: "Forgot about an anniversary or only have a couple of days left before a big date? We craft a complete digital masterpiece in just 24 hours without compromising quality — starting at 390 ₽.",
-        bento4_title: "Two Formats: Digital Scroll or VIP Hardcover Book",
-        bento4_desc: "Choose a modern seamless webtoon made for smartphone screens worldwide, or order an exclusive glossy hardcover edition (Note: physical book shipping is available within Russia only via CDEK).",
-        chat_name: "My Love",
-        chat_status: "online at 01:24 AM",
-        chat_typing: "typing a message...",
-        chat_replay: "↻ Replay Emotion",
-        chat_msg1: "Wait... is that US?! At our train station and with our cat?! 😭",
-        chat_msg2: "Are you serious??? I'm reading it for the third time, this is literally the best gift of my life 💔✨",
-        chat_msg3: "Happy anniversary, my love ❤️",
-        chat_footer: "That exact moment when a gift hits straight to the heart",
-        vs_bad_lbl: "Freelance Artist",
-        vs_bad_title: "30 Days Wait & from 15,000 ₽",
-        vs_bad_desc: "Endless revisions, missed deadlines right before your holiday, inconsistent art style, and a high price for every single panel.",
-        vs_good_lbl: "OURTUNE Studio",
-        vs_good_title: "From 24 Hours & 390 ₽ · Korean Studio Level",
-        vs_good_desc: "Three simple steps and zero stress. Tell us your story in your own words and send your photos — we write the script, dialogues, and illustrate a seamless webtoon.",
-        steps_tag: "Simple Process",
-        steps_h2: "Magic in 3 Steps",
-        steps_sub: "No complicated briefs — just tell your story the way you'd tell a close friend",
-        step1_title: "Pick a Plan & Share Your Story",
-        step1_desc: "Choose a plan on the website and jot down key moments of your relationship: how you met, funny memories, or special phrases.",
-        step2_title: "Continue in Telegram & Send Photos",
-        step2_desc: "After clicking the button, you'll open a direct Telegram chat with us where you can attach 3–5 casual photos of your couple.",
-        step3_title: "Receive Your Masterpiece",
-        step3_desc: "We write the script and illustrate a single continuous webtoon (or print a hardcover book and ship it to your nearest CDEK point in Russia).",
-        price_tag: "Special Pricing",
-        price_h2: "Pricing Plans",
-        price_sub: "Choose the story format and length that fits your special occasion",
-        p1_badge: "Save 80% · Fast Start",
-        p1_name: "Mini Story",
-        p1_sub: "Perfect for a sweet surprise any day",
-        p1_f1: "15 key panels with 100% likeness",
-        p1_f2: "Heartwarming mini-story (1 scene)",
-        p1_f3: "Format: Digital file (seamless vertical scroll)",
-        p1_f4: "Turnaround time: 24 hours",
-        p1_btn: "Select for 390 ₽",
-        p2_pop: "Best Seller · Chosen by 78% of Couples",
-        p2_badge: "Best Value & Emotion",
-        p2_name: "Full Feature",
-        p2_sub: "Deep dive into your relationship & feelings",
-        p2_f1: "45 detailed cinematic panels",
-        p2_f2: "Full-length rich relationship story",
-        p2_f3: "Custom dialogues, chats & inside jokes",
-        p2_f4: "Turnaround time: 1–2 days",
-        p2_btn: "Select for 1 490 ₽",
-        p3_badge: "Exclusive · Physical Book",
-        p3_name: "Glossy Hardcover",
-        p3_sub: "Premium physical edition to hold in your hands",
-        p3_f1: "Full-length exclusive story + digital version included",
-        p3_f2: "VIP hardcover printed comic book",
-        p3_f3: "Turnaround time: 1 week",
-        p3_f4: "Free delivery to nearest CDEK point",
-        p3_rus_note: "📦 Note: Physical book shipping is available within Russia only (via CDEK).",
-        p3_btn: "Select for 9 990 ₽",
-        bld_tag: "Free Customization",
-        bld_h3: "Customize Your Manhwa Atmosphere",
-        bld_sub: "Pick your preferred art mood and extra details — they will be automatically added to your order for free:",
-        bld_lbl1: "1. Visual Art Mood:",
-        vibe_0: "🌸 Seoul Romance",
-        vibe_1: "☕ Cozy Slice-of-Life",
-        vibe_2: "🌃 Evening Neon",
-        vibe_3: "😂 Comedy & Memes",
-        bld_lbl2: "2. Free Story Accents (select multiple):",
-        extra_0: "🐾 Pet in Frame (0 ₽)",
-        extra_1: "💬 Real Chat Bubbles (0 ₽)",
-        extra_2: "🎵 Song QR Code (0 ₽)",
-        bld_cfg: "Your Configuration",
-        bld_btn: "Proceed to Checkout →",
-        rev_tag: "Real Emotions",
-        rev_h2: "What Our Clients Say",
-        rev_sub: "Stories from couples who turned their memories into a romantic webtoon",
-        rev1_txt: "\"Ordered the Full Feature for 1,490 ₽ for our anniversary. When my girlfriend saw our real chat messages and our sleeping cat in the panels — her reaction was priceless. Facial likeness is 10/10!\"",
-        rev1_auth: "Maxim <span>· Full Feature (1 490 ₽)</span>",
-        rev2_txt: "\"We're currently long-distance in different cities, so I got the Mini Story for 390 ₽ to remind my boyfriend of the day we met at the train station. Done in less than 24 hours! The autumn leaf transitions look like top-tier anime.\"",
-        rev2_auth: "Alina <span>· Mini Story (390 ₽)</span>",
-        rev3_txt: "\"We got the Glossy Hardcover for 9,990 ₽ for our wedding anniversary. The book arrived at our local CDEK in Russia in exactly one week — hard cover, thick glossy pages. Now it sits in the most visible spot in our living room!\"",
-        rev3_auth: "Alexander & Ekaterina <span>· Glossy Hardcover (9 990 ₽)</span>",
-        faq_tag: "Got Questions?",
-        faq_h2: "Frequently Asked Questions",
-        faq1_q: "Why is the \"Mini Story\" plan only 390 ₽?",
-        faq1_a: "We made our starter 15-panel digital webtoon super accessible (390 ₽ instead of 1,990 ₽) so every couple can experience our studio art quality and surprise their partner with unforgettable emotions even without a major holiday.",
-        faq2_q: "Will the characters really look like us?",
-        faq2_a: "Yes! We carefully analyze the photos you send and lock in each person's facial features, hairstyle, eye color, and outfit style so you recognize yourselves at first glance in every single frame.",
-        faq3_q: "What kind of photos do I need to send?",
-        faq3_a: "No professional photoshoot needed. Just 3–5 casual selfies or couple photos in good lighting where your faces are clearly visible.",
-        faq4_q: "What if I'm not good at writing stories?",
-        faq4_a: "You don't need to be a writer! Just list the facts in your own words (where you met, what you wore, what song was playing, your inside jokes), and our scriptwriter will turn it into a touching storyline with natural dialogues.",
-        faq5_q: "How does the 9,990 ₽ hardcover book delivery work?",
-        faq5_a: "In the \"Glossy Hardcover\" plan (9,990 ₽), we typeset and print your book in a premium glossy hardcover and ship it for free to your nearest CDEK pickup point. Please note: physical book delivery is available within Russia only (takes 1 week), and you also get the digital scroll version as a free bonus!",
-        ord_tag: "Start Right Now",
-        ord_h2: "Place Your Order",
-        ord_sub: "Fill out the form below — your request will be automatically formatted for our Telegram chat",
-        ord_name_lbl: "What should we call you?",
-        ord_name_ph: "Your name",
-        ord_plan_lbl: "Selected Plan",
-        opt_0: "Mini Story (15 panels) — 390 ₽",
-        opt_1: "Full Feature (45 panels) — 1 490 ₽ (Best Seller)",
-        opt_2: "Glossy Hardcover (VIP Book · Russia Delivery Only) — 9 990 ₽",
-        ord_saved: "✓ Draft saved",
-        chip_0: "+ How we met",
-        chip_1: "+ Memorable moment",
-        chip_2: "+ Inside joke",
-        chip_3: "+ Pet / Details",
-        prompts_insert: ["How we met: ", "Memorable moment/trip: ", "Our inside jokes/phrases: ", "Details (outfits / pet / place): "],
-        ord_notice: "📸 <strong>Please note:</strong> You don't need to upload photos right now. After clicking the button below, our Telegram chat will open with your pre-filled order text — simply send it and attach 3–5 photos to start! (Physical hardcover books ship within Russia only via CDEK).",
-        ord_copy: "📋 Or copy ready order text to clipboard",
-        ord_copied: "✅ Order text copied! Send it to our Telegram @VAV_ls",
-        float_cta_txt: "Plans from <span>390 ₽</span> · Ready in 24h",
-        float_cta_btn: "Order ✦",
-        footer_desc: "Personalized romantic webtoons and hardcover manhwa books based on your love story.",
-        footer_copy: "© 2026 OURTUNE. All rights reserved.",
-        plan_titles: ["Mini Story (15 panels)", "Full Feature (45 panels)", "Glossy Hardcover (VIP Book)"],
-        plan_prices: ["390 ₽", "1 490 ₽", "9 990 ₽"],
-        story_labels: [
-          "Short story (for 15 panels — 390 ₽)",
-          "Detailed story (for 45 panels — 1 490 ₽)",
-          "Detailed story for VIP Hardcover Book (9 990 ₽ · Russia shipping only)"
-        ],
-        story_placeholders: [
-          "Write a short story (how you met or describe one romantic/funny moment). For 15 panels, a brief summary is plenty...",
-          "Tell us your story in detail! The more moments, phrases, jokes, and situations you share, the richer your 45-panel webtoon will be...",
-          "Tell us your story in full detail! Describe key events, dialogues, favorite places, and little things for your hardcover printed book (ships within Russia via CDEK)..."
-        ],
-        submit_btns: [
-          "Send Order in Telegram (390 ₽) →",
-          "Send Order in Telegram (1 490 ₽) →",
-          "Send Order in Telegram (9 990 ₽) →"
-        ],
-        vibes_clean: ["Seoul Romance (soft light)", "Cozy Slice-of-Life", "Evening Neon", "Comedy & Inside Memes"],
-        extras_clean: ["Include Pet", "Real Telegram Chats", "Song QR Code"]
-      },
       ru: {
         page_title: "OURTUNE — Ваша история любви в стиле манхвы от 390 ₽",
         nav_case: "Пример работы",
@@ -2425,7 +2296,7 @@
         ep4_txt: "Волнение на перроне с букетом цветов и искренние эмоции при встрече поезда.",
         ep5_head: "Эпизод 5 · Кинематографичный финал",
         ep5_txt: "Романтичная прогулка по осеннему парку, которая останется в памяти навсегда.",
-        case_cta: "Хочу такую же историю от 390 ₽ →",
+        case_cta: "Хочу такую же историю →",
         m_ep1: "Эп. 1", m_ep2: "Эп. 2", m_ep3: "Эп. 3", m_ep4: "Эп. 4", m_ep5: "Эп. 5",
         island_labels: ["Эпизод 1 · Уют", "Эпизод 2 · Переходы", "Эпизод 3 · Переписки", "Эпизод 4 · Встреча", "Эпизод 5 · Финал ✦"],
         why_tag: "Эстетика и персонализация",
@@ -2468,6 +2339,8 @@
         p1_badge: "Выгода 80% · Быстрый старт",
         p1_name: "Мини-история",
         p1_sub: "Идеально для милого сюрприза без повода",
+        p1_cost: "390 ₽",
+        p1_old: "1 990 ₽",
         p1_f1: "15 ключевых кадров с вашим сходством",
         p1_f2: "Трогательная мини-история на 1 сюжет",
         p1_f3: "Формат: Цифровой файл (бесшовный скролл)",
@@ -2477,6 +2350,8 @@
         p2_badge: "Лучшее соотношение цены и эмоций",
         p2_name: "Полный метр",
         p2_sub: "Глубокое погружение в ваши чувства",
+        p2_cost: "1 490 ₽",
+        p2_old: "3 490 ₽",
         p2_f1: "45 детальных кинематографичных кадров",
         p2_f2: "Большая развернутая история отношений",
         p2_f3: "Проработанные диалоги, переписки и мемы",
@@ -2485,26 +2360,27 @@
         p3_badge: "Эксклюзив · Физическая книга",
         p3_name: "Печатный глянец",
         p3_sub: "Премиальное физическое издание в подарок",
+        p3_cost: "9 990 ₽",
+        p3_old: "14 990 ₽",
         p3_f1: "Эксклюзивная полноформатная история + цифровая копия",
         p3_f2: "VIP физический комикс в твердой обложке",
         p3_f3: "Срок выполнения: 1 неделя",
         p3_f4: "Бесплатная доставка до ближайшего СДЭК",
         p3_rus_note: "📦 Доставка физической книги осуществляется по всей России (через СДЭК).",
         p3_btn: "Выбрать за 9 990 ₽",
-        bld_tag: "Персонализация бесплатно",
-        bld_h3: "Настройте атмосферу вашей манхвы",
-        bld_sub: "Выберите желаемый тон рисовки и детали — они автоматически добавятся к вашему заказу без доплат:",
-        bld_lbl1: "1. Визуальный стиль рисовки:",
+        bld_tag: "Бесплатно к заказу",
+        bld_h3: "✨ Настройте стиль и бесплатные детали",
+        bld_lbl1: "1. Выберите стиль рисовки или напишите свой:",
         vibe_0: "🌸 Романтика Сеула",
         vibe_1: "☕ Уютный Slice-of-Life",
         vibe_2: "🌃 Вечерний неон",
         vibe_3: "😂 Больше юмора",
+        vibe_4: "✍️ Свой стиль",
+        custom_style_ph: "Или впишите сюда свой стиль / любимую манхву или аниме (необязательно)...",
         bld_lbl2: "2. Бесплатные акценты в кадре (можно несколько):",
-        extra_0: "🐾 Питомец в кадре (0 ₽)",
-        extra_1: "💬 Вставки переписок (0 ₽)",
-        extra_2: "🎵 QR-код с вашим треком (0 ₽)",
-        bld_cfg: "Ваша конфигурация",
-        bld_btn: "Перейти к оформлению →",
+        extra_0: "🐾 Питомец в кадре (Бесплатно)",
+        extra_1: "💬 Вставки переписок (Бесплатно)",
+        extra_2: "🎵 QR-код с вашим треком (Бесплатно)",
         rev_tag: "Живые эмоции",
         rev_h2: "Что говорят наши клиенты",
         rev_sub: "Истории пар, которые уже превратили свои воспоминания в манхву",
@@ -2565,24 +2441,208 @@
           "Отправить заявку в Telegram (1 490 ₽) →",
           "Отправить заявку в Telegram (9 990 ₽) →"
         ],
-        vibes_clean: ["Романтика Сеула (мягкий свет)", "Уютный Slice-of-Life", "Кинематографичный неон", "Комедия и локальные мемы"],
+        vibes_clean: ["Романтика Сеула (мягкий свет)", "Уютный Slice-of-Life", "Кинематографичный неон", "Комедия и локальные мемы", "Свой стиль"],
         extras_clean: ["Добавить питомца", "Реальные сообщения TG", "QR-код с вашей песней"]
+      },
+      en: {
+        page_title: "OURTUNE — Your Love Story as a Romantic Manhwa from $5",
+        nav_case: "Live Example",
+        nav_why: "Why Us",
+        nav_pricing: "Plans from $5",
+        nav_faq: "FAQ",
+        nav_slots: "3 spots left for tomorrow",
+        nav_cta: "Order Manhwa",
+        float_left: 'Chapter 1 · "That Special Night"',
+        float_right: '"Literally the best gift of my life 😭❤️"',
+        hero_badge: "Your custom romantic webtoon from photos",
+        hero_badge_price: "from $5",
+        hero_h1_gold: "In one seamless webtoon awaits",
+        hero_h1_main: "your love story",
+        hero_sub: "A gift that hits straight to the heart. 100% facial likeness, your favorite spots, chats, and inside jokes crafted at top Korean studio quality in 24 hours.",
+        hero_btn_main: "Create Couple's Webtoon from $5 ✦",
+        hero_btn_sec: "Watch Live Example ↓",
+        stat1_val: "from $5",
+        stat1_lbl: "Accessible price for a personalized story",
+        stat2_val: "100% Likeness",
+        stat2_lbl: "We capture your facial features & style from 2–3 photos",
+        stat3_val: "from 24 Hours",
+        stat3_lbl: "Fast turnaround for digital scroll webtoons",
+        stat4_val: "Seamless 9:16",
+        stat4_lbl: "Designed for smooth reading on any smartphone",
+        case_tag: "Real OURTUNE Case",
+        case_h2: "How It Looks Live",
+        case_sub: "Simply scroll down — the story inside the phone glides smoothly on its own",
+        ep1_head: "Episode 1 · Cozy Details",
+        ep1_txt: "The night before departure, warm home atmosphere, and even your beloved pet in the frame.",
+        ep2_head: "Episode 2 · Magic Transitions",
+        ep2_txt: "A glowing golden thread with autumn leaves seamlessly connects the station and the train.",
+        ep3_head: "Episode 3 · Your Real Chats",
+        ep3_txt: "Telegram video circles, trip snapshots, and late-night texts to the one you love.",
+        ep4_head: "Episode 4 · Long-Awaited Reunion",
+        ep4_txt: "Butterflies on the platform with a bouquet of flowers and pure emotion as the train arrives.",
+        ep5_head: "Episode 5 · Cinematic Finale",
+        ep5_txt: "A romantic walk through an autumn park that stays in your memory forever.",
+        case_cta: "I Want a Story Like This →",
+        m_ep1: "Ep. 1", m_ep2: "Ep. 2", m_ep3: "Ep. 3", m_ep4: "Ep. 4", m_ep5: "Ep. 5",
+        island_labels: ["Episode 1 · Cozy", "Episode 2 · Transitions", "Episode 3 · Real Chats", "Episode 4 · Reunion", "Episode 5 · Finale ✦"],
+        why_tag: "Aesthetics & Personalization",
+        why_h2: "Give Something Truly One-of-a-Kind",
+        why_sub: "Flowers fade and greeting cards get forgotten on a shelf. A custom manhwa about the two of you becomes a family heirloom.",
+        bento1_title: "100% Recognizable Faces",
+        bento1_desc: "We never use generic template characters. From just 2–3 casual selfies, we carefully transfer your facial features, hairstyles, moles, and favorite outfits into top-tier Korean romance manhwa art.",
+        bento2_title: "Inside Jokes & Beloved Pets",
+        bento2_desc: "That special park bench, Telegram video messages, a funny jacket from your first date, or your Scottish Fold cat — we weave details into the plot that only the two of you understand.",
+        bento3_title: "Ready in 24 Hours",
+        bento3_desc: "Forgot about an anniversary or only have a couple of days left before a big date? We craft a complete digital masterpiece in just 24 hours without compromising quality — starting at just $5.",
+        bento4_title: "Two Formats: Digital Scroll or VIP Hardcover Book",
+        bento4_desc: "Choose a modern seamless webtoon made for smartphone screens worldwide, or order an exclusive glossy hardcover edition (Note: physical book shipping is available within Russia only via CDEK).",
+        chat_name: "My Love",
+        chat_status: "online at 01:24 AM",
+        chat_typing: "typing a message...",
+        chat_replay: "↻ Replay Emotion",
+        chat_msg1: "Wait... is that US?! At our train station and with our cat?! 😭",
+        chat_msg2: "Are you serious??? I'm reading it for the third time, this is literally the best gift of my life 💔✨",
+        chat_msg3: "Happy anniversary, my love ❤️",
+        chat_footer: "That exact moment when a gift hits straight to the heart",
+        vs_bad_lbl: "Freelance Artist",
+        vs_bad_title: "30 Days Wait & from $180",
+        vs_bad_desc: "Endless revisions, missed deadlines right before your holiday, inconsistent art style, and a high price for every single panel.",
+        vs_good_lbl: "OURTUNE Studio",
+        vs_good_title: "From 24 Hours & $5 · Korean Studio Level",
+        vs_good_desc: "Three simple steps and zero stress. Tell us your story in your own words and send your photos — we write the script, dialogues, and illustrate a seamless webtoon.",
+        steps_tag: "Simple Process",
+        steps_h2: "Magic in 3 Steps",
+        steps_sub: "No complicated briefs — just tell your story the way you'd tell a close friend",
+        step1_title: "Pick a Plan & Share Your Story",
+        step1_desc: "Choose a plan on the website and jot down key moments of your relationship: how you met, funny memories, or special phrases.",
+        step2_title: "Continue in Telegram & Send Photos",
+        step2_desc: "After clicking the button, you'll open a direct Telegram chat with us where you can attach 3–5 casual photos of your couple.",
+        step3_title: "Receive Your Masterpiece",
+        step3_desc: "We write the script and illustrate a single continuous webtoon (or print a hardcover book and ship it to your nearest CDEK point in Russia).",
+        price_tag: "Special Pricing",
+        price_h2: "Pricing Plans",
+        price_sub: "Choose the story format and length that fits your special occasion",
+        p1_badge: "Save 80% · Fast Start",
+        p1_name: "Mini Story",
+        p1_sub: "Perfect for a sweet surprise any day",
+        p1_cost: "$5",
+        p1_old: "$25",
+        p1_f1: "15 key panels with 100% likeness",
+        p1_f2: "Heartwarming mini-story (1 scene)",
+        p1_f3: "Format: Digital file (seamless vertical scroll)",
+        p1_f4: "Turnaround time: 24 hours",
+        p1_btn: "Select for $5",
+        p2_pop: "Best Seller · Chosen by 78% of Couples",
+        p2_badge: "Best Value & Emotion",
+        p2_name: "Full Feature",
+        p2_sub: "Deep dive into your relationship & feelings",
+        p2_cost: "$19",
+        p2_old: "$45",
+        p2_f1: "45 detailed cinematic panels",
+        p2_f2: "Full-length rich relationship story",
+        p2_f3: "Custom dialogues, chats & inside jokes",
+        p2_f4: "Turnaround time: 1–2 days",
+        p2_btn: "Select for $19",
+        p3_badge: "Exclusive · Physical Book",
+        p3_name: "Glossy Hardcover",
+        p3_sub: "Premium physical edition to hold in your hands",
+        p3_cost: "$119",
+        p3_old: "$179",
+        p3_f1: "Full-length exclusive story + digital version included",
+        p3_f2: "VIP hardcover printed comic book",
+        p3_f3: "Turnaround time: 1 week",
+        p3_f4: "Free delivery to nearest CDEK point",
+        p3_rus_note: "📦 Note: Physical book shipping is available within Russia only (via CDEK).",
+        p3_btn: "Select for $119",
+        bld_tag: "Included for Free",
+        bld_h3: "✨ Customize Art Style & Free Details",
+        bld_lbl1: "1. Choose an art mood or type your own:",
+        vibe_0: "🌸 Seoul Romance",
+        vibe_1: "☕ Cozy Slice-of-Life",
+        vibe_2: "🌃 Evening Neon",
+        vibe_3: "😂 Comedy & Memes",
+        vibe_4: "✍️ Custom Style",
+        custom_style_ph: "Or type your own custom art style / favorite manhwa or anime reference (optional)...",
+        bld_lbl2: "2. Free Story Accents (select multiple):",
+        extra_0: "🐾 Pet in Frame (Free)",
+        extra_1: "💬 Real Chat Bubbles (Free)",
+        extra_2: "🎵 Song QR Code (Free)",
+        rev_tag: "Real Emotions",
+        rev_h2: "What Our Clients Say",
+        rev_sub: "Stories from couples who turned their memories into a romantic webtoon",
+        rev1_txt: "\"Ordered the Full Feature for $19 for our anniversary. When my girlfriend saw our real chat messages and our sleeping cat in the panels — her reaction was priceless. Facial likeness is 10/10!\"",
+        rev1_auth: "Maxim <span>· Full Feature ($19)</span>",
+        rev2_txt: "\"We're currently long-distance in different cities, so I got the Mini Story for $5 to remind my boyfriend of the day we met at the train station. Done in less than 24 hours! The autumn leaf transitions look like top-tier anime.\"",
+        rev2_auth: "Alina <span>· Mini Story ($5)</span>",
+        rev3_txt: "\"We got the Glossy Hardcover for $119 for our wedding anniversary. The book arrived at our local CDEK in Russia in exactly one week — hard cover, thick glossy pages. Now it sits in the most visible spot in our living room!\"",
+        rev3_auth: "Alexander & Ekaterina <span>· Glossy Hardcover ($119)</span>",
+        faq_tag: "Got Questions?",
+        faq_h2: "Frequently Asked Questions",
+        faq1_q: "Why is the \"Mini Story\" plan only $5?",
+        faq1_a: "We made our starter 15-panel digital webtoon super accessible ($5 instead of $25) so every couple can experience our studio art quality and surprise their partner with unforgettable emotions even without a major holiday.",
+        faq2_q: "Will the characters really look like us?",
+        faq2_a: "Yes! We carefully analyze the photos you send and lock in each person's facial features, hairstyle, eye color, and outfit style so you recognize yourselves at first glance in every single frame.",
+        faq3_q: "What kind of photos do I need to send?",
+        faq3_a: "No professional photoshoot needed. Just 3–5 casual selfies or couple photos in good lighting where your faces are clearly visible.",
+        faq4_q: "What if I'm not good at writing stories?",
+        faq4_a: "You don't need to be a writer! Just list the facts in your own words (where you met, what you wore, what song was playing, your inside jokes), and our scriptwriter will turn it into a touching storyline with natural dialogues.",
+        faq5_q: "How does the $119 hardcover book delivery work?",
+        faq5_a: "In the \"Glossy Hardcover\" plan ($119), we typeset and print your book in a premium glossy hardcover and ship it for free to your nearest CDEK pickup point. Please note: physical book delivery is available within Russia only (takes 1 week), and you also get the digital scroll version as a free bonus!",
+        ord_tag: "Start Right Now",
+        ord_h2: "Place Your Order",
+        ord_sub: "Fill out the form below — your request will be automatically formatted for our Telegram chat",
+        ord_name_lbl: "What should we call you?",
+        ord_name_ph: "Your name",
+        ord_plan_lbl: "Selected Plan",
+        opt_0: "Mini Story (15 panels) — $5",
+        opt_1: "Full Feature (45 panels) — $19 (Best Seller)",
+        opt_2: "Glossy Hardcover (VIP Book · Russia Delivery Only) — $119",
+        ord_saved: "✓ Draft saved",
+        chip_0: "+ How we met",
+        chip_1: "+ Memorable moment",
+        chip_2: "+ Inside joke",
+        chip_3: "+ Pet / Details",
+        prompts_insert: ["How we met: ", "Memorable moment/trip: ", "Our inside jokes/phrases: ", "Details (outfits / pet / place): "],
+        ord_notice: "📸 <strong>Please note:</strong> You don't need to upload photos right now. After clicking the button below, our Telegram chat will open with your pre-filled order text — simply send it and attach 3–5 photos to start! (Physical hardcover books ship within Russia only via CDEK).",
+        ord_copy: "📋 Or copy ready order text to clipboard",
+        ord_copied: "✅ Order text copied! Send it to our Telegram @VAV_ls",
+        float_cta_txt: "Plans from <span>$5</span> · Ready in 24h",
+        float_cta_btn: "Order ✦",
+        footer_desc: "Personalized romantic webtoons and hardcover manhwa books based on your love story.",
+        footer_copy: "© 2026 OURTUNE. All rights reserved.",
+        plan_titles: ["Mini Story (15 panels)", "Full Feature (45 panels)", "Glossy Hardcover (VIP Book)"],
+        plan_prices: ["$5", "$19", "$119"],
+        story_labels: [
+          "Short story (for 15 panels — $5)",
+          "Detailed story (for 45 panels — $19)",
+          "Detailed story for VIP Hardcover Book ($119 · Russia shipping only)"
+        ],
+        story_placeholders: [
+          "Write a short story (how you met or describe one romantic/funny moment). For 15 panels, a brief summary is plenty...",
+          "Tell us your story in detail! The more moments, phrases, jokes, and situations you share, the richer your 45-panel webtoon will be...",
+          "Tell us your story in full detail! Describe key events, dialogues, favorite places, and little things for your hardcover printed book (ships within Russia via CDEK)..."
+        ],
+        submit_btns: [
+          "Send Order in Telegram ($5) →",
+          "Send Order in Telegram ($19) →",
+          "Send Order in Telegram ($119) →"
+        ],
+        vibes_clean: ["Seoul Romance (soft light)", "Cozy Slice-of-Life", "Evening Neon", "Comedy & Inside Memes", "Custom Style"],
+        extras_clean: ["Include Pet", "Real Telegram Chats", "Song QR Code"]
       }
     };
 
     function setLanguage(lang) {
-      currentLang = (lang === 'ru') ? 'ru' : 'en';
+      currentLang = (lang === 'en') ? 'en' : 'ru';
       document.documentElement.lang = currentLang;
       try { localStorage.setItem('ourtune_lang', currentLang); } catch (e) {}
 
-      // Переключение кнопок EN | RU
-      document.getElementById('langEnBtn').classList.toggle('active', currentLang === 'en');
       document.getElementById('langRuBtn').classList.toggle('active', currentLang === 'ru');
+      document.getElementById('langEnBtn').classList.toggle('active', currentLang === 'en');
 
       const dict = i18n[currentLang];
       document.title = dict.page_title;
 
-      // Обновляем все элементы с data-i18n
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (dict[key] !== undefined) {
@@ -2590,19 +2650,17 @@
         }
       });
 
-      // Плейсхолдеры и опции селекта
       document.getElementById('clientName').placeholder = dict.ord_name_ph;
+      document.getElementById('customStyleInput').placeholder = dict.custom_style_ph;
       document.getElementById('optPlan0').textContent = dict.opt_0;
       document.getElementById('optPlan1').textContent = dict.opt_1;
       document.getElementById('optPlan2').textContent = dict.opt_2;
 
-      // Dynamic Island
       const islandTextEl = document.getElementById('islandText');
       if (islandTextEl) {
         islandTextEl.textContent = dict.island_labels[lastActiveEpisode] || dict.island_labels[0];
       }
 
-      // Если включен fallback-вебтун, обновляем его язык
       const fallback = document.getElementById('fallbackWebtoonContainer');
       if (fallback && fallback.style.display === 'block') {
         renderFallbackWebtoonContent();
@@ -2719,7 +2777,7 @@
     }
 
     // =========================================================================
-    // 4. FALLBACK-ВЕБТУН ДЛЯ РИДЕРА (ПОДДЕРЖИВАЕТ EN И RU)
+    // 4. FALLBACK-ВЕБТУН ДЛЯ РИДЕРА (ПОДДЕРЖИВАЕТ RU И EN)
     // =========================================================================
     function renderFallbackWebtoonContent() {
       const fallback = document.getElementById('fallbackWebtoonContainer');
@@ -2763,7 +2821,7 @@
     }
 
     // =========================================================================
-    // 5. СВЕРХПЛАВНЫЙ ДВИЖОК ТЕЛЕФОНА БЕЗ ЛАГОВ (LERP + УЧЕТ ВЫСОТЫ ШАПКИ НА IPHONE)
+    // 5. СВЕРХПЛАВНЫЙ ДВИЖОК ТЕЛЕФОНА БЕЗ ЛАГОВ И СКАЧКОВ РАЗМЕРА (LERP)
     // =========================================================================
     const wrapperEl = document.getElementById('showcase-wrapper');
     const tapeEl = document.getElementById('scrollTape');
@@ -2788,7 +2846,7 @@
 
     function cachePhoneMetrics() {
       if (!wrapperEl || !tapeEl || !scrollAreaEl) return;
-      const headerOffset = 70; // соответствует --header-h
+      const headerOffset = 70;
       const rect = wrapperEl.getBoundingClientRect();
       cachedWrapperTop = rect.top + window.scrollY - headerOffset;
       cachedWrapperScrollHeight = Math.max(1, wrapperEl.offsetHeight - (window.innerHeight - headerOffset));
@@ -2944,12 +3002,26 @@
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
     // =========================================================================
-    // 7. КОНСТРУКТОР СТИЛЯ, ТАРИФЫ (390 / 1490 / 9990 ₽) И ОТПРАВКА В TELEGRAM
+    // 7. СТИЛЬ РИСОВКИ (+ СВОЙ СТИЛЬ), БЕСПЛАТНЫЕ ДЕТАЛИ И ОТПРАВКА В TELEGRAM
     // =========================================================================
     function setVibe(btn, vibeIdx) {
       document.querySelectorAll('#vibeSelector .style-pill').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       currentVibeIdx = vibeIdx;
+      if (vibeIdx === 4) {
+        document.getElementById('customStyleInput').focus();
+      }
+      saveDraft();
+    }
+
+    function onCustomStyleType() {
+      const val = document.getElementById('customStyleInput').value.trim();
+      if (val.length > 0) {
+        document.querySelectorAll('#vibeSelector .style-pill').forEach(b => b.classList.remove('active'));
+        document.getElementById('customStyleBtn').classList.add('active');
+        currentVibeIdx = 4;
+      }
+      saveDraft();
     }
 
     function toggleExtra(btn, extraIdx) {
@@ -2982,14 +3054,10 @@
       const label = document.getElementById('storyLabel');
       const textarea = document.getElementById('storyText');
       const submitBtn = document.getElementById('submitOrderBtn');
-      const builderTitle = document.getElementById('builderPlanTitle');
-      const builderPrice = document.getElementById('builderPriceDisplay');
 
       label.textContent = dict.story_labels[currentPlanIdx];
       textarea.placeholder = dict.story_placeholders[currentPlanIdx];
       submitBtn.textContent = dict.submit_btns[currentPlanIdx];
-      if (builderTitle) builderTitle.textContent = dict.plan_titles[currentPlanIdx];
-      if (builderPrice) builderPrice.textContent = dict.plan_prices[currentPlanIdx];
     }
 
     function insertPrompt(chipIdx) {
@@ -3005,6 +3073,7 @@
       try {
         localStorage.setItem('ourtune_name', document.getElementById('clientName').value);
         localStorage.setItem('ourtune_plan_idx', String(currentPlanIdx));
+        localStorage.setItem('ourtune_custom_style', document.getElementById('customStyleInput').value);
         localStorage.setItem('ourtune_story', document.getElementById('storyText').value);
         const badge = document.getElementById('autosaveBadge');
         if (badge) {
@@ -3016,7 +3085,7 @@
     }
 
     function initApp() {
-      let savedLang = 'en'; // По умолчанию открывается на английском!
+      let savedLang = 'ru'; // По умолчанию сайт открывается на РУССКОМ языке!
       try {
         const storedLang = localStorage.getItem('ourtune_lang');
         if (storedLang === 'ru' || storedLang === 'en') {
@@ -3024,12 +3093,16 @@
         }
         const savedName = localStorage.getItem('ourtune_name');
         const savedPlanIdx = localStorage.getItem('ourtune_plan_idx');
+        const savedCustomStyle = localStorage.getItem('ourtune_custom_style');
         const savedStory = localStorage.getItem('ourtune_story');
 
         if (savedName) document.getElementById('clientName').value = savedName;
         if (savedPlanIdx !== null && !isNaN(parseInt(savedPlanIdx, 10))) {
           currentPlanIdx = Math.max(0, Math.min(2, parseInt(savedPlanIdx, 10)));
           document.getElementById('tariffSelect').selectedIndex = currentPlanIdx;
+        }
+        if (savedCustomStyle) {
+          document.getElementById('customStyleInput').value = savedCustomStyle;
         }
         if (savedStory) document.getElementById('storyText').value = savedStory;
       } catch (e) {}
@@ -3043,7 +3116,13 @@
       const dict = i18n[currentLang];
       const name = document.getElementById('clientName').value.trim() || (currentLang === 'en' ? 'Not specified' : 'Не указано');
       const planText = `${dict.plan_titles[currentPlanIdx]} — ${dict.plan_prices[currentPlanIdx]}`;
-      const vibeText = dict.vibes_clean[currentVibeIdx];
+      
+      const customStyleVal = document.getElementById('customStyleInput').value.trim();
+      let vibeText = dict.vibes_clean[currentVibeIdx];
+      if (customStyleVal) {
+        vibeText = currentVibeIdx === 4 ? customStyleVal : `${vibeText} (${customStyleVal})`;
+      }
+
       const extrasList = selectedExtraIndices.map(i => dict.extras_clean[i]);
       const extrasStr = extrasList.length > 0 ? extrasList.join(', ') : (currentLang === 'en' ? 'Standard' : 'Стандарт');
       const story = document.getElementById('storyText').value.trim() || (currentLang === 'en' ? 'Will share in chat' : 'Расскажу в диалоге');
@@ -3053,8 +3132,8 @@
           `Hello! I'd like to order an OURTUNE manhwa ✨\n\n` +
           `👤 Name: ${name}\n` +
           `💎 Plan: ${planText}\n` +
-          `🎨 Art Mood: ${vibeText}\n` +
-          `🎁 Extras: ${extrasStr}\n\n` +
+          `🎨 Art Style: ${vibeText}\n` +
+          `🎁 Free Extras: ${extrasStr}\n\n` +
           `📖 Our Story:\n${story}`
         );
       } else {
@@ -3063,7 +3142,7 @@
           `👤 Имя: ${name}\n` +
           `💎 Тариф: ${planText}\n` +
           `🎨 Стиль рисовки: ${vibeText}\n` +
-          `🎁 Детали: ${extrasStr}\n\n` +
+          `🎁 Бесплатные детали: ${extrasStr}\n\n` +
           `📖 Наша история:\n${story}`
         );
       }
